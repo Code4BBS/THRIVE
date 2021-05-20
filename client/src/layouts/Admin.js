@@ -23,10 +23,9 @@ import componentStyles from "assets/theme/layouts/admin.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Admin = () => {
+const Admin = ({ user, cookies }) => {
   const classes = useStyles();
   const location = useLocation();
-
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -92,7 +91,11 @@ const Admin = () => {
           }
         />
         <Box position="relative" className={classes.mainContent}>
-          <AdminNavbar brandText={getBrandText(location.pathname)} />
+          <AdminNavbar
+            user={user}
+            cookies={cookies}
+            brandText={getBrandText(location.pathname)}
+          />
           <Switch>
             {getRoutes(routes)}
             <Redirect from="*" to="/admin/index" />

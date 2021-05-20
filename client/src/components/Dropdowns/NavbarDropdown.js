@@ -15,13 +15,15 @@ import EventNote from "@material-ui/icons/EventNote";
 import LiveHelp from "@material-ui/icons/LiveHelp";
 import Person from "@material-ui/icons/Person";
 import Settings from "@material-ui/icons/Settings";
+import { GoogleLogout } from "react-google-login";
+import axios from "axios";
 
 // core components
 import componentStyles from "assets/theme/components/navbar-dropdown.js";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function NavbarDropdown() {
+export default function NavbarDropdown({ user, cookies }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -34,9 +36,19 @@ export default function NavbarDropdown() {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
-  const alertBox = () => {
-    alert("Clicked");
+  const logout = () => {
+    axios
+      .post("/api/v1/auth/logout", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        cookies.remove("isLoggedIn", { path: "/" });
+        cookies.remove("userData", { path: "/" });
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const menuId = "primary-search-account-menu";
@@ -118,7 +130,6 @@ export default function NavbarDropdown() {
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
-        onClick={alertBox}
       >
         <Box
           component={DirectionsRun}
@@ -126,7 +137,21 @@ export default function NavbarDropdown() {
           height="1.25rem!important"
           marginRight="1rem"
         />
-        <span>Logot</span>
+        <GoogleLogout
+          clientId="816660866473-0imd0k3n3sj5687c35v0r793lct9pkps.apps.googleusercontent.com"
+          buttonText="LOG OUT"
+          render={(renderProps) => (
+            <Button buttonStyle="btn--outline" onClick={renderProps.onClick}>
+              &nbsp;&nbsp; Logout
+            </Button>
+          )}
+          onLogoutSuccess={() => logout()}
+          icon={false}
+          style={{
+            color: "black",
+            boxSizing: "inherit",
+          }}
+        ></GoogleLogout>
       </Box>
     </Menu>
   );
@@ -145,14 +170,14 @@ export default function NavbarDropdown() {
           root: classes.buttonRoot,
         }}
       >
-        {/* <Avatar
+        <Avatar
           alt="..."
-          src={require("assets/img/theme/team-4-800x800.jpg").default}
+          src={user ? user.image : " "}
           classes={{
             root: classes.avatarRoot,
           }}
-        /> */}
-        <Hidden smDown>Jessica Jones</Hidden>
+        />
+        <Hidden smDown>{user ? user.name : " "}</Hidden>
       </Button>
       {renderMenu}
     </>

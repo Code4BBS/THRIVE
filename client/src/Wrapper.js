@@ -14,14 +14,17 @@ class Wrapper extends Component {
   state = {
     isLoggedIn: false,
     user: null,
+    isLoading: false,
   };
 
   checkIsLoggedIn = () => {
     const cookies = this.props.cookies.cookies;
-    this.setState({
-      user: cookies.userData ? JSON.parse(cookies.userData) : null,
-      isLoggedIn: cookies.isLoggedIn,
-    });
+    if (cookies.userData) {
+      this.setState({
+        user: cookies.userData ? JSON.parse(cookies.userData) : null,
+        isLoggedIn: true,
+      });
+    }
   };
 
   componentDidMount = () => {
@@ -51,18 +54,30 @@ class Wrapper extends Component {
   render() {
     return (
       <div>
-        {this.state.isLoggedIn ? (
-          <Router>
-            <Switch>
-              <Route
-                path="/admin"
-                render={(props) => <AdminLayout {...props} />}
-              />
-              <Redirect from="/" to="/admin/index" />
-            </Switch>
-          </Router>
+        {!this.state.isLoading ? (
+          <>
+            {this.state.isLoggedIn && this.state.user ? (
+              <Router>
+                <Switch>
+                  <Route
+                    path="/admin"
+                    render={(props) => (
+                      <AdminLayout
+                        user={this.state.user}
+                        cookies={this.props.cookies}
+                        {...props}
+                      />
+                    )}
+                  />
+                  <Redirect from="/" to="/admin/index" />
+                </Switch>
+              </Router>
+            ) : (
+              <AuthLayout sucessLogin={this.getLoggedInUser} />
+            )}
+          </>
         ) : (
-          <AuthLayout sucessLogin={this.getLoggedInUser} />
+          <p>Loading</p>
         )}
       </div>
     );

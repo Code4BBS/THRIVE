@@ -195,9 +195,9 @@ export default function AuthNavbar() {
                 {ListObject}
               </Menu>
             </Hidden>
-            <Hidden smDown implementation="css">
+            {/* <Hidden smDown implementation="css">
               {ListObject}
-            </Hidden>
+            </Hidden> */}
           </Container>
         </Toolbar>
       </AppBar>

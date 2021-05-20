@@ -40,7 +40,7 @@ const Login = ({ sucessLogin }) => {
     } else {
       axios
         .post(
-          "http://localhost:3000/api/v1/auth/login",
+          "/api/v1/auth/login",
           { tokenId: response.tokenId },
           {
             withCredentials: true,
