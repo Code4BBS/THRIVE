@@ -1,4 +1,7 @@
 import React from "react";
+import { withRouter, useHistory } from "react-router-dom";
+import GoogleLogin from "react-google-login";
+import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -22,9 +25,39 @@ import componentStyles from "assets/theme/views/auth/login.js";
 
 const useStyles = makeStyles(componentStyles);
 
-function Login() {
+const Login = ({ sucessLogin }) => {
   const classes = useStyles();
   const theme = useTheme();
+
+  const successResponseGoogle = (response) => {
+    const emailUsed = response.profileObj.email;
+    const index = emailUsed.indexOf("@");
+    const domain = emailUsed.substr(index);
+
+    if (domain !== "@iitbbs.ac.in") {
+      alert("Use your IIT Bhubaneswar email id.");
+      return false;
+    } else {
+      axios
+        .post(
+          "http://localhost:3000/api/v1/auth/login",
+          { tokenId: response.tokenId },
+          {
+            withCredentials: true,
+          }
+        )
+        .then((response) => {
+          console.log(response.data);
+          sucessLogin(response);
+        })
+        .catch((err) => console.log(err));
+      console.log("success");
+    }
+  };
+  const failureResponseGoogle = (response) => {
+    console.log("he2");
+    alert("Use your IIT BBS email for login");
+  };
   return (
     <>
       <Grid item xs={12} lg={5} md={7}>
@@ -50,135 +83,49 @@ function Login() {
             }}
             subheader={
               <Box textAlign="center">
-                <Box
-                  component={Button}
-                  variant="contained"
-                  marginRight=".5rem!important"
-                  classes={{ root: classes.buttonRoot }}
-                >
-                  <Box component="span" marginRight="4px">
-                    <Box
-                      alt="..."
-                      component="img"
-                      width="20px"
-                      className={classes.buttonImg}
-                      src={
-                        require("assets/img/icons/common/github.svg").default
-                      }
-                    ></Box>
-                  </Box>
-                  <Box component="span" marginLeft=".75rem">
-                    Github
-                  </Box>
-                </Box>
-                <Button
-                  variant="contained"
-                  classes={{ root: classes.buttonRoot }}
-                >
-                  <Box component="span" marginRight="4px">
-                    <Box
-                      alt="..."
-                      component="img"
-                      width="20px"
-                      className={classes.buttonImg}
-                      src={
-                        require("assets/img/icons/common/google.svg").default
-                      }
-                    ></Box>
-                  </Box>
-                  <Box component="span" marginLeft=".75rem">
-                    Google
-                  </Box>
-                </Button>
+                <GoogleLogin
+                  className="google-login"
+                  clientId="814516511786-nucvcmf3osa464saoshkeg2ma2slfuqa.apps.googleusercontent.com"
+                  render={(renderProps) => (
+                    <Button
+                      variant="contained"
+                      classes={{ root: classes.buttonRoot }}
+                      onClick={renderProps.onClick}
+                    >
+                      <Box component="span" marginRight="4px">
+                        <Box
+                          alt="..."
+                          component="img"
+                          width="20px"
+                          className={classes.buttonImg}
+                          src={
+                            require("assets/img/icons/common/google.svg")
+                              .default
+                          }
+                        ></Box>
+                      </Box>
+                      <Box component="span" marginLeft=".75rem">
+                        Google
+                      </Box>
+                    </Button>
+                  )}
+                  isSignedIn={true}
+                  onSuccess={successResponseGoogle}
+                  onFailure={failureResponseGoogle}
+                  cookiePolicy={"single_host_origin"}
+                  icon={false}
+                  padding={100}
+                />
               </Box>
             }
           ></CardHeader>
-          <CardContent classes={{ root: classes.cardContent }}>
-            <Box
-              color={theme.palette.gray[600]}
-              textAlign="center"
-              marginBottom="1rem"
-              marginTop=".5rem"
-              fontSize="1rem"
-            >
-              <Box fontSize="80%" fontWeight="400" component="small">
-                Or sign in with credentials
-              </Box>
-            </Box>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <FilledInput
-                autoComplete="off"
-                type="email"
-                placeholder="Email"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Email />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            <FormControl
-              variant="filled"
-              component={Box}
-              width="100%"
-              marginBottom="1rem!important"
-            >
-              <FilledInput
-                autoComplete="off"
-                type="password"
-                placeholder="Password"
-                startAdornment={
-                  <InputAdornment position="start">
-                    <Lock />
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-            <FormControlLabel
-              value="end"
-              control={<Checkbox color="primary" />}
-              label="Remeber me"
-              labelPlacement="end"
-              classes={{
-                root: classes.formControlLabelRoot,
-                label: classes.formControlLabelLabel,
-              }}
-            />
-            <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
-              <Button color="primary" variant="contained">
-                Sign in
-              </Button>
-            </Box>
-          </CardContent>
         </Card>
-        <Grid container component={Box} marginTop="1rem">
-          <Grid item xs={6} component={Box} textAlign="left">
-            <a
-              href="#admui"
-              onClick={(e) => e.preventDefault()}
-              className={classes.footerLinks}
-            >
-              Forgot password
-            </a>
-          </Grid>
-          <Grid item xs={6} component={Box} textAlign="right">
-            <a
-              href="#admui"
-              onClick={(e) => e.preventDefault()}
-              className={classes.footerLinks}
-            >
-              Create new account
-            </a>
-          </Grid>
-        </Grid>
+        {/* <Grid container component={Box} marginTop="1rem">
+        <p>Extra</p>
+        </Grid> */}
       </Grid>
     </>
   );
-}
+};
 
 export default Login;

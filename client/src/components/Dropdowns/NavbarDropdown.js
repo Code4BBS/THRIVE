@@ -35,6 +35,10 @@ export default function NavbarDropdown() {
     setAnchorEl(null);
   };
 
+  const alertBox = () => {
+    alert("Clicked");
+  };
+
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -114,7 +118,7 @@ export default function NavbarDropdown() {
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
-        onClick={handleMenuClose}
+        onClick={alertBox}
       >
         <Box
           component={DirectionsRun}
@@ -122,7 +126,7 @@ export default function NavbarDropdown() {
           height="1.25rem!important"
           marginRight="1rem"
         />
-        <span>Logout</span>
+        <span>Logot</span>
       </Box>
     </Menu>
   );
@@ -141,13 +145,13 @@ export default function NavbarDropdown() {
           root: classes.buttonRoot,
         }}
       >
-        <Avatar
+        {/* <Avatar
           alt="..."
           src={require("assets/img/theme/team-4-800x800.jpg").default}
           classes={{
             root: classes.avatarRoot,
           }}
-        />
+        /> */}
         <Hidden smDown>Jessica Jones</Hidden>
       </Button>
       {renderMenu}
