@@ -14,7 +14,7 @@ exports.createQuestion = catchAsync(async (req,res,next) => {
         question = {
             questionBody : req.body.questionBody,
             createdAt : Date.now(),
-            // user : req.user,
+            user : req.user,
             isAnanymous : req.body.isAnonymous
         }
     }
@@ -57,7 +57,7 @@ exports.createAnswer = catchAsync(async (req,res,next) => {
         Answer = {
             answer : req.body.answer,
             isAnanymous : req.body.isAnanymous,
-            // user : req.user,
+            user : req.user,
             // question : req.params.qId
         }
     }
@@ -73,14 +73,13 @@ exports.createAnswer = catchAsync(async (req,res,next) => {
 
 exports.upVote = catchAsync(async(req,res,next) => {
     let question = await Question.findById(req.params.qId);
-    req.user = 1;
-    if(question.upvotedBy.includes(req.user)) {
+    if(question.upvotedBy.includes(req.user.id)) {
         res.status(200).json({
             message : "already upvoted",
             question
         })
         return (next);
-    } else if(question.downvotedBy.includes(req.user)) {
+    } else if(question.downvotedBy.includes(req.user.id)) {
         question.downvotedBy.pull(req.user);
         question.downvotes = question.downvotes-1;
         question.upvotedBy.push(req.user);
@@ -97,6 +96,37 @@ exports.upVote = catchAsync(async(req,res,next) => {
         res.status(200).json({
             status : "success",
             message : "upvoted Successfully",
+            newQuestion
+        })
+        return (next);
+    }
+})
+
+exports.downVote = catchAsync(async(req,res,next) => {
+    let question = await Question.findById(req.params.qId);
+    if(question.downvotedBy.includes(req.user.id)) {
+        res.status(200).json({
+            message : "already downvoted",
+            question
+        })
+        return (next);
+    } else if(question.upvotedBy.includes(req.user.id)) {
+        question.upvotedBy.pull(req.user);
+        question.upvotes = question.upvotes-1;
+        question.downvotedBy.push(req.user);
+        question.downvotes = question.downvotes + 1;
+        let newQuestion = await question.save();
+        res.status(200).json({
+            status : "success",
+            newQuestion
+        })
+    } else {
+        question.downvotedBy.push(req.user);
+        question.downvotes = question.downvotes+1;
+        let newQuestion = await question.save();
+        res.status(200).json({
+            status : "success",
+            message : "downvoted Successfully",
             newQuestion
         })
         return (next);
