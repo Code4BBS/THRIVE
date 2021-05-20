@@ -10,7 +10,10 @@ const clientEndpoints = ["discover", "profile", "update"];
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
 
+
+const quoraRouter = require("./routes/quoraRoutes");
 const authRouter = require("./routes/authRoutes.js");
+
 
 const app = express();
 
@@ -25,9 +28,8 @@ app.use(middleware.requestLogger);
 
 //Endpoints//
 app.use("/api/v1/auth", authRouter);
-
+app.use("/api/v1/quora", quoraRouter);
 app.use(express.static(path.join(__dirname, "client/build")));
-
 app.use(globalErrorHandler);
 
 module.exports = app;
