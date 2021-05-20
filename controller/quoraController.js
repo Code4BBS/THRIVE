@@ -70,3 +70,35 @@ exports.createAnswer = catchAsync(async (req,res,next) => {
         finalQuestion
     })
 })
+
+exports.upVote = catchAsync(async(req,res,next) => {
+    let question = await Question.findById(req.params.qId);
+    req.user = 1;
+    if(question.upvotedBy.includes(req.user)) {
+        res.status(200).json({
+            message : "already upvoted",
+            question
+        })
+        return (next);
+    } else if(question.downvotedBy.includes(req.user)) {
+        question.downvotedBy.pull(req.user);
+        question.downvotes = question.downvotes-1;
+        question.upvotedBy.push(req.user);
+        question.upvotes = question.upvotes + 1;
+        let newQuestion = await question.save();
+        res.status(200).json({
+            status : "success",
+            newQuestion
+        })
+    } else {
+        question.upvotedBy.push(req.user);
+        question.upvotes = question.upvotes+1;
+        let newQuestion = await question.save();
+        res.status(200).json({
+            status : "success",
+            message : "upvoted Successfully",
+            newQuestion
+        })
+        return (next);
+    }
+})
