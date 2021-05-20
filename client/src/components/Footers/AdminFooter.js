@@ -30,11 +30,11 @@ const Footer = () => {
             © {new Date().getFullYear()}{" "}
             <a
               className={classes.copyrightLink}
-              href="https://www.creative-tim.com?ref=adr-admin-footer"
+              href="https://github.com/Code4BBS/CMP"
               rel="noopener noreferrer"
               target="_blank"
             >
-              Creative Tim
+              Code4BBS
             </a>
           </div>
         </Box>

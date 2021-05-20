@@ -19,12 +19,12 @@ import Tv from "@material-ui/icons/Tv";
 import VpnKey from "@material-ui/icons/VpnKey";
 
 var routes = [
-  {
-    href: "#pablo",
-    name: "Upgrade to pro",
-    icon: FlashOn,
-    upgradeToPro: true,
-  },
+  // {
+  //   href: "#pablo",
+  //   name: "Upgrade to pro",
+  //   icon: FlashOn,
+  //   upgradeToPro: true,
+  // },
   {
     path: "/index",
     name: "Dashboard",
