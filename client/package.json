@@ -1,21 +1,12 @@
 {
-  "name": "argon-dashboard-material-ui",
+  "name": "comp-frontend",
   "version": "1.0.0",
-  "author": "Creative Tim",
-  "license": "MIT",
-  "description": "Material UI version of Argon Dashboard React by Creative Tim",
+  "author": "Code4BBS",
+  "description": "College Management Portal",
   "proxy": "http://localhost:3000",
-  "homepage": "https://demos.creative-tim.com/argon-dashboard-material-ui/#/admin/dashboard",
-  "bugs": {
-    "url": "https://github.com/creativetimofficial/argon-dashboard-material-ui/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/creativetimofficial/argon-dashboard-material-ui.git"
-  },
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
-    "build": "react-scripts build && gulp licenses",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start"

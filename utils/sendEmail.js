@@ -22,7 +22,7 @@ const sendEmail = async (options) => {
 
     // 2) Define the email options
     const mailOptions = {
-      from: "discover.neuro <SomeMail@gmail.com>",
+      from: "cmp.code4bbs <SomeMail@gmail.com>",
       to: options.email,
       subject: options.subject,
       text: options.message,

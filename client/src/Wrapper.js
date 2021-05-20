@@ -8,7 +8,6 @@ import {
 import { CookiesProvider, withCookies } from "react-cookie";
 import AdminLayout from "layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
-import { get } from "mongoose";
 
 class Wrapper extends Component {
   state = {

@@ -141,8 +141,15 @@ export default function NavbarDropdown({ user, cookies }) {
           clientId="816660866473-0imd0k3n3sj5687c35v0r793lct9pkps.apps.googleusercontent.com"
           buttonText="LOG OUT"
           render={(renderProps) => (
-            <Button buttonStyle="btn--outline" onClick={renderProps.onClick}>
-              &nbsp;&nbsp; Logout
+            <Button
+              onClick={renderProps.onClick}
+              disableElevation
+              disableRipple
+              disableFocusRipple
+              disableTouchRipple
+              style={{ textAlign: "left", padding: "0px" }}
+            >
+              Sign Out
             </Button>
           )}
           onLogoutSuccess={() => logout()}

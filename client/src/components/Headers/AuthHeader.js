@@ -38,7 +38,7 @@ const AuthHeader = () => {
                   lineHeight="1.7"
                   fontSize="1rem"
                 >
-                  A one stop solution for every student
+                  A one stop solution for any student
                 </Box>
               </Grid>
             </Box>

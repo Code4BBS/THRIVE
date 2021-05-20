@@ -129,9 +129,9 @@ export default function AuthNavbar() {
             maxWidth="xl"
           >
             <Box color="text.primary" height="30px" className={classes.header}>
-              <div>College Management Portal</div>
+              <div style={{ fontSize: "22px" }}>College Management Portal</div>
             </Box>
-            <Hidden mdUp implementation="css">
+            {/* <Hidden mdUp implementation="css">
               <IconButton
                 edge="start"
                 color="inherit"
@@ -194,7 +194,7 @@ export default function AuthNavbar() {
                 />
                 {ListObject}
               </Menu>
-            </Hidden>
+            </Hidden> */}
             {/* <Hidden smDown implementation="css">
               {ListObject}
             </Hidden> */}
