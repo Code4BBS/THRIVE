@@ -132,3 +132,11 @@ exports.downVote = catchAsync(async(req,res,next) => {
         return (next);
     }
 })
+
+exports.deleteQuestion = catchAsync(async(req,res,next) => {
+    const question = await Question.findByIdAndDelete(req.params.qId);
+    res.status(203).json({
+        status : "success",
+        message : "question deleted successfully"
+    })
+})
