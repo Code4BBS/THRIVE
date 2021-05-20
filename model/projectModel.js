@@ -24,11 +24,6 @@ const projectSchema = new mongoose.Schema(
     },
     blacklisted: { type: Boolean, default: false },
     communication: { type: String },
-    whatsApp: {
-      type: Number,
-      validate: [validator.isMobilePhone, "Enter a Valid Phone Number"],
-    },
-    linkedIn: { type: String, validate: [validator.isURL] },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
