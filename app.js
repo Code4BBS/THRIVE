@@ -12,7 +12,8 @@ const globalErrorHandler = require("./controller/errorController");
 
 const quoraRouter = require("./routes/quoraRoutes");
 const authRouter = require("./routes/authRoutes.js");
-
+const userRouter = require("./routes/discoverRoutes.js");
+const searchRouter = require("./routes/searchRoutes.js");
 const app = express();
 
 app.use(helmet());
@@ -34,7 +35,9 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 // API Endpoints
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/user", userRouter);
 app.use("/api/v1/quora", quoraRouter);
+app.use("/api/v1/search", searchRouter);
 
 app.get("*", (req, res, next) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));

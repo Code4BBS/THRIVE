@@ -21,7 +21,7 @@ class Wrapper extends Component {
     if (cookies.userData) {
       this.setState({
         user: cookies.userData ? JSON.parse(cookies.userData) : null,
-        isLoggedIn: true,
+        isLoggedIn: cookies.isLoggedIn,
       });
     }
   };

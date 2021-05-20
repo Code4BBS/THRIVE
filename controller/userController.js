@@ -1,16 +1,16 @@
-const User = require('./../model/dbModel/userModel');
-const Tag = require('./../model/dbModel/tagModel');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
-const { sendEmail } = require('../utils/sendEmail');
+const User = require("./../model/userModel");
+const Tag = require("./../model/tagModel");
+const catchAsync = require("./../utils/catchAsync");
+const AppError = require("./../utils/appError");
+const { sendEmail } = require("../utils/sendEmail");
 
 exports.aboutMe = catchAsync(async (req, res, next) => {
   if (!req.user) {
-    return next(new AppError('This user is not present', 401));
+    return next(new AppError("This user is not present", 401));
   }
 
   res.status(200).json({
-    status: 'suceess',
+    status: "suceess",
     data: {
       user: req.user,
     },
@@ -20,16 +20,16 @@ exports.aboutMe = catchAsync(async (req, res, next) => {
 exports.getProfile = catchAsync(async (req, res, next) => {
   let user = await User.findOne({ _id: req.query.id })
     .populate({
-      path: 'tags',
-      model: 'Tag',
+      path: "tags",
+      model: "Tag",
     })
     .lean();
 
   if (!user) {
-    return next(new AppError('This user is not present', 400));
+    return next(new AppError("This user is not present", 400));
   }
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
       user,
     },
@@ -39,7 +39,7 @@ exports.getProfile = catchAsync(async (req, res, next) => {
 exports.updateProfile = catchAsync(async (req, res, next) => {
   if (req.body.email || req.body.name) {
     return next(
-      new AppError('Sorry you are not allowed to change name and email', 401)
+      new AppError("Sorry you are not allowed to change name and email", 401)
     );
   }
 
@@ -53,13 +53,13 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   }).populate({
-    path: 'tags',
-    model: 'Tag',
-    select: 'name group',
+    path: "tags",
+    model: "Tag",
+    select: "name group",
   });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
       user: updateUser,
     },
@@ -67,13 +67,13 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const docs = await User.find({ publishStatus: true })
-    .select('name email image verifyStatus')
-    .sort({ verifyStatus: -1, name: 1 })
+  const docs = await User.find()
+    .select("name email image ")
+    .sort({ name: 1 })
     .lean();
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: docs.length,
     data: {
       docs,
@@ -86,7 +86,7 @@ exports.getAllTags = catchAsync(async (req, res, next) => {
 
   // SEND RESPONSE
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: docs.length,
     data: {
       docs,
@@ -98,13 +98,13 @@ exports.reportUser = catchAsync(async (req, res, next) => {
   const reportedUser = await User.findById(req.params.id);
 
   if (!reportedUser) {
-    return next(new AppError('The user to be reported is not present', 400));
+    return next(new AppError("The user to be reported is not present", 400));
   }
 
   if (reportedUser.reporters && reportedUser.reporters.includes(req.user._id)) {
     res.status(200).json({
-      status: 'success',
-      message: 'This user is already reported by you',
+      status: "success",
+      message: "This user is already reported by you",
     });
   } else {
     const newReportCount = reportedUser.reportCount + 1;
@@ -125,8 +125,8 @@ exports.reportUser = catchAsync(async (req, res, next) => {
     });
 
     res.status(200).json({
-      status: 'Success',
-      message: 'The user has been successfully reported',
+      status: "Success",
+      message: "The user has been successfully reported",
       data: updatedUser,
     });
   }

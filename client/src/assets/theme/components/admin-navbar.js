@@ -17,7 +17,7 @@ const componentStyles = (theme) => ({
   searchBox: {
     borderColor: theme.palette.adminNavbarSearch.main,
     borderRadius: "2rem",
-    border: "2px solid",
+    border: "2px solid ",
     backgroundColor: "initial",
     boxShadow: boxShadows.inputBoxShadow,
     transition: "box-shadow .15s ease",

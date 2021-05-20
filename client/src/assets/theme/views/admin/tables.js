@@ -1,6 +1,41 @@
 import boxShadows from "assets/theme/box-shadow.js";
 
 const componentStyles = (theme) => ({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    listStyle: "none",
+    padding: theme.spacing(0.5),
+    margin: 0,
+  },
+  chip: {
+    margin: theme.spacing(0.5),
+  },
+  avatar: {
+    marginRight: theme.spacing(2),
+  },
+  align: {
+    marginTop: "auto",
+    marginBottom: "auto",
+  },
+  table: {
+    minWidth: 100,
+  },
+  cellB: {
+    fontWeight: 500,
+    border: 0,
+    fontSize: 17,
+    paddingTop: 8,
+    paddingBottom: 8,
+    minWidth: "fit-content",
+  },
+  cell: {
+    border: 0,
+    fontSize: 17,
+    paddingTop: 8,
+    paddingBottom: 8,
+  },
   cardRoot: {
     boxShadow: boxShadows.boxShadow + "!important",
   },
@@ -118,6 +153,27 @@ const componentStyles = (theme) => ({
     width: "36px",
     height: "36px",
     fontSize: ".875rem",
+  },
+  searchBox: {
+    borderColor: theme.palette.adminNavbarSearch.main,
+    borderRadius: "2rem",
+    border: "2px solid",
+    width: "300px",
+    boxShadow: boxShadows.inputBoxShadow,
+    transition: "box-shadow .15s ease",
+  },
+  searchIcon: {
+    color: "red",
+    marginRight: "0.5rem",
+    marginLeft: "1rem",
+  },
+  searchInput: {
+    color: "black",
+    width: "270px",
+    backgroundColor: "initial",
+    border: 0,
+    boxShadow: "none",
+    padding: "0",
   },
 });
 

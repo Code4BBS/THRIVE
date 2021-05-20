@@ -6,7 +6,7 @@ import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
-import Discover from "views/admin/Discover.js";
+import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -72,7 +72,7 @@ var routes = [
     name: "Discover",
     icon: PeopleIcon,
     iconColor: "Primary",
-    component: Discover,
+    component: CustomerListView,
     layout: "/admin",
   },
   // {

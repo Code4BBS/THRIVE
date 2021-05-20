@@ -37,6 +37,7 @@ export default function NavbarDropdown({ user, cookies }) {
     setAnchorEl(null);
   };
   const logout = () => {
+    console.log("hell");
     axios
       .post("/api/v1/auth/logout", {
         withCredentials: true,
@@ -138,7 +139,7 @@ export default function NavbarDropdown({ user, cookies }) {
           marginRight="1rem"
         />
         <GoogleLogout
-          clientId="816660866473-0imd0k3n3sj5687c35v0r793lct9pkps.apps.googleusercontent.com"
+          clientId="814516511786-nucvcmf3osa464saoshkeg2ma2slfuqa.apps.googleusercontent.com"
           buttonText="LOG OUT"
           render={(renderProps) => (
             <Button
