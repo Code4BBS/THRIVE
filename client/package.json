@@ -26,38 +26,25 @@
     "@material-ui/core": "4.11.3",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.57",
+    "axios": "^0.21.1",
     "chart.js": "2.9.4",
     "node-sass": "5.0.0",
     "nouislider": "14.6.3",
     "prop-types": "15.7.2",
     "react": "17.0.1",
     "react-chartjs-2": "2.11.1",
+    "react-cookie": "^4.0.3",
     "react-copy-to-clipboard": "5.0.3",
     "react-datetime": "3.0.4",
     "react-dom": "17.0.1",
+    "react-google-login": "^5.2.2",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.2"
   },
   "eslintConfig": {
     "extends": [
       "react-app"
-    ],
-    "plugins": [
-      "unused-imports"
-    ],
-    "rules": {
-      "no-unused-vars": "off",
-      "unused-imports/no-unused-imports": "error",
-      "unused-imports/no-unused-vars": [
-        "warn",
-        {
-          "vars": "all",
-          "varsIgnorePattern": "^_",
-          "args": "after-used",
-          "argsIgnorePattern": "^_"
-        }
-      ]
-    }
+    ]
   },
   "optionalDependencies": {
     "typescript": "4.1.5"

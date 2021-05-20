@@ -10,14 +10,14 @@ const clientEndpoints = ["discover", "profile", "update"];
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
 
-
+const authRouter = require("./routes/authRoutes.js");
 
 const app = express();
 
 app.use(helmet());
 app.use(
   cors({
-    origin: "http://localhost:3001",
+    origin: "http://localhost:3000",
     credentials: true,
   })
 );
@@ -28,8 +28,10 @@ app.use(mongoSanitize());
 
 app.use(middleware.requestLogger);
 
-app.use(express.static(path.join(__dirname, "client/build")));
+//Endpoints//
+app.use("/api/v1/auth", authRouter);
 
+app.use(express.static(path.join(__dirname, "client/build")));
 
 app.use(globalErrorHandler);
 

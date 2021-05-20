@@ -12,12 +12,13 @@ import AuthHeader from "components/Headers/AuthHeader.js";
 import AuthFooter from "components/Footers/AuthFooter.js";
 
 import routes from "routes.js";
+import Login from "./../views/auth/Login";
 
 import componentStyles from "assets/theme/layouts/auth.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Auth = () => {
+const Auth = ({ sucessLogin }) => {
   const classes = useStyles();
   const mainContent = React.useRef(null);
   const location = useLocation();
@@ -65,10 +66,7 @@ const Auth = () => {
           zIndex="101"
         >
           <Box component={Grid} container justifyContent="center">
-            <Switch>
-              {getRoutes(routes)}
-              <Redirect from="*" to="/auth/login" />
-            </Switch>
+            <Login sucessLogin={sucessLogin} />
           </Box>
         </Container>
       </div>

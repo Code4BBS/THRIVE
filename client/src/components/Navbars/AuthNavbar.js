@@ -128,13 +128,9 @@ export default function AuthNavbar() {
             component={Box}
             maxWidth="xl"
           >
-            <Box
-              alt="..."
-              height="30px"
-              component="img"
-              className={classes.headerImg}
-              src={require("assets/img/brand/argon-react-white.png").default}
-            />
+            <Box color="text.primary" height="30px" className={classes.header}>
+              <div>College Management Portal</div>
+            </Box>
             <Hidden mdUp implementation="css">
               <IconButton
                 edge="start"
