@@ -4,6 +4,7 @@
   "author": "Creative Tim",
   "license": "MIT",
   "description": "Material UI version of Argon Dashboard React by Creative Tim",
+  "proxy": "http://localhost:3000",
   "homepage": "https://demos.creative-tim.com/argon-dashboard-material-ui/#/admin/dashboard",
   "bugs": {
     "url": "https://github.com/creativetimofficial/argon-dashboard-material-ui/issues"
