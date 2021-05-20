@@ -7,6 +7,7 @@ import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import Discover from "views/admin/Discover.js";
+import Quora from "views/admin/Quora.js";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -19,6 +20,7 @@ import Person from "@material-ui/icons/Person";
 import Tv from "@material-ui/icons/Tv";
 import PeopleIcon from "@material-ui/icons/People";
 import VpnKey from "@material-ui/icons/VpnKey";
+import ContactSupportTwoToneIcon from '@material-ui/icons/ContactSupportTwoTone';
 
 var routes = [
   // {
@@ -74,6 +76,14 @@ var routes = [
     iconColor: "Primary",
     component: Discover,
     layout: "/admin",
+  },
+  {
+    path : "/quora",
+    name : "Quora",
+    icon : ContactSupportTwoToneIcon,
+    iconColor : "Warning",
+    component : Quora,
+    layout : "/admin"
   },
   // {
   //   path: "/login",
