@@ -71,7 +71,7 @@ export default function AdminNavbar({ user, cookies, brandText }) {
                   />
                 </Box>
                 <NavbarDropdown user={user} cookies={cookies} />
-                <Notification />
+                <Notification user={user} />
               </Box>
             </Box>
           </Container>

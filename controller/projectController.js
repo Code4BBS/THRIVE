@@ -62,7 +62,7 @@ const createProject = catchAsync(async (req, res, next) => {
     {
       tags: { $all: tags },
     },
-    { $push: { notifications: message } }
+    { $push: { notifications: message }, notificationsSeen: false }
   );
 
   res.status(201).json({

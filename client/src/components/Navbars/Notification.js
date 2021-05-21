@@ -7,14 +7,16 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import SearchIcon from "@material-ui/icons/Search";
-import { InputBase } from "@material-ui/core";
+import { InputBase, CardHeader } from "@material-ui/core";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import Badge from "@material-ui/core/Badge";
 import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
+    boxShadow: "0px 0px",
   },
   bullet: {
     display: "inline-block",
@@ -27,6 +29,12 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  badge: {
+    color: "red",
+  },
+  dot: {
+    color: "#fc03a9",
+  },
 });
 
 // const useStyles = makeStyles((theme) => ({
@@ -35,13 +43,15 @@ const useStyles = makeStyles({
 //   },
 // }));
 
-function Notification() {
+function Notification({ user }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([
     "You have no Notifications",
   ]);
-
+  console.log(user);
+  const [status, setNotificationStatus] = useState(user.notificationsSeen);
+  console.log(status);
   const handleClick = (event) => {
     getNotifications();
     setAnchorEl(event.currentTarget);
@@ -53,12 +63,14 @@ function Notification() {
 
   const getNotifications = () => {
     axios
-      .get("/api/v1/user/profile?required=notifications", {
+      .get("/api/v1/user/notifications", {
         withCredentials: true,
       })
       .then((response) => {
-        let userNotifications = response.data.data.user;
+        let userNotifications = response.data.data.notifications;
+        let notificationStatus = response.data.data.status;
         setNotifications(userNotifications);
+        setNotificationStatus(false);
       })
       .catch((err) => {
         console.log(err);
@@ -69,29 +81,38 @@ function Notification() {
   const id = open ? "simple-popover" : undefined;
   const cardContent = (
     <Card className={classes.root}>
+      <CardHeader title="Notifications" />
+
       <CardContent>
-        {notifications.map((message, key) => (
-          <Typography>{message}</Typography>
-        ))}
+        {notifications.reverse().map((message, key) => {
+          return <Typography>{message}</Typography>;
+        })}
       </CardContent>
     </Card>
   );
 
   return (
     <div>
-      <SvgIcon
-        style={{
-          color: "white",
-          width: "25px",
-          height: "30px",
-          marginTop: "8px",
-          marginLeft: "10px",
-          cursor: "pointer",
-        }}
-        onClick={handleClick}
+      <Badge
+        classes={{ dot: classes.dot }}
+        overlap="circle"
+        variant="dot"
+        invisible={!status}
       >
-        <NotificationsIcon />
-      </SvgIcon>
+        <SvgIcon
+          style={{
+            color: "white",
+            width: "25px",
+            height: "30px",
+
+            marginLeft: "10px",
+            cursor: "pointer",
+          }}
+          onClick={handleClick}
+        >
+          <NotificationsIcon />
+        </SvgIcon>
+      </Badge>
       <Popover
         id={id}
         open={open}

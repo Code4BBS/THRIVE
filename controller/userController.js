@@ -8,14 +8,24 @@ exports.aboutMe = catchAsync(async (req, res, next) => {
   if (!req.user) {
     return next(new AppError("This user is not present", 401));
   }
-  let docs = req.user;
-  if (req.query.required == "notifications") {
-    docs = req.user.notifications;
-  }
   res.status(200).json({
     status: "suceess",
     data: {
-      user: docs,
+      user: req.user,
+    },
+  });
+});
+
+exports.getNotifications = catchAsync(async (req, res, next) => {
+  if (!req.user) {
+    return next(new AppError("This user is not present", 401));
+  }
+  req.user.notificationsSeen = true;
+  await req.user.save();
+  res.status(200).json({
+    status: "suceess",
+    data: {
+      notifications: req.user.notifications,
     },
   });
 });
@@ -133,4 +143,14 @@ exports.reportUser = catchAsync(async (req, res, next) => {
       data: updatedUser,
     });
   }
+});
+
+exports.seenNotifications = catchAsync(async (req, res, next) => {
+  const user = await User.findByIdAndUpdate(req.user._id, {
+    notificationsSeen: true,
+  });
+  res.status(200).json({
+    status: "success",
+    notifications: user.notifications,
+  });
 });
