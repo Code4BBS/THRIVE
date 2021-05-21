@@ -8,6 +8,7 @@ const componentStyles = (theme) => ({
       minWidth: "unset!important",
       borderRadius: "50%",
     },
+    marginRight: "30px",
   },
   buttonLabel: {
     fontSize: ".875rem",
