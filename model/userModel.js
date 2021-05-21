@@ -81,6 +81,7 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    notifications: [String],
   },
   {
     toJSON: { virtuals: true },
