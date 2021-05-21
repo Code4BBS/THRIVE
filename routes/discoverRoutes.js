@@ -49,10 +49,4 @@ router.patch(
   userController.seenNotifications
 );
 
-router.get(
-  "/notifications",
-  authController.restrictTo("user", "admin", "superAdmin"),
-  authController.loggedInUser,
-  userController.getNotifications
-);
 module.exports = router;

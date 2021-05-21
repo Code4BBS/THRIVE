@@ -49,7 +49,7 @@ function Notification({ user }) {
   const [notifications, setNotifications] = useState([
     "You have no Notifications",
   ]);
-  console.log(user);
+
   const [status, setNotificationStatus] = useState(user.notificationsSeen);
   console.log(status);
   const handleClick = (event) => {
@@ -70,7 +70,7 @@ function Notification({ user }) {
         let userNotifications = response.data.data.notifications;
         let notificationStatus = response.data.data.status;
         setNotifications(userNotifications);
-        setNotificationStatus(false);
+        setNotificationStatus(true);
       })
       .catch((err) => {
         console.log(err);
@@ -97,7 +97,7 @@ function Notification({ user }) {
         classes={{ dot: classes.dot }}
         overlap="circle"
         variant="dot"
-        invisible={!status}
+        invisible={status}
       >
         <SvgIcon
           style={{

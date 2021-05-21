@@ -41,5 +41,11 @@ router.patch(
   authController.loggedInUser,
   userController.reportUser
 );
+router.get(
+  "/notifications",
+  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.loggedInUser,
+  userController.getNotifications
+);
 
 module.exports = router;
