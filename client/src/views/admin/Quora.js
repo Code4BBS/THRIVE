@@ -12,15 +12,15 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Hidden from "@material-ui/core/Hidden";
 import Tooltip from "@material-ui/core/Tooltip";
-import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
+import Avatar from "@material-ui/core/Avatar";
+import IconButton from "@material-ui/core/IconButton";
 // core components
 import Header from "components/Headers/Header.js";
 // import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import componentStyles from "assets/theme/views/admin/icons.js";
 import Archive from "@material-ui/icons/Archive";
-import CreateIcon from '@material-ui/icons/Create';
+import CreateIcon from "@material-ui/icons/Create";
 // import QuestionCard from './../../components/Cards/QuestionCard';
 
 const useStyles = makeStyles(componentStyles);
@@ -28,7 +28,7 @@ const useStyles = makeStyles(componentStyles);
 const Quora = () => {
   const classes = useStyles();
   const theme = useTheme();
-  
+
   return (
     <>
       <Header />
@@ -52,25 +52,22 @@ const Quora = () => {
                   variant: "h3",
                 }}
                 action={
-                    <Button color="primary" variant="contained">
-                        <Box
-                        component={CreateIcon}
-                        top="0.5px"
-                        position="relative"
-                        />
-                    </Button>
+                  <Button color="primary" variant="contained">
+                    <Box
+                      component={CreateIcon}
+                      top="0.5px"
+                      position="relative"
+                    />
+                  </Button>
                 }
-              >
-              </CardHeader>
+              ></CardHeader>
               <CardContent>
-                <Grid container>
-                    {/* <QuestionCard /> */}
-                </Grid>
+                <Grid container>{/* <QuestionCard /> */}</Grid>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
-    </Container>
+      </Container>
     </>
   );
 };

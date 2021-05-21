@@ -14,7 +14,7 @@ import componentStyles from "assets/theme/components/user-header.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const UserHeader = () => {
+const UserHeader = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
   return (
@@ -49,7 +49,7 @@ const UserHeader = () => {
                 variant="h1"
                 classes={{ root: classes.typographyRootH1 }}
               >
-                Hello Jesse
+                <b style={{ fontWeight: 300 }}>Hello</b> {user.name}
               </Typography>
               <Box
                 component="p"

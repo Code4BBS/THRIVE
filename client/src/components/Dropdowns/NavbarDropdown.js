@@ -19,7 +19,7 @@ import { GoogleLogout } from "react-google-login";
 import axios from "axios";
 
 // core components
-import componentStyles from "assets/theme/components/navbar-dropdown.js";
+import componentStyles from "../../assets/theme/components/navbar-dropdown.js";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -36,6 +36,7 @@ export default function NavbarDropdown({ user, cookies }) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
+
   const logout = () => {
     console.log("hell");
     axios

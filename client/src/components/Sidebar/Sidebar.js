@@ -127,6 +127,7 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
   let logoImage = (
     <img alt={logo.imgAlt} className={classes.logoClasses} src={logo.imgSrc} />
   );
+
   let logoObject =
     logo && logo.innerLink ? (
       <Link to={logo.innerLink} className={classes.logoLinkClasses}>

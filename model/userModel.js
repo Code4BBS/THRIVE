@@ -36,7 +36,6 @@ const userSchema = new mongoose.Schema(
     rollNumber: {
       type: String,
     },
-
     admissionYear: {
       type: Number,
       max: [new Date().getFullYear(), "Invalid year of admission"],

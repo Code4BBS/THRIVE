@@ -151,48 +151,50 @@ const Results = ({ className, customers, tags, ...rest }) => {
       {!filterVisibility ? (
         <Box mt={3}>
           <Card classes={{ root: classes.cardRoot }}>
-            <CardContent style={{ padding: 20 }}>
-              <Grid container spacing={3}>
-                <TableContainer>
-                  <Table className={classes.table} aria-label="simple table">
-                    <TableBody>
-                      <TableRow>
-                        <TableCell
-                          component="th"
-                          scope="row"
-                          className={classes.cellB}
-                        >
-                          Filter students by skills, activities and
-                          participation. &nbsp; &nbsp;
-                          {/* <FilterListIcon color='primary' size='large' cursor='pointer' variant='filled' onClick={displayFilterPane} />
+            <CardContent style={{ padding: 0 }}>
+              <TableContainer>
+                <Table
+                  className={classes.table}
+                  aria-label="simple table"
+                  style={{ margin: 0 }}
+                >
+                  <TableBody>
+                    <TableRow>
+                      <TableCell
+                        component="th"
+                        scope="row"
+                        className={classes.cellB}
+                        style={{ verticalAlign: "middle" }}
+                      >
+                        Filter students by skills, activities and participation
+                        {/* <FilterListIcon color='primary' size='large' cursor='pointer' variant='filled' onClick={displayFilterPane} />
                           <AutorenewIcon cursor='pointer' size='large' variant='filled' onClick={resetSearch} /> */}
-                        </TableCell>
+                      </TableCell>
 
-                        <TableCell align="right" className={classes.cell}>
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={displayFilterPane}
-                            style={{ alignSelf: "right" }}
-                          >
-                            Filter
-                          </Button>
-                          &nbsp;&nbsp;
-                          <Button
-                            variant="contained"
-                            color="primary"
-                            onClick={resetSearch}
-                            disabled={selectedTags === []}
-                            style={{ alignSelf: "right" }}
-                          >
-                            Reset
-                          </Button>
-                        </TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              </Grid>
+                      <TableCell align="right" className={classes.cell}>
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={displayFilterPane}
+                          style={{ alignSelf: "right" }}
+                        >
+                          Filter
+                        </Button>
+                        &nbsp;&nbsp;
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={resetSearch}
+                          disabled={selectedTags === []}
+                          style={{ alignSelf: "right" }}
+                        >
+                          Reset
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
             </CardContent>
           </Card>
         </Box>
@@ -299,6 +301,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
                                 classes={{
                                   input: classes.searchInput,
                                 }}
+                                style={{ letterSpacing: 0 }}
                                 onChange={searchUser}
                               />
                             </Box>
@@ -306,8 +309,9 @@ const Results = ({ className, customers, tags, ...rest }) => {
                         </TableCell>
                       </TableRow>
                       <TableRow>
-                        {headings.map((heading, key) => (
+                        {headings.map((heading, index) => (
                           <TableCell
+                            key={`cell-${index}`}
                             classes={{
                               root:
                                 classes.tableCellRoot +
@@ -355,7 +359,11 @@ const Results = ({ className, customers, tags, ...rest }) => {
                                 >
                                   {getInitials(customer.name)}
                                 </Avatar>
-                                <Typography color="textPrimary" variant="body1">
+                                <Typography
+                                  color="textPrimary"
+                                  variant="body1"
+                                  style={{ letterSpacing: 0 }}
+                                >
                                   {customer.name.toLowerCase()}
                                 </Typography>
                               </Box>
