@@ -25,7 +25,7 @@ const UserHeader = ({ user }) => {
         alignItems="center"
         display="flex"
         className={classes.wrapperBox}
-        minHeight="600px"
+        minHeight="300px"
         position="relative"
       >
         <Box
@@ -58,15 +58,9 @@ const UserHeader = ({ user }) => {
                 lineHeight="1.7"
                 fontSize="1rem"
               >
-                This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
+                This is your profile page. You can see your general public
+                profile and edit it
               </Box>
-              <Button
-                variant="contained"
-                classes={{ root: classes.buttonRoot }}
-              >
-                Edit profile
-              </Button>
             </Grid>
           </Grid>
         </Container>

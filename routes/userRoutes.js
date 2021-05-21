@@ -1,44 +1,44 @@
-const express = require('express');
-const authLogic = require('./../model/businessLogic/authLogic');
-const userController = require('./../controller/userController');
+const express = require("express");
+const authController = require("../controller/authController");
+const userController = require("../controller/userController");
 const router = express.Router();
 
-router.use(authLogic.verifyJwtToken);
+router.use(authController.verifyJwtToken);
 
-router.get('/', userController.getAllUsers);
+router.get("/", userController.getAllUsers);
 
 //Own profile
 router.get(
-  '/profile',
-  authLogic.restrictTo('user', 'admin', 'superAdmin'),
-  authLogic.loggedInUser,
+  "/profile",
+  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.loggedInUser,
   userController.aboutMe
 );
 
 //Other's profile
 router.get(
-  '/other',
-  authLogic.restrictTo('visitor', 'user', 'admin', 'superAdmin'),
+  "/other",
+  authController.restrictTo("visitor", "user", "admin", "superAdmin"),
   userController.getProfile
 );
 
 router.patch(
-  '/profile',
-  authLogic.restrictTo('user', 'admin', 'superAdmin'),
-  authLogic.loggedInUser,
+  "/profile",
+  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.loggedInUser,
   userController.updateProfile
 );
 
 router.get(
-  '/tag',
-  authLogic.restrictTo('visitor', 'user', 'admin', 'superAdmin'),
+  "/tag",
+  authController.restrictTo("visitor", "user", "admin", "superAdmin"),
   userController.getAllTags
 );
 
 router.patch(
-  '/report/:id',
-  authLogic.restrictTo('user', 'admin', 'superAdmin'),
-  authLogic.loggedInUser,
+  "/report/:id",
+  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.loggedInUser,
   userController.reportUser
 );
 
