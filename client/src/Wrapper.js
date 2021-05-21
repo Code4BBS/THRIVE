@@ -9,20 +9,35 @@ import { CookiesProvider, withCookies } from "react-cookie";
 import AdminLayout from "./layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 
+import axios from "axios";
+import { isNonNullChain } from "typescript";
+
 class Wrapper extends Component {
   state = {
     isLoggedIn: false,
     user: null,
-    isLoading: false,
+    isLoading: true,
   };
 
   checkIsLoggedIn = () => {
     const cookies = this.props.cookies.cookies;
     if (cookies.userData) {
-      this.setState({
-        user: cookies.userData ? JSON.parse(cookies.userData) : null,
-        isLoggedIn: cookies.isLoggedIn,
-      });
+      axios
+        .get("/api/v1/user/profile")
+        .then((res) => {
+          console.log(res.data.data.user);
+          this.setState({
+            user: res.data.data.user,
+            isLoggedIn: cookies.isLoggedIn,
+            isLoading: false,
+          });
+        })
+        .catch((err) => {
+          console.log(err);
+          this.setState({ isLoading: false });
+        });
+    } else {
+      this.setState({ isLoading: false });
     }
   };
 
