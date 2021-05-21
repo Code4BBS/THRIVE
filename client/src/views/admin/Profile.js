@@ -27,7 +27,8 @@ import boxShadows from "assets/theme/box-shadow.js";
 
 const useStyles = makeStyles(componentStyles);
 
-function Profile() {
+function Profile({ user }) {
+  console.log(user);
   const classes = useStyles();
   const theme = useTheme();
   return (

@@ -38,7 +38,7 @@ const Admin = ({ user, cookies }) => {
         return (
           <Route
             path={prop.layout + prop.path}
-            component={prop.component}
+            render={(props) => <prop.component user={user} />}
             key={key}
           />
         );
