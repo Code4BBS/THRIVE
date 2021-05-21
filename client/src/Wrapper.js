@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { CookiesProvider, withCookies } from "react-cookie";
-import AdminLayout from "layouts/Admin.js";
+import AdminLayout from "./layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 
 class Wrapper extends Component {

@@ -1,9 +1,11 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
+import "./App.css";
+
+import { BrowserRouter } from "react-router-dom";
 import Wrapper from "./Wrapper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider } from "@material-ui/core/styles";
+
 import { CookiesProvider, withCookies } from "react-cookie";
 import theme from "assets/theme/theme.js";
 

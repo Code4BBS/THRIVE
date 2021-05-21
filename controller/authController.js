@@ -175,6 +175,54 @@ const loginStatus = (req, res, next) => {
   });
 };
 
+const getLoginStatus = catchAsync(async (req, res, next) => {
+  if (req.cookies.jwt) {
+    // 1) verifies the token
+    const decoded = await promisify(jwt.verify)(
+      req.cookies.jwt,
+      process.env.JWT_SECRET
+    );
+
+    // 2) Check if user still exists
+    const currentUser = await firestore
+      .collection("admin")
+      .doc(decoded.id)
+      .get();
+
+    if (!currentUser) {
+      res.status(403).json({
+        status: "fail",
+        message: "User does not exist",
+      });
+    }
+
+    // 3) Check if user recently changed password
+    else if (changedPasswordAfter(decoded.iat, currentUser.passwordChangedAt))
+      res.status(403).json({
+        status: "fail",
+        message: "Password has been changed recently",
+      });
+    // THERE IS A LOGGED IN USER
+    //res.locals.user = currentUser;
+    else {
+      let user = { ...currentUser.data() };
+      user.id = currentUser.id;
+
+      res.status(200).json({
+        status: "success",
+        data: {
+          user,
+        },
+      });
+    }
+  } else {
+    res.status(500).json({
+      status: "fail",
+      message: "No cookies found",
+    });
+  }
+});
+
 module.exports = {
   createToken,
   createSendToken,
@@ -184,4 +232,5 @@ module.exports = {
   googleLogin,
   logout,
   loginStatus,
+  getLoginStatus,
 };

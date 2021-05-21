@@ -18,7 +18,6 @@ import componentStyles from "assets/theme/components/admin-navbar.js";
 const useStyles = makeStyles(componentStyles);
 
 export default function AdminNavbar({ user, cookies, brandText }) {
-  console.log(user);
   const classes = useStyles();
   return (
     <>

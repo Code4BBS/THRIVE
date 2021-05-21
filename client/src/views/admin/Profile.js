@@ -20,7 +20,7 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import School from "@material-ui/icons/School";
 
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import UserHeader from "../../components/Headers/UserHeader.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
@@ -28,12 +28,14 @@ import boxShadows from "assets/theme/box-shadow.js";
 const useStyles = makeStyles(componentStyles);
 
 function Profile({ user }) {
-  console.log(user);
   const classes = useStyles();
   const theme = useTheme();
+
+  console.log(user);
+
   return (
     <>
-      <UserHeader />
+      <UserHeader user={user} />
       {/* Page content */}
       <Container
         maxWidth={false}
@@ -115,6 +117,7 @@ function Profile({ user }) {
                           component={Box}
                           width="100%"
                           marginBottom="1rem!important"
+                          disabled
                         >
                           <Box
                             paddingLeft="0.75rem"
@@ -122,7 +125,7 @@ function Profile({ user }) {
                             component={FilledInput}
                             autoComplete="off"
                             type="text"
-                            defaultValue="lucky.jesse"
+                            defaultValue={user.name}
                           />
                         </FormControl>
                       </FormGroup>
@@ -135,6 +138,7 @@ function Profile({ user }) {
                           component={Box}
                           width="100%"
                           marginBottom="1rem!important"
+                          disabled
                         >
                           <Box
                             paddingLeft="0.75rem"
@@ -142,13 +146,13 @@ function Profile({ user }) {
                             component={FilledInput}
                             autoComplete="off"
                             type="email"
-                            placeholder="jesse@example.com"
+                            defaultValue={user.email}
                           />
                         </FormControl>
                       </FormGroup>
                     </Grid>
                   </Grid>
-                  <Grid container>
+                  {/* <Grid container>
                     <Grid item xs={12} lg={6}>
                       <FormGroup>
                         <FormLabel>First name</FormLabel>
@@ -189,7 +193,7 @@ function Profile({ user }) {
                         </FormControl>
                       </FormGroup>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
                 </div>
                 <Box
                   component={Divider}
@@ -355,9 +359,7 @@ function Profile({ user }) {
                   <Box position="relative">
                     <Box
                       component="img"
-                      src={
-                        require("assets/img/theme/team-4-800x800.jpg").default
-                      }
+                      src={user.image}
                       alt="..."
                       maxWidth="180px"
                       borderRadius="50%"
@@ -477,12 +479,7 @@ function Profile({ user }) {
                   </Grid>
                 </Grid>
                 <Box textAlign="center">
-                  <Typography variant="h3">
-                    Jessica Jones
-                    <Box component="span" fontWeight="300">
-                      , 27
-                    </Box>
-                  </Typography>
+                  <Typography variant="h3">{user.name}</Typography>
                   <Box
                     component={Typography}
                     variant="h5"
