@@ -8,7 +8,7 @@ import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
-import Quora from "views/admin/Quora.js";
+import Quora from "views/admin/Quora/index.js";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
