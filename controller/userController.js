@@ -8,11 +8,14 @@ exports.aboutMe = catchAsync(async (req, res, next) => {
   if (!req.user) {
     return next(new AppError("This user is not present", 401));
   }
-
+  let docs = req.user;
+  if (req.query.required == "notifications") {
+    docs = req.user.notifications;
+  }
   res.status(200).json({
     status: "suceess",
     data: {
-      user: req.user,
+      user: docs,
     },
   });
 });
