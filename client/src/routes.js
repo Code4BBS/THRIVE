@@ -6,6 +6,7 @@ import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
+import Projects from "views/admin/Projects.js";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -31,6 +32,14 @@ var routes = [
     icon: Tv,
     iconColor: "Primary",
     component: Dashboard,
+    layout: "/admin",
+  },
+  {
+    path: "/projects",
+    name: "Dashboard",
+    icon: Tv,
+    iconColor: "Primary",
+    component: Projects,
     layout: "/admin",
   },
   {
@@ -88,20 +97,17 @@ var routes = [
     title: "Documentation",
   },
   {
-    href:
-      "https://www.creative-tim.com/learning-lab/material-ui/overview/argon-dashboard?ref=admui-admin-sidebar",
+    href: "https://www.creative-tim.com/learning-lab/material-ui/overview/argon-dashboard?ref=admui-admin-sidebar",
     name: "Getting started",
     icon: FlashOn,
   },
   {
-    href:
-      "https://www.creative-tim.com/learning-lab/material-ui/colors/argon-dashboard?ref=admui-admin-sidebar",
+    href: "https://www.creative-tim.com/learning-lab/material-ui/colors/argon-dashboard?ref=admui-admin-sidebar",
     name: "Foundation",
     icon: Palette,
   },
   {
-    href:
-      "https://www.creative-tim.com/learning-lab/material-ui/alerts/argon-dashboard?ref=admui-admin-sidebar",
+    href: "https://www.creative-tim.com/learning-lab/material-ui/alerts/argon-dashboard?ref=admui-admin-sidebar",
     name: "Components",
     icon: Dns,
   },
