@@ -1,11 +1,16 @@
 const Project = require("../model/projectModel");
-
+const Tag = require("./../model/tagModel");
+const User = require("./../model/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const { findByIdAndDelete } = require("../model/projectModel");
 
 const getAllProjects = catchAsync(async (req, res, next) => {
-  const projects = await Project.find();
+  const projects = await Project.find().populate({
+    path: "tags",
+    model: "Tag",
+    select: "name ",
+  });
 
   res.status(200).json({
     status: "success",
@@ -17,7 +22,11 @@ const getAllProjects = catchAsync(async (req, res, next) => {
 });
 
 const getProject = catchAsync(async (req, res, next) => {
-  const project = await Project.findById(req.params.id);
+  const project = await Project.findById(req.params.id).populate({
+    path: "tags",
+    model: "Tag",
+    select: "name ",
+  });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -30,12 +39,10 @@ const getProject = catchAsync(async (req, res, next) => {
 });
 
 const createProject = catchAsync(async (req, res, next) => {
-  // const owner = req.user;
-  // if (!owner) return next(new AppError("No user Found",500));
+  const owner = req.user.id;
+  if (!owner) return next(new AppError("No user Found", 500));
 
-  const { title, description, tagsList, preRequsite, communication } = req.body;
-
-  const tags = tagsList.split(",");
+  const { title, description, tags, preRequsite, communication } = req.body;
 
   if (!title || !description || !communication)
     return next(new AppError("All Required Fields not there", 400));
@@ -46,13 +53,23 @@ const createProject = catchAsync(async (req, res, next) => {
     tags,
     preRequsite,
     communication,
+    owner,
     // owner,
   });
+  const message = `Project ${title} requirements are matching your profile`;
+  console.log(message);
+  const updatedUsers = await User.updateMany(
+    {
+      tags: { $all: tags },
+    },
+    { $push: { notifications: message } }
+  );
 
   res.status(201).json({
     status: "success",
     message: "Project created successfully",
     project: newProject,
+    updatedUsers,
   });
 });
 
@@ -60,7 +77,6 @@ const updateProject = catchAsync(async (req, res, next) => {
   const updateBody = {
     title: req.body.title,
     description: req.body.description,
-    tags: req.body.tagsList.split(","),
     preRequsite: req.body.preRequsite,
     communication: req.body.communication,
     lastUpdatedAt: new Date(),
@@ -78,6 +94,7 @@ const updateProject = catchAsync(async (req, res, next) => {
     message: "Project updated successfully",
     project: project,
   });
+  console.log("reached");
 });
 
 const deleteProject = catchAsync(async (req, res, next) => {

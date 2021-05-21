@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const Tag = require("./tagModel");
 
 const projectSchema = new mongoose.Schema(
   {
@@ -11,7 +12,12 @@ const projectSchema = new mongoose.Schema(
       type: String,
       required: [true, "Project must have a description"],
     },
-    tags: [String],
+    tags: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Tag",
+      },
+    ],
     createdAt: {
       type: Date,
       default: Date.now(),

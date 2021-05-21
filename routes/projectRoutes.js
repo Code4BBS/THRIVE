@@ -1,7 +1,10 @@
 const express = require("express");
 const projectController = require("../controller/projectController");
+const authController = require("../controller/authController");
 
 const router = express.Router();
+
+router.use(authController.verifyJwtToken, authController.loggedInUser);
 
 router.get("/", projectController.getAllProjects);
 
