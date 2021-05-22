@@ -28,6 +28,12 @@ export default function AlertDialog(props) {
         <DialogContentText id="alert-dialog-slide-description">
           <i>{props.description}</i>
         </DialogContentText>
+
+        <b>Pre Requisite: &nbsp;</b>
+        <br />
+        {props.preRequisite ? props.preRequisite : "No Pre Requisite"}
+        <br />
+        <br />
         <b>Contact: &nbsp;</b>
         <br />
         {props.communication}

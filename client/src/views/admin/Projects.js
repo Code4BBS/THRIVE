@@ -31,77 +31,10 @@ import Modal from "components/Custom/Modals/Modal.js";
 // core components
 import Header from "components/Headers/Header.js";
 
+import axios from "axios";
 import componentStyles from "assets/theme/views/admin/tables.js";
 
 const useStyles = makeStyles(componentStyles);
-
-const projects = [
-  {
-    title: "College Management Portal",
-    description:
-      "oing this project and I want help! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem lorem ipsum lorem",
-    tags: ["Node.js", "React.js", "Socket.io"],
-    owner: {
-      name: "Shrirang Deshmukh",
-      _id: "122455",
-      img: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    timeDuration: "3 Months from June 2021",
-    communication: "dsp13@iitbbs.ac.in",
-  },
-  {
-    title: "ARP",
-    description:
-      "oing this project and I want help! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem lorem ipsum lorem",
-    tags: ["Node.js", "Firebase"],
-    owner: {
-      name: "Kartikeya",
-      _id: "122455",
-      img: "https://lh3.googleusercontent.com/a/AATXAJze2-u0hJtkXOq5HURzbwPLhNzUcpuaRG8cocpC=s96-c",
-    },
-    timeDuration: "1 Month from May 2021",
-    communication: "dsp13@iitbbs.ac.in",
-  },
-  {
-    title: "Equipment Portal",
-    description:
-      "oing this project and I want help! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem lorem ipsum lorem",
-    tags: ["Flutter"],
-    owner: {
-      name: "Sai Krishna",
-      _id: "122455",
-      img: "https://lh3.googleusercontent.com/a/AATXAJxI8REMO2iCBEnNf9oeNmZvQjz0_ULKyRiFn6qB=s96-c",
-    },
-    timeDuration: "3 Months from Apr 2021",
-    communication: "9511725963",
-  },
-  {
-    title: "Electronics Research",
-    description:
-      "oing this project and I want help! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem lorem ipsum lorem",
-    tags: ["Digital Electronics", "VLSI"],
-    owner: {
-      name: "Some Proffessor",
-      _id: "122455",
-      img: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    timeDuration: "Not Specific",
-    communication: "https://linkedin.com/in/shrirang-deshmukh",
-  },
-  {
-    title: "Machine Learning Project",
-    description:
-      "oing this project and I want help! lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem lorem ipsum lorem",
-    tags: ["Python", "MATLAB"],
-    owner: {
-      name: "Navaneeth",
-      _id: "122455",
-      img: "https://lh3.googleusercontent.com/a/AATXAJylBIZ_y8oCMOWoIIkNVLEdXQlnXozWPM2NOrHw=s96-c",
-    },
-    timeDuration: "2 months from May 2021",
-    communication: "go to this site. Contact some one else",
-  },
-];
 
 const headers = ["Project", "Owner", "Tags", "Time Duration"];
 
@@ -111,10 +44,26 @@ const Tables = () => {
 
   const [modalDetails, setModalDetails] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [projects, setProjects] = React.useState([]);
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  const getProjects = () => {
+    axios.get("/api/v1/project").then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        if (response.data.data.res > 0) {
+          setProjects(response.data.data.projects);
+        }
+      }
+    });
+  };
+
+  React.useEffect(() => {
+    getProjects();
+  }, []);
 
   let modal = null;
   if (modalDetails !== null && modalDetails !== undefined) {
@@ -189,6 +138,7 @@ const Tables = () => {
                           title: project.title,
                           description: project.description,
                           communication: project.communication,
+                          preRequisite: project.preRequisite,
                         });
 
                         setOpen(true);
@@ -222,7 +172,7 @@ const Tables = () => {
                               width: "2rem",
                             }}
                             alt="..."
-                            src={project.owner.img}
+                            src={project.owner.image}
                           />
                           <Box display="flex" alignItems="flex-start">
                             <Box fontSize=".875rem" component="span">
@@ -245,15 +195,16 @@ const Tables = () => {
                               color="primary"
                               size="small"
                               style={{ marginRight: "0.5rem" }}
+                              // key={tag._id}
                             >
-                              {tag}
+                              {tag.name}
                             </Button>
                           );
                         })}
                       </TableCell>
 
                       <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {project.timeDuration}
+                        {project.duration}
                       </TableCell>
                     </TableRow>
                   );
