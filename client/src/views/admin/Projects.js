@@ -108,12 +108,10 @@ const Tables = ({ user }) => {
     axios.put(`/api/v1/project/blacklist/${project._id}`).then((response) => {
       // console.log(response);
       if (response.status === 200) {
+        window.alert("Project blacklisted successfully");
         const updatedProjects = [...projects];
-        updatedProjects.slice(index, 1);
+        updatedProjects.splice(index, 1);
         setProjects(updatedProjects);
-
-        let con = window.confirm("Project blacklisted successfully");
-        if (con) window.location.reload();
       }
     });
   };
