@@ -99,19 +99,21 @@ const Tables = ({ user }) => {
         title={modalDetails.title}
         description={modalDetails.description}
         communication={modalDetails.communication}
+        preRequisite={modalDetails.preRequisite}
       />
     );
   }
 
   const blacklistProject = (project, index) => {
     axios.put(`/api/v1/project/blacklist/${project._id}`).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.status === 200) {
         const updatedProjects = [...projects];
         updatedProjects.slice(index, 1);
-        console.log(updatedProjects);
         setProjects(updatedProjects);
-        window.alert("Project blacklisted successfully");
+
+        let con = window.confirm("Project blacklisted successfully");
+        if (con) window.location.reload();
       }
     });
   };
@@ -293,7 +295,6 @@ const Tables = ({ user }) => {
             </Box>
           </TableContainer>
         </Box>
-
         {modal}
       </Container>
     </>
