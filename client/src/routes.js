@@ -23,6 +23,7 @@ import Tv from "@material-ui/icons/Tv";
 import PeopleIcon from "@material-ui/icons/People";
 import VpnKey from "@material-ui/icons/VpnKey";
 import ContactSupportTwoToneIcon from "@material-ui/icons/ContactSupportTwoTone";
+import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 
 var routes = [
   // {
@@ -41,9 +42,9 @@ var routes = [
   },
   {
     path: "/projects",
-    name: "Dashboard",
-    icon: Tv,
-    iconColor: "Primary",
+    name: "Projects",
+    icon: EmojiObjectsIcon,
+    iconColor: "PrimaryLight",
     component: Projects,
     layout: "/admin",
   },
