@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Component } from "react";
 // react component that copies the given text inside your clipboard
 import { CopyToClipboard } from "react-copy-to-clipboard";
 // @material-ui/core components
@@ -21,25 +21,36 @@ import Button from "@material-ui/core/Button";
 import componentStyles from "assets/theme/views/admin/icons.js";
 import Archive from "@material-ui/icons/Archive";
 import CreateIcon from "@material-ui/icons/Create";
-// import QuestionCard from './../../components/Cards/QuestionCard';
+import QuestionCard from './../../../components/Cards/QuestionCard';
+import { withStyles } from "@material-ui/core";
 
-const useStyles = makeStyles(componentStyles);
-
-const Quora = () => {
-  const classes = useStyles();
-  const theme = useTheme();
-
-  return (
-    <>
-      <Header />
-      {/* Page content */}
-      <Container
-        maxWidth={false}
-        component={Box}
-        marginTop="-6rem"
-        classes={{ root: classes.containerRoot }}
-      >
-        {/* Table */}
+class Quora extends Component {
+  state = {
+    creating : false,
+    question : {
+      body : "",
+      isAnanymous : false
+    }
+  }
+  render() {
+    const { classes } = this.props;
+    let ques = null;
+    if(this.props.QuoraQuestions.length != 0) {
+      ques = this.props.QuoraQuestions.map((el,idx) => {
+        // let user = "Ananymous";
+        let user = el.isAnanymous == 0 ? el.user.name : "Ananymous"
+        return (
+          <Grid item xs = {12} sm = {6} md = {4} component={Box}
+          paddingLeft="15px"
+          paddingRight="15px">
+          <QuestionCard name = {user} isAnanymous = {el.isAnanymous} upvotes = {el.upvotes} downvotes = {el.downvotes} 
+            question = {el.questionBody} answers = {el.answers} time = {el.createdAt} key = {idx}/>
+          </Grid>
+        )
+      } )
+    }
+    return(
+      <>
         <Grid container component={Box} marginBottom="39px">
           <Grid item xs={12}>
             <Card classes={{ root: classes.cardRoot }}>
@@ -52,24 +63,27 @@ const Quora = () => {
                   variant: "h3",
                 }}
                 action={
-                  <Button color="primary" variant="contained">
-                    <Box
-                      component={CreateIcon}
-                      top="0.5px"
-                      position="relative"
-                    />
-                  </Button>
+                    <IconButton color="primary"  aria-label="write a question" onClick={() => { alert('clicked') }} 
+                      className={classes.margin}>
+                      <CreateIcon fontSize="large"/>
+                    </IconButton>
                 }
-              ></CardHeader>
+              >
+              
+              </CardHeader>
+             
               <CardContent>
-                <Grid container>{/* <QuestionCard /> */}</Grid>
+                <Grid container >
+                    {ques}
+                </Grid>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
-      </Container>
     </>
-  );
-};
+    )
+    }
+}
 
-export default Quora;
+
+export default withStyles(componentStyles)(Quora);

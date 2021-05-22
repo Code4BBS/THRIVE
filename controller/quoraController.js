@@ -30,7 +30,11 @@ exports.createQuestion = catchAsync(async (req,res,next) => {
 
 exports.getAllQuestions = catchAsync(async (req,res,next) => {
     let questions = {};
-    questions = await Question.find().sort({createdAt : -1});
+    questions = await Question.find().sort({createdAt : -1}).populate({
+        path : "user",
+        model : "User",
+        select : "name"
+    });
     res.status(200).json({
         status : "success",
         questions
