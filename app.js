@@ -13,7 +13,7 @@ const globalErrorHandler = require("./controller/errorController");
 //routers
 const quoraRouter = require("./routes/quoraRoutes");
 const authRouter = require("./routes/authRoutes.js");
-const userRouter = require("./routes/discoverRoutes.js");
+const userRouter = require("./routes/userRoutes.js");
 const searchRouter = require("./routes/searchRoutes.js");
 const projectRouter = require("./routes/projectRoutes");
 

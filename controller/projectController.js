@@ -61,14 +61,14 @@ const createProject = catchAsync(async (req, res, next) => {
     owner,
     duration,
   });
-  // const message = `Project ${title} requirements are matching your profile`;
-  // console.log(message);
-  // const updatedUsers = await User.updateMany(
-  //   {
-  //     tags: { $all: tags },
-  //   },
-  //   { $push: { notifications: message } }
-  // );
+  const message = `Project ${title} requirements are matching your profile`;
+  console.log(message);
+  const updatedUsers = await User.updateMany(
+    {
+      tags: { $all: tags },
+    },
+    { $push: { notifications: message }, notificationsSeen: false }
+  );
 
   res.status(201).json({
     status: "success",

@@ -42,4 +42,11 @@ router.patch(
   userController.reportUser
 );
 
+router.patch(
+  "/notification/seen",
+  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.loggedInUser,
+  userController.seenNotifications
+);
+
 module.exports = router;
