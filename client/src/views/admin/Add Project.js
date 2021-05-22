@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -61,12 +60,14 @@ function Profile({ user }) {
   const postProject = (event) => {
     event.preventDefault();
     axios.post("/api/v1/project", { ...values }).then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.status === 201) {
-        window.alert("Project Added Successfully");
-        // navigate('/admin/projects');
+        let confirm = window.confirm("Project Added Successfully");
+        if (confirm) {
+          window.location.href = "/admin/projects";
+        }
       } else {
-        window.alert("Failed to Add Complaint! Try Again after some time");
+        window.alert("Failed to Add Project! Try Again after some time");
       }
     });
   };

@@ -10,6 +10,7 @@ import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
 import Quora from "views/admin/Quora.js";
 import Projects from "views/admin/Projects.js";
+import AddProject from "views/admin/Add Project.js";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -24,6 +25,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import VpnKey from "@material-ui/icons/VpnKey";
 import ContactSupportTwoToneIcon from "@material-ui/icons/ContactSupportTwoTone";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
+import CreateIcon from "@material-ui/icons/Create";
 
 var routes = [
   // {
@@ -94,6 +96,14 @@ var routes = [
     icon: ContactSupportTwoToneIcon,
     iconColor: "Warning",
     component: Quora,
+    layout: "/admin",
+  },
+  {
+    path: "/addProject",
+    name: "Add Project",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: AddProject,
     layout: "/admin",
   },
   // {
