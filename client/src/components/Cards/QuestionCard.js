@@ -21,7 +21,6 @@ const useStyles = makeStyles({
     marginBottom : 10,
     marginLeft : 10,
     marginRight : 10,
-    // width : 345
   },
 });
 
@@ -33,7 +32,6 @@ const ImgMediaCard = (props) => {
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {/* Question from {props.name} */}
             {!props.isAnanymous ? props.name : "An Anonymous user"} Asked
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -52,16 +50,6 @@ const ImgMediaCard = (props) => {
       <ThumbDownOutlinedIcon/>
       <Typography>{props.answers.length}</Typography>
       <QuestionAnswerOutlinedIcon/>
-        
-        
-        {/* <Divider orientation="vertical" flexItem />
-        
-        <Divider orientation="vertical" flexItem /> */}
-        
-        {/* <Divider orientation="vertical" flexItem /> */}
-        {/* <Button size="medium" color="primary">
-          <VisibilityOutlinedIcon/>
-        </Button> */}
       </CardActions>
     </Card>
   );

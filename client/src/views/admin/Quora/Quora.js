@@ -86,54 +86,5 @@ class Quora extends Component {
     )
   }
 }
-// const useStyles = makeStyles(componentStyles);
-
-// const Quora = (QuoraQuestions) => {
-//   const classes = useStyles();
-//   const theme = useTheme();
-//   console.log(QuoraQuestions)
-//   return (
-//     <>
-//         <Grid container component={Box} marginBottom="39px">
-//           <Grid item xs={12}>
-//             <Card classes={{ root: classes.cardRoot }}>
-//               <CardHeader
-//                 className={classes.cardHeader}
-//                 title="Recent Questions"
-//                 titleTypographyProps={{
-//                   component: Box,
-//                   marginBottom: "0!important",
-//                   variant: "h3",
-//                 }}
-//                 action={
-//                     <Button color="primary" variant="contained">
-//                         <Box
-//                         component={CreateIcon}
-//                         top="0.5px"
-//                         position="relative"
-//                         />
-//                     </Button>
-//                 }
-//               >
-//               </CardHeader>
-             
-//               <CardContent>
-//                 <Grid container style = { {display : "flex", justifyContent : "space-between"} }>
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                     <QuestionCard />
-//                 </Grid>
-//               </CardContent>
-//             </Card>
-//           </Grid>
-//         </Grid>
-//     </>
-//   );
-// };
 
 export default withStyles(componentStyles)(Quora);
