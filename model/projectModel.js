@@ -22,14 +22,15 @@ const projectSchema = new mongoose.Schema(
       type: Date,
       default: Date.now(),
     },
-    preRequsite: String,
     lastUpdatedAt: Date,
     owner: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
     },
     blacklisted: { type: Boolean, default: false },
+    preRequsite: { type: String },
     communication: { type: String },
+    duration: { type: String },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
