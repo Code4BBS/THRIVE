@@ -11,8 +11,8 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
 // import LinearProgress from "@material-ui/core/LinearProgress";
-// import Menu from "@material-ui/core/Menu";
-// import MenuItem from "@material-ui/core/MenuItem";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -24,7 +24,7 @@ import TableRow from "@material-ui/core/TableRow";
 // import AvatarGroup from "@material-ui/lab/AvatarGroup";
 // import Pagination from "@material-ui/lab/Pagination";
 // @material-ui/icons components
-// import MoreVert from "@material-ui/icons/MoreVert";
+import MoreVert from "@material-ui/icons/MoreVert";
 
 import Modal from "components/Custom/Modals/Modal.js";
 
@@ -36,19 +36,44 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const headers = ["Project", "Owner", "Tags", "Time Duration"];
-
-const Tables = () => {
+const Tables = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
 
   const [modalDetails, setModalDetails] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [projects, setProjects] = React.useState([]);
+  const [anchorId, setAnchorId] = React.useState(null);
+  const [currentAnchor, setCurrentAnchor] = React.useState(null);
 
-  const handleClose = () => {
+  const handleModalOpen = (project) => {
+    setModalDetails({
+      title: project.title,
+      description: project.description,
+      communication: project.communication,
+      preRequisite: project.preRequisite,
+    });
+    setOpen(true);
+  };
+
+  const handleModalClose = () => {
     setOpen(false);
   };
+
+  const handleMenuClick = (event, index) => {
+    setCurrentAnchor(event.currentTarget);
+    setAnchorId(index);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorId(null);
+  };
+
+  const headers = ["Project", "Owner", "Tags", "Duration", "More Details"];
+
+  if (user && user.role === "admin") {
+    headers.push("");
+  }
 
   const getProjects = () => {
     axios.get("/api/v1/project").then((response) => {
@@ -70,13 +95,26 @@ const Tables = () => {
     modal = (
       <Modal
         open={open}
-        handleClose={handleClose}
+        handleClose={handleModalClose}
         title={modalDetails.title}
         description={modalDetails.description}
         communication={modalDetails.communication}
       />
     );
   }
+
+  const blacklistProject = (project, index) => {
+    axios.put(`/api/v1/project/blacklist/${project._id}`).then((response) => {
+      console.log(response);
+      if (response.status === 200) {
+        const updatedProjects = [...projects];
+        updatedProjects.slice(index, 1);
+        console.log(updatedProjects);
+        setProjects(updatedProjects);
+        window.alert("Project blacklisted successfully");
+      }
+    });
+  };
 
   return (
     <>
@@ -130,20 +168,7 @@ const Tables = () => {
               <TableBody>
                 {projects.map((project, index) => {
                   return (
-                    <TableRow
-                      key={index}
-                      onClick={() => {
-                        console.log("Triggered project: " + project.title);
-                        setModalDetails({
-                          title: project.title,
-                          description: project.description,
-                          communication: project.communication,
-                          preRequisite: project.preRequisite,
-                        });
-
-                        setOpen(true);
-                      }}
-                    >
+                    <TableRow key={index}>
                       <TableCell
                         classes={{
                           root:
@@ -178,7 +203,7 @@ const Tables = () => {
                             <Box fontSize=".875rem" component="span">
                               <a
                                 href={`/admin/${project.owner._id}`}
-                                styles={{ textDecoration: "none" }}
+                                style={{ textDecoration: "none" }}
                               >
                                 {project.owner.name}
                               </a>
@@ -204,8 +229,63 @@ const Tables = () => {
                       </TableCell>
 
                       <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {project.duration}
+                        {project.duration ? project.duration : "Not Specified"}
                       </TableCell>
+
+                      <TableCell classes={{ root: classes.tableCellRoot }}>
+                        <Button
+                          variant="contained"
+                          size="small"
+                          style={{ marginRight: "0.5rem" }}
+                          onClick={() => handleModalOpen(project)}
+                        >
+                          Click Here
+                        </Button>
+                      </TableCell>
+
+                      {user && user.role === "admin" ? (
+                        <TableCell
+                          classes={{ root: classes.tableCellRoot }}
+                          align="right"
+                        >
+                          <Box
+                            aria-controls={`simple-menu-${index}`}
+                            aria-haspopup="true"
+                            onClick={(e) => handleMenuClick(e, index)}
+                            size="small"
+                            component={Button}
+                            width="2rem!important"
+                            height="2rem!important"
+                            minWidth="2rem!important"
+                            minHeight="2rem!important"
+                          >
+                            <Box
+                              component={MoreVert}
+                              width="1.25rem!important"
+                              height="1.25rem!important"
+                              position="relative"
+                              top="2px"
+                              color={theme.palette.gray[500]}
+                            />
+                          </Box>
+                          <Menu
+                            id={`simple-menu-${index}`}
+                            anchorEl={currentAnchor}
+                            keepMounted
+                            open={anchorId === index}
+                            onClose={handleMenuClose}
+                          >
+                            <MenuItem
+                              onClick={() => {
+                                blacklistProject(project, index);
+                                handleMenuClose();
+                              }}
+                            >
+                              Blacklist Project
+                            </MenuItem>
+                          </Menu>
+                        </TableCell>
+                      ) : null}
                     </TableRow>
                   );
                 })}
