@@ -34,6 +34,7 @@ const useStyles = makeStyles({
   },
   dot: {
     color: "#fc03a9",
+    backgroundColor: "#fc03a9",
   },
 });
 
