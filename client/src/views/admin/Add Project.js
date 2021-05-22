@@ -63,7 +63,9 @@ function Profile({ user }) {
 
   const postProject = (event) => {
     event.preventDefault();
-    axios.post("/api/v1/project", { ...values }).then((response) => {
+    let tags = selectedTags;
+
+    axios.post("/api/v1/project", { ...values, tags }).then((response) => {
       // console.log(response);
       if (response.status === 201) {
         let confirm = window.confirm("Project Added Successfully");
@@ -370,7 +372,7 @@ function Profile({ user }) {
                                   style={{ display: "inline", margin: "3px" }}
                                 >
                                   <Chip
-                                    variant="outlined"
+                                    variant="default"
                                     size="small"
                                     label={tag.name}
                                     color="primary"

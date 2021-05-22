@@ -97,6 +97,7 @@ const TagList = ({ tags, hide, getTags, tagsSelected }) => {
                         tags={group.tags}
                         addToSelected={addToSelected}
                         removeFromSelected={removeFromSelected}
+                        tagsSelected={tagsSelected}
                       />
                     );
                   })}
@@ -108,7 +109,7 @@ const TagList = ({ tags, hide, getTags, tagsSelected }) => {
                         style={{ alignSelf: "left" }}
                         onClick={sendSelectedTags}
                       >
-                        Search
+                        Selected
                       </Button>
                       &nbsp; &nbsp;
                       <Button
