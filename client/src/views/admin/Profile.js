@@ -747,7 +747,7 @@ function Profile({ user, getUserAgain }) {
                 classes={{ root: classes.ptMd4 }}
                 paddingTop="0!important"
               >
-                <Grid container>
+                {/* <Grid container>
                   <Grid item xs={12}>
                     <Box
                       padding="1rem 0"
@@ -822,8 +822,8 @@ function Profile({ user, getUserAgain }) {
                       </Box>
                     </Box>
                   </Grid>
-                </Grid>
-                <Box textAlign="center">
+                </Grid> */}
+                <Box textAlign="center" style={{ marginTop: "75px" }}>
                   <Typography variant="h3">{user.name}</Typography>
                   <Box
                     component={Typography}

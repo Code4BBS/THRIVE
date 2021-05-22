@@ -1,22 +1,27 @@
+import "./Notification.css";
+
 import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
-import SearchIcon from "@material-ui/icons/Search";
-import { InputBase, CardHeader } from "@material-ui/core";
-import SvgIcon from "@material-ui/core/SvgIcon";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import { CardHeader, Avatar } from "@material-ui/core";
 import Badge from "@material-ui/core/Badge";
 import axios from "axios";
 
+import SvgIcon from "@material-ui/core/SvgIcon";
+import NotificationsIcon from "@material-ui/icons/Notifications";
+import AssignmentIcon from "@material-ui/icons/Assignment";
+
 const useStyles = makeStyles({
   root: {
-    minWidth: 275,
+    width: "min(360px, 90vw)",
     boxShadow: "0px 0px",
+    padding: 0,
+    margin: 0,
+    cursor: "default",
   },
   bullet: {
     display: "inline-block",
@@ -36,6 +41,26 @@ const useStyles = makeStyles({
     color: "#fc03a9",
     backgroundColor: "#fc03a9",
   },
+  popover: {
+    padding: 0,
+  },
+  tile: {
+    transition: "0.3s ease-in-out",
+    padding: "4px 10px",
+    borderTop: "1px solid rgb(0,0,0,0.2)",
+    display: "flex",
+    "&:hover": {
+      backgroundColor: "rgb(65, 153, 242)",
+      color: "rgb(255,255,255)",
+      boxShadow: "0px 3px 5px rgb(0,0,0,0.4)",
+    },
+  },
+  head: {
+    fontWeight: 600,
+  },
+  desc: {
+    fontSize: "14px",
+  },
 });
 
 // const useStyles = makeStyles((theme) => ({
@@ -52,7 +77,7 @@ function Notification({ user }) {
   ]);
 
   const [status, setNotificationStatus] = useState(user.notificationsSeen);
-  console.log(status);
+  // console.log(status);
   const handleClick = (event) => {
     getNotifications();
     setAnchorEl(event.currentTarget);
@@ -82,11 +107,33 @@ function Notification({ user }) {
   const id = open ? "simple-popover" : undefined;
   const cardContent = (
     <Card className={classes.root}>
-      <CardHeader title="Notifications" />
-
-      <CardContent>
+      <CardHeader
+        title="NOTIFICATIONS"
+        style={{ padding: "10px 0px 0px 10px", margin: 0 }}
+      />
+      <CardContent style={{ padding: 0, margin: 0 }}>
         {notifications.reverse().map((message, key) => {
-          return <Typography>{message}</Typography>;
+          return (
+            <div className={classes.tile}>
+              <div
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                  margin: "0px 10px 0px 3px",
+                }}
+              >
+                <AssignmentIcon style={{ width: 30, height: 30 }} />
+              </div>
+              <div>
+                <Typography className={classes.head}>
+                  {message.split("requirements are")[0]}
+                </Typography>
+                <Typography className={classes.desc}>
+                  {message.split("requirements are")[1]}
+                </Typography>
+              </div>
+            </div>
+          );
         })}
       </CardContent>
     </Card>
@@ -123,6 +170,7 @@ function Notification({ user }) {
           vertical: "bottom",
           horizontal: "center",
         }}
+        className={classes.popover}
         transformOrigin={{
           vertical: "top",
           horizontal: "center",
