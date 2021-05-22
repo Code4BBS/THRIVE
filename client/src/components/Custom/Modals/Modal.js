@@ -8,58 +8,11 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 // import DialogTitle from "@material-ui/core/DialogTitle";
 import Slide from "@material-ui/core/Slide";
 
-import LinkedInIcon from "@material-ui/icons/LinkedIn";
-import WhatsAppIcon from "@material-ui/icons/WhatsApp";
-// import EmailIcon from '@material-ui/icons/Email';
-
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AlertDialog(props) {
-  let communication = null;
-
-  if (props.communication.other) {
-    communication = props.communication.other;
-  } else if (props.communication.whatsapp) {
-    communication = (
-      <span>
-        <WhatsAppIcon
-          style={{
-            marginRight: "0.5rem",
-            height: "1.5rem",
-            width: "1.5rem",
-          }}
-        />
-        <a
-          href={`https://wa.me/${props.communication.whatsapp}/?text=urlencodedtext`}
-          style={{ textDecoration: "none" }}
-        >
-          {props.communication.whatsapp}
-        </a>
-      </span>
-    );
-  } else if (props.communication.linkedIn) {
-    communication = (
-      <span>
-        <LinkedInIcon
-          style={{
-            marginRight: "0.5rem",
-            height: "1.5rem",
-            width: "1.5rem",
-            marginTop: "0.5rem",
-          }}
-        />
-        <a
-          href={props.communication.linkedIn}
-          style={{ textDecoration: "none" }}
-        >
-          {props.communication.linkedIn}
-        </a>
-      </span>
-    );
-  }
-
   return (
     <Dialog
       open={props.open}
@@ -77,7 +30,7 @@ export default function AlertDialog(props) {
         </DialogContentText>
         <b>Contact: &nbsp;</b>
         <br />
-        {communication}
+        {props.communication}
       </DialogContent>
 
       <DialogActions>

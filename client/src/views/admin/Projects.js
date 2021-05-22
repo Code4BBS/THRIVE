@@ -47,12 +47,7 @@ const projects = [
       img: "https://avatars.githubusercontent.com/u/64681029?v=4",
     },
     timeDuration: "3 Months from June 2021",
-    communication: {
-      email: "dsp13@iitbbs.ac.in",
-      linkedIn: "https://linkedin.com/in/shrirang-deshmukh",
-      // whatsapp: "9511725963",
-      // other: "go to this site. Contact some one else",
-    },
+    communication: "dsp13@iitbbs.ac.in",
   },
   {
     title: "ARP",
@@ -65,12 +60,7 @@ const projects = [
       img: "https://lh3.googleusercontent.com/a/AATXAJze2-u0hJtkXOq5HURzbwPLhNzUcpuaRG8cocpC=s96-c",
     },
     timeDuration: "1 Month from May 2021",
-    communication: {
-      email: "dsp13@iitbbs.ac.in",
-      linkedIn: "https://linkedin.com/in/shrirang-deshmukh",
-      whatsapp: "9511725963",
-      other: "Go to this site. Contact some one else",
-    },
+    communication: "dsp13@iitbbs.ac.in",
   },
   {
     title: "Equipment Portal",
@@ -83,12 +73,7 @@ const projects = [
       img: "https://lh3.googleusercontent.com/a/AATXAJxI8REMO2iCBEnNf9oeNmZvQjz0_ULKyRiFn6qB=s96-c",
     },
     timeDuration: "3 Months from Apr 2021",
-    communication: {
-      email: "dsp13@iitbbs.ac.in",
-      linkedIn: "https://linkedin.com/in/shrirang-deshmukh",
-      whatsapp: "9511725963",
-      other: "go to this site. Contact some one else",
-    },
+    communication: "9511725963",
   },
   {
     title: "Electronics Research",
@@ -101,12 +86,7 @@ const projects = [
       img: "https://avatars.githubusercontent.com/u/64681029?v=4",
     },
     timeDuration: "Not Specific",
-    communication: {
-      email: "dsp13@iitbbs.ac.in",
-      linkedIn: "https://linkedin.com/in/shrirang-deshmukh",
-      whatsapp: "9511725963",
-      other: "go to this site. Contact some one else",
-    },
+    communication: "https://linkedin.com/in/shrirang-deshmukh",
   },
   {
     title: "Machine Learning Project",
@@ -119,12 +99,7 @@ const projects = [
       img: "https://lh3.googleusercontent.com/a/AATXAJylBIZ_y8oCMOWoIIkNVLEdXQlnXozWPM2NOrHw=s96-c",
     },
     timeDuration: "2 months from May 2021",
-    communication: {
-      email: "dsp13@iitbbs.ac.in",
-      linkedIn: "https://linkedin.com/in/shrirang-deshmukh",
-      whatsapp: "9511725963",
-      other: "go to this site. Contact some one else",
-    },
+    communication: "go to this site. Contact some one else",
   },
 ];
 
