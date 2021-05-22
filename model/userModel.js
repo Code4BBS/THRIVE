@@ -54,6 +54,9 @@ const userSchema = new mongoose.Schema(
     phoneNumber: {
       type: String,
     },
+    bio: {
+      type: String,
+    },
     tags: [
       {
         type: mongoose.Schema.ObjectId,

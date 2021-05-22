@@ -10,7 +10,6 @@ import AdminLayout from "./layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 
 import axios from "axios";
-import { isNonNullChain } from "typescript";
 
 class Wrapper extends Component {
   state = {
@@ -19,23 +18,27 @@ class Wrapper extends Component {
     isLoading: true,
   };
 
+  getUser = (cookies) => {
+    axios
+      .get("/api/v1/user/profile")
+      .then((res) => {
+        console.log(res.data.data.user);
+        this.setState({
+          user: res.data.data.user,
+          isLoggedIn: cookies ? cookies.isLoggedIn : this.state.isLoggedIn,
+          isLoading: false,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        this.setState({ isLoading: false });
+      });
+  };
+
   checkIsLoggedIn = () => {
     const cookies = this.props.cookies.cookies;
     if (cookies.userData) {
-      axios
-        .get("/api/v1/user/profile")
-        .then((res) => {
-          console.log(res.data.data.user);
-          this.setState({
-            user: res.data.data.user,
-            isLoggedIn: cookies.isLoggedIn,
-            isLoading: false,
-          });
-        })
-        .catch((err) => {
-          console.log(err);
-          this.setState({ isLoading: false });
-        });
+      this.getUser(cookies);
     } else {
       this.setState({ isLoading: false });
     }
@@ -79,6 +82,7 @@ class Wrapper extends Component {
                       <AdminLayout
                         user={this.state.user}
                         cookies={this.props.cookies}
+                        getUserAgain={this.getUser}
                         {...props}
                       />
                     )}

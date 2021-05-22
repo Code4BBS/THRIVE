@@ -23,7 +23,7 @@ import componentStyles from "assets/theme/layouts/admin.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Admin = ({ user, cookies }) => {
+const Admin = ({ user, cookies, getUserAgain }) => {
   const classes = useStyles();
   const location = useLocation();
   React.useEffect(() => {
@@ -38,7 +38,9 @@ const Admin = ({ user, cookies }) => {
         return (
           <Route
             path={prop.layout + prop.path}
-            render={() => <prop.component user={user} />}
+            render={() => (
+              <prop.component user={user} getUserAgain={getUserAgain} />
+            )}
             key={key}
           />
         );
