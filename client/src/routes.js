@@ -12,6 +12,7 @@ import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 import Projects from "views/admin/Projects.js";
 import AddProject from "views/admin/Add Project.js";
 import Quora from "views/admin/Quora/index.js";
+import ViewQuestion from "views/admin/Quora/viewQuestion";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -105,6 +106,14 @@ var routes = [
     icon: CreateIcon,
     iconColor: "Primary",
     component: AddProject,
+    layout: "/admin",
+  },
+  {
+    path: "/viewQuestion",
+    name: "View Question",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: ViewQuestion,
     layout: "/admin",
   },
   // {
