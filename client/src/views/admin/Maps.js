@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
+
+import "./Maps.css";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,106 +15,48 @@ import Header from "components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/maps.js";
 
+import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
+
+mapboxgl.accessToken =
+  "pk.eyJ1IjoibWludHVqdXBhbGx5IiwiYSI6ImNrZHNsMGdiZDEwbm0yd3BibHhzMWJzc2EifQ.Kk0Ih8YQrDqCJEWwpbkEIA";
+
 const useStyles = makeStyles(componentStyles);
-
-const MapWrapper = () => {
-  const mapRef = React.useRef(null);
-  const theme = useTheme();
-  React.useEffect(() => {
-    let google = window.google;
-    let map = mapRef.current;
-    let lat = "40.748817";
-    let lng = "-73.985428";
-    const myLatlng = new google.maps.LatLng(lat, lng);
-    const mapOptions = {
-      zoom: 12,
-      center: myLatlng,
-      scrollwheel: false,
-      zoomControl: true,
-      styles: [
-        {
-          featureType: "administrative",
-          elementType: "labels.text.fill",
-          stylers: [{ color: "#444444" }],
-        },
-        {
-          featureType: "landscape",
-          elementType: "all",
-          stylers: [{ color: "#f2f2f2" }],
-        },
-        {
-          featureType: "poi",
-          elementType: "all",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "road",
-          elementType: "all",
-          stylers: [{ saturation: -100 }, { lightness: 45 }],
-        },
-        {
-          featureType: "road.highway",
-          elementType: "all",
-          stylers: [{ visibility: "simplified" }],
-        },
-        {
-          featureType: "road.arterial",
-          elementType: "labels.icon",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "transit",
-          elementType: "all",
-          stylers: [{ visibility: "off" }],
-        },
-        {
-          featureType: "water",
-          elementType: "all",
-          stylers: [
-            { color: theme.palette.primary.main },
-            { visibility: "on" },
-          ],
-        },
-      ],
-    };
-
-    map = new google.maps.Map(map, mapOptions);
-
-    const marker = new google.maps.Marker({
-      position: myLatlng,
-      map: map,
-      animation: google.maps.Animation.DROP,
-      title: "Light Bootstrap Dashboard PRO React!",
-    });
-
-    const contentString =
-      '<div class="info-window-content"><h2>Light Bootstrap Dashboard PRO React</h2>' +
-      "<p>A premium Admin for React-Bootstrap, Bootstrap, React, and React Hooks.</p></div>";
-
-    const infowindow = new google.maps.InfoWindow({
-      content: contentString,
-    });
-
-    google.maps.event.addListener(marker, "click", function () {
-      infowindow.open(map, marker);
-    });
-  });
-  return (
-    <>
-      <Box
-        height="600px"
-        position="relative"
-        width="100%"
-        overflow="hidden"
-        borderRadius=".375rem"
-        ref={mapRef}
-      ></Box>
-    </>
-  );
-};
 
 const Maps = () => {
   const classes = useStyles();
+
+  const mapContainer = useRef(null);
+  const map = useRef(null);
+  const [lng, setLng] = useState(85.6762581434793);
+  const [lat, setLat] = useState(20.14401529809813);
+  const [zoom, setZoom] = useState(14);
+
+  let div = document.createElement("div");
+  div.classList.add("marker");
+  div.innerText = "IIT Bhubaneshwar";
+
+  useEffect(() => {
+    if (map.current) return; // initialize map only once
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: "mapbox://styles/mapbox/satellite-streets-v11",
+      center: [lng, lat],
+      zoom: zoom,
+    });
+
+    new mapboxgl.Marker({
+      color: "red",
+    })
+      .setLngLat([85.6762581434793, 20.14401529809813])
+      .addTo(map.current);
+
+    var marker = new mapboxgl.Marker(div, {
+      color: "red",
+    })
+      .setLngLat([85.6762581434793, 20.14401529809813])
+      .addTo(map.current);
+  });
+
   return (
     <>
       <Header />
@@ -125,8 +69,9 @@ const Maps = () => {
       >
         <Grid container>
           <Grid item xs={12}>
-            <Card classes={{ root: classes.cardRoot }}>
-              <MapWrapper />
+            <Card id="institute-map" classes={{ root: classes.cardRoot }}>
+              {/* <MapWrapper /> */}
+              <div ref={mapContainer} style={{ height: "400px" }} />
             </Card>
           </Grid>
         </Grid>

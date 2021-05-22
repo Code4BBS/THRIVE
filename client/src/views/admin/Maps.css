@@ -1,0 +1,10 @@
+.marker {
+  color: white;
+  font-size: 16px;
+  margin-top: 15px;
+  font-family: Open Sans;
+  font-weight: 600;
+  text-shadow: 0px 0px 5px black;
+  -webkit-text-stroke-width: 0.3px;
+  -webkit-text-stroke-color: black;
+}
