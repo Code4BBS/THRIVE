@@ -59,6 +59,9 @@ const componentStyles = (theme) => ({
     "&:hover": {
       backgroundColor: theme.palette.dark.dark,
     },
+    "&:disabled": {
+      border: "0",
+    },
   },
   profileImage: {
     verticalAlign: "middle",
@@ -89,6 +92,10 @@ const componentStyles = (theme) => ({
     [theme.breakpoints.up("lg")]: {
       marginBottom: "0!important",
     },
+  },
+
+  checkBoxLabel: {
+    fontSize: "0.8rem",
   },
 });
 
