@@ -10,11 +10,11 @@ const middleware = require("./utils/middleware");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
 
+//routers
 const quoraRouter = require("./routes/quoraRoutes");
 const authRouter = require("./routes/authRoutes.js");
 const userRouter = require("./routes/discoverRoutes.js");
 const searchRouter = require("./routes/searchRoutes.js");
-//routers
 const projectRouter = require("./routes/projectRoutes");
 
 const app = express();
@@ -41,7 +41,7 @@ app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/quora", quoraRouter);
 app.use("/api/v1/search", searchRouter);
-app.use("/project", projectRouter);
+app.use("/api/v1/project", projectRouter);
 
 app.get("*", (req, res, next) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));
