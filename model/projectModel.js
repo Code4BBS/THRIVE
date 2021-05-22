@@ -28,7 +28,7 @@ const projectSchema = new mongoose.Schema(
       ref: "User",
     },
     blacklisted: { type: Boolean, default: false },
-    preRequsite: { type: String },
+    preRequisite: { type: String },
     communication: { type: String },
     duration: { type: String },
   },
