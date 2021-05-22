@@ -41,8 +41,12 @@ class Quora extends Component {
         // let user = "Ananymous";
         let user = el.isAnanymous == 0 ? el.user.name : "Ananymous"
         return (
+          <Grid item xs = {12} sm = {6} md = {4} component={Box}
+          paddingLeft="15px"
+          paddingRight="15px">
           <QuestionCard name = {user} isAnanymous = {el.isAnanymous} upvotes = {el.upvotes} downvotes = {el.downvotes} 
             question = {el.questionBody} answers = {el.answers} time = {el.createdAt} key = {idx}/>
+          </Grid>
         )
       } )
     }
@@ -71,7 +75,7 @@ class Quora extends Component {
               </CardHeader>
              
               <CardContent>
-                <Grid container style = { {display : "flex", justifyContent : "space-between"} }>
+                <Grid container >
                     {ques}
                 </Grid>
               </CardContent>

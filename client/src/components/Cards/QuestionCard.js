@@ -12,12 +12,16 @@ import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 import Divider from '@material-ui/core/Divider';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import VisibilityOutlinedIcon from '@material-ui/icons/VisibilityOutlined';
+import Grid from "@material-ui/core/Grid";
+import Box from "@material-ui/core/Box";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 400,
     marginBottom : 10,
-    width : 345
+    marginLeft : 10,
+    marginRight : 10,
+    // width : 345
   },
 });
 
@@ -42,18 +46,22 @@ const ImgMediaCard = (props) => {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Typography>{props.upvotes}</Typography>
-        <ThumbUpOutlinedIcon/>
-        <Divider orientation="vertical" flexItem />
-        <Typography>{props.downvotes}</Typography>
-        <ThumbDownOutlinedIcon/>
-        <Divider orientation="vertical" flexItem />
-        <Typography>{props.answers.length}</Typography>
-        <QuestionAnswerOutlinedIcon/>
-        <Divider orientation="vertical" flexItem />
-        <Button size="medium" color="primary">
+      <Typography>{props.upvotes}</Typography>
+      <ThumbUpOutlinedIcon/>  
+      <Typography>{props.downvotes}</Typography>
+      <ThumbDownOutlinedIcon/>
+      <Typography>{props.answers.length}</Typography>
+      <QuestionAnswerOutlinedIcon/>
+        
+        
+        {/* <Divider orientation="vertical" flexItem />
+        
+        <Divider orientation="vertical" flexItem /> */}
+        
+        {/* <Divider orientation="vertical" flexItem /> */}
+        {/* <Button size="medium" color="primary">
           <VisibilityOutlinedIcon/>
-        </Button>
+        </Button> */}
       </CardActions>
     </Card>
   );
