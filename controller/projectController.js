@@ -6,11 +6,13 @@ const AppError = require("../utils/appError");
 const { findByIdAndDelete } = require("../model/projectModel");
 
 const getAllProjects = catchAsync(async (req, res, next) => {
-  const projects = await Project.find().populate({
-    path: "tags",
-    model: "Tag",
-    select: "name ",
-  });
+  const projects = await Project.find({ blacklisted: false })
+    .populate({
+      path: "tags",
+      model: "Tag",
+      select: "name ",
+    })
+    .populate({ path: "owner", model: "User", select: "name image" });
 
   res.status(200).json({
     status: "success",
@@ -22,11 +24,13 @@ const getAllProjects = catchAsync(async (req, res, next) => {
 });
 
 const getProject = catchAsync(async (req, res, next) => {
-  const project = await Project.findById(req.params.id).populate({
-    path: "tags",
-    model: "Tag",
-    select: "name ",
-  });
+  const project = await Project.findById(req.params.id)
+    .populate({
+      path: "tags",
+      model: "Tag",
+      select: "name ",
+    })
+    .populate({ path: "owner", model: "User", select: "name image" });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -42,7 +46,8 @@ const createProject = catchAsync(async (req, res, next) => {
   const owner = req.user.id;
   if (!owner) return next(new AppError("No user Found", 500));
 
-  const { title, description, tags, preRequsite, communication } = req.body;
+  const { title, description, preRequisite, communication, duration } =
+    req.body;
 
   if (!title || !description || !communication)
     return next(new AppError("All Required Fields not there", 400));
@@ -50,26 +55,26 @@ const createProject = catchAsync(async (req, res, next) => {
   const newProject = await Project.create({
     title,
     description,
-    tags,
-    preRequsite,
+    // tags,
+    preRequisite,
     communication,
     owner,
-    // owner,
+    duration,
   });
-  const message = `Project ${title} requirements are matching your profile`;
-  console.log(message);
-  const updatedUsers = await User.updateMany(
-    {
-      tags: { $all: tags },
-    },
-    { $push: { notifications: message } }
-  );
+  // const message = `Project ${title} requirements are matching your profile`;
+  // console.log(message);
+  // const updatedUsers = await User.updateMany(
+  //   {
+  //     tags: { $all: tags },
+  //   },
+  //   { $push: { notifications: message } }
+  // );
 
   res.status(201).json({
     status: "success",
     message: "Project created successfully",
     project: newProject,
-    updatedUsers,
+    // updatedUsers,
   });
 });
 
@@ -98,7 +103,7 @@ const updateProject = catchAsync(async (req, res, next) => {
 });
 
 const deleteProject = catchAsync(async (req, res, next) => {
-  const project = await findByIdAndDelete(req.params.id);
+  const project = await Project.findByIdAndDelete(req.params.id);
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -109,7 +114,11 @@ const deleteProject = catchAsync(async (req, res, next) => {
 });
 
 const blacklistProject = catchAsync(async (req, res, next) => {
-  const project = await findByIdAndUpdate(req.params.id, { blacklisted: true });
+  console.log(req.params.id);
+
+  const project = await Project.findByIdAndUpdate(req.params.id, {
+    blacklisted: true,
+  });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -120,7 +129,7 @@ const blacklistProject = catchAsync(async (req, res, next) => {
 });
 
 const whitelistProject = catchAsync(async (req, res, next) => {
-  const project = await findByIdAndUpdate(req.params.id, {
+  const project = await Project.findByIdAndUpdate(req.params.id, {
     blacklisted: false,
   });
 
