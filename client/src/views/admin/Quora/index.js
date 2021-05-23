@@ -29,6 +29,7 @@ class QuoraCont extends Component {
         this.setState({viewingQuestion : true});
     }
     render() {
+        console.log(this.props);
         const { classes } = this.props;
         let view = (
             <>
@@ -39,7 +40,7 @@ class QuoraCont extends Component {
                     marginTop="-6rem"
                     classes={{ root: classes.containerRoot }}
                     >
-                    <Quora QuoraQuestions = {this.state.questions} viewQuestion = {() => this.viewQuestion()}/>
+                    <Quora QuoraQuestions = {this.state.questions} viewQuestion = {() => this.viewQuestion()} {...this.props}/>
                     {/* <ViewQuestion/> */}
             </Container>
             </>
