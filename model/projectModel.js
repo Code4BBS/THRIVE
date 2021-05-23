@@ -31,6 +31,23 @@ const projectSchema = new mongoose.Schema(
     preRequisite: { type: String },
     communication: { type: String },
     duration: { type: String },
+    collaborators: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+      },
+    ],
+
+    requests: [
+      {
+        requester: {
+          type: mongoose.Schema.ObjectId,
+          ref: "User",
+        },
+
+        note: { type: String },
+      },
+    ],
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

@@ -3,7 +3,6 @@ const Tag = require("./../model/tagModel");
 const User = require("./../model/userModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
-const { findByIdAndDelete } = require("../model/projectModel");
 
 const getAllProjects = catchAsync(async (req, res, next) => {
   const projects = await Project.find({ blacklisted: false })
@@ -12,7 +11,8 @@ const getAllProjects = catchAsync(async (req, res, next) => {
       model: "Tag",
       select: "name ",
     })
-    .populate({ path: "owner", model: "User", select: "name image" });
+    .populate({ path: "owner", model: "User", select: "name image" })
+    .populate({ path: "collaborators", model: "User", select: "name image" });
 
   res.status(200).json({
     status: "success",
@@ -31,6 +31,8 @@ const getProject = catchAsync(async (req, res, next) => {
       select: "name ",
     })
     .populate({ path: "owner", model: "User", select: "name image" });
+  // .populate({ path: "collaborators", model: "User", select: "name image" })
+  // .populate({ path: "request", model: "User", select: "name image" });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -141,6 +143,24 @@ const whitelistProject = catchAsync(async (req, res, next) => {
   });
 });
 
+const getAllBlacklistedProjects = async (req, res, next) => {
+  const projects = await Project.find({ blacklisted: false })
+    .populate({
+      path: "tags",
+      model: "Tag",
+      select: "name ",
+    })
+    .populate({ path: "owner", model: "User", select: "name image" });
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      res: projects.length,
+      projects,
+    },
+  });
+};
+
 module.exports = {
   getAllProjects,
   getProject,
@@ -149,4 +169,5 @@ module.exports = {
   deleteProject,
   whitelistProject,
   blacklistProject,
+  getAllBlacklistedProjects,
 };
