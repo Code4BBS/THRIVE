@@ -156,20 +156,20 @@ const Results = ({
                 </TableRow>
                 <TableRow style={{ marginLeft: "5px", marginTop: "5px" }}>
                   {selectedCollaborators.length > 0
-                    ? customers.map((collaborater, index) => {
-                        if (selectedCollaborators.includes(collaborater._id)) {
+                    ? customers.map((collaborator, index) => {
+                        if (selectedCollaborators.includes(collaborator._id)) {
                           return (
                             <li
                               key={index}
                               style={{ display: "inline", margin: "3px" }}
                             >
                               <Chip
-                                variant="default"
-                                size="small"
-                                label={collaborater.name}
-                                color="primary"
+                                variant="outlined"
+                                label={collaborator.name}
+                                avatar={<Avatar src={collaborator.image} />}
+                                styles={{ color: "black!important" }}
                                 onClick={() =>
-                                  changeCollaborators(collaborater)
+                                  changeCollaborators(collaborator)
                                 }
                               />
                             </li>

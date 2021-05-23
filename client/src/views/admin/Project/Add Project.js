@@ -20,6 +20,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Avatar from "@material-ui/core/Avatar";
 import TextField from "@material-ui/core/TextField";
 // @material-ui/icons components
 import LocationOn from "@material-ui/icons/LocationOn";
@@ -180,6 +181,13 @@ function Profile({ user }) {
                     >
                       Add New Project
                     </Box>
+                    <br />
+                    <Chip
+                      variant="outlined"
+                      label={user.name}
+                      avatar={<Avatar src={user.image} />}
+                      styles={{ color: "black!important" }}
+                    />
                   </Grid>
                   {/* <Grid item xs="auto">
               <Box
@@ -386,74 +394,84 @@ function Profile({ user }) {
                       </FormControl>
                     </FormGroup>
                   </Grid>
+
+                  <Grid item xs={6} lg={6} style={{ marginBottom: "10px" }}>
+                    <Button variant="outlined" size="small" onClick={showTags}>
+                      {!selectedTags.length > 0 ? "Select Tags" : "Edit Tags"}
+                    </Button>
+                    <div style={{ marginTop: "5%" }}>
+                      {selectedTags.length > 0
+                        ? tagsList.map((tag, index) => {
+                            //selectedTags : id
+
+                            if (selectedTags.includes(tag._id)) {
+                              return (
+                                <li
+                                  key={index}
+                                  style={{ display: "inline", margin: "3px" }}
+                                >
+                                  <Chip
+                                    variant="default"
+                                    // size="small"
+                                    label={tag.name}
+                                    color="primary"
+                                  />
+                                </li>
+                              );
+                            }
+                            return null;
+                          })
+                        : null}
+                    </div>
+                  </Grid>
+
+                  <Grid item xs={6} lg={6} style={{ marginBottom: "10px" }}>
+                    <Button
+                      variant="outlined"
+                      size="small"
+                      onClick={showCollaboratorsPane}
+                    >
+                      {!selectedCollaborators.length > 0
+                        ? "Select Collaborators"
+                        : "Edit Collaborators"}
+                    </Button>
+                    <div style={{ marginTop: "5%" }}>
+                      {selectedCollaborators.length > 0
+                        ? customers.map((collaborator, index) => {
+                            //selectedTags : id
+
+                            if (
+                              selectedCollaborators.includes(collaborator._id)
+                            ) {
+                              return (
+                                <li
+                                  key={index}
+                                  style={{ display: "inline", margin: "3px" }}
+                                >
+                                  <Chip
+                                    variant="outlined"
+                                    // color="primary"
+                                    label={collaborator.name}
+                                    avatar={<Avatar src={collaborator.image} />}
+                                    styles={{ color: "black!important" }}
+                                  />
+
+                                  {/* <Chip
+                                    variant="default"
+                                    size="small"
+                                    label={collaborator.name}
+                                    color="primary"
+                                  /> */}
+                                </li>
+                              );
+                            }
+                            return null;
+                          })
+                        : null}
+                    </div>
+                  </Grid>
                 </Grid>
               </div>
-              <Grid item xs={12} lg={6} style={{ marginBottom: "10px" }}>
-                <Button variant="outlined" color="primary" onClick={showTags}>
-                  {!selectedTags.length > 0 ? "Select Tags" : "Edit Tags"}
-                </Button>
-                <div style={{ marginTop: "5px" }}>
-                  {selectedTags.length > 0
-                    ? tagsList.map((tag, index) => {
-                        //selectedTags : id
-
-                        if (selectedTags.includes(tag._id)) {
-                          return (
-                            <li
-                              key={index}
-                              style={{ display: "inline", margin: "3px" }}
-                            >
-                              <Chip
-                                variant="default"
-                                size="small"
-                                label={tag.name}
-                                color="primary"
-                              />
-                            </li>
-                          );
-                        }
-                        return null;
-                      })
-                    : null}
-                </div>
-              </Grid>
-
-              <Grid item xs={12} lg={6} style={{ marginBottom: "10px" }}>
-                <Button
-                  variant="outlined"
-                  color="primary"
-                  onClick={showCollaboratorsPane}
-                >
-                  {!selectedTags.length > 0
-                    ? "Select Collaborators"
-                    : "Edit Collaborators"}
-                </Button>
-                <div style={{ marginTop: "5px" }}>
-                  {selectedCollaborators.length > 0
-                    ? customers.map((collaborator, index) => {
-                        //selectedTags : id
-
-                        if (selectedCollaborators.includes(collaborator._id)) {
-                          return (
-                            <li
-                              key={index}
-                              style={{ display: "inline", margin: "3px" }}
-                            >
-                              <Chip
-                                variant="default"
-                                size="small"
-                                label={collaborator.name}
-                                color="primary"
-                              />
-                            </li>
-                          );
-                        }
-                        return null;
-                      })
-                    : null}
-                </div>
-              </Grid>
-
               <Box
                 component={Divider}
                 marginBottom="0.8rem!important"
