@@ -67,6 +67,7 @@ const createProject = catchAsync(async (req, res, next) => {
   console.log(tags);
   if (!title || !description || !communication)
     return next(new AppError("All Required Fields not there", 400));
+  let createdAt = Date.now();
 
   const newProject = await Project.create({
     title,
@@ -77,6 +78,7 @@ const createProject = catchAsync(async (req, res, next) => {
     owner,
     duration,
     collaborators,
+    createdAt,
   });
   const message = `Project ${title} requirements are matching your profile`;
   let notification = {

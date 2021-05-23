@@ -1,4 +1,6 @@
 const User = require("./../model/userModel");
+const Project = require("./../model/projectModel");
+const Tag = require("./../model/tagModel");
 const catchAsync = require("./../utils/catchAsync");
 const AppError = require("./../utils/appError");
 
@@ -37,6 +39,33 @@ exports.searchByTag = catchAsync(async (req, res, next) => {
       status: "success",
       data: {
         users,
+      },
+    });
+  } catch (err) {
+    throw new AppError(err.message, 500);
+  }
+});
+
+exports.searchProjectsByTag = catchAsync(async (req, res, next) => {
+  try {
+    const queryTags = req.body.tagsSelected;
+
+    const projects = await Project.find({
+      tags: { $all: queryTags },
+    })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "tags",
+        model: "Tag",
+        select: "name ",
+      })
+      .populate({ path: "owner", model: "User", select: "name image" })
+      .populate({ path: "collaborators", model: "User", select: "name image" });
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        projects,
       },
     });
   } catch (err) {

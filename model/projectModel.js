@@ -48,6 +48,9 @@ const projectSchema = new mongoose.Schema(
         note: { type: String },
       },
     ],
+    createdAt: {
+      type: Date,
+    },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
