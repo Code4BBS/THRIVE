@@ -30,6 +30,8 @@ import DialogContent from "@material-ui/core/DialogContent";
 // @material-ui/icons components
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
+import CheckIcon from "@material-ui/icons/Check";
+import ClearIcon from "@material-ui/icons/Clear";
 
 // core components
 import Header from "../../../components/Headers/Header.js";
@@ -46,8 +48,9 @@ function Profile({ user }) {
 
   const [project, setProject] = useState(null);
   const [open, setOpen] = useState(false);
-
-  const [requestNote, setRequestNote] = useState(null);
+  const [requestNote, setRequestNote] = useState("");
+  const [isLoading, setLoading] = useState(true);
+  const [button, setButton] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -65,10 +68,13 @@ function Profile({ user }) {
     setOpen(false);
     if (project) {
       axios
-        .put(`/api/v1/project/request/${project._id}/join`, request)
+        .put(`/api/v1/project/request/${project._id}/join`, {
+          request: request,
+        })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
+            setButton(true);
             window.alert("Request Sent Successfully");
           }
         })
@@ -85,21 +91,20 @@ function Profile({ user }) {
     if (project) {
       axios
         .put(
-          `/api/v1/project/request/${project._id}/accpet?id=${request.requester._id}`
+          `/api/v1/project/request/${project._id}/accept?id=${request.requester._id}`
         )
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            const updatedProject = project;
-            const updatedRequests = [...updatedProject.requests];
-            updatedRequests.splice(index, 1);
-            const updatedCollaborators = [...updatedProject.collaborators];
-            updatedCollaborators.push(request.requester);
+            // const updatedProject = project;
+            // const updatedRequests = [...updatedProject.requests];
+            // updatedRequests.splice(index, 1);
+            // const updatedCollaborators = [...updatedProject.collaborators];
+            // updatedCollaborators.push(request.requester);
 
-            updatedProject.requests = updatedRequests;
-            updatedProject.collaborators = updatedCollaborators;
-
-            setProject(updatedProject);
+            // updatedProject.requests = updatedRequests;
+            // updatedProject.collaborators = updatedCollaborators;
+            setProject(response.data.data.project);
             window.alert("Request Accepted Successfully");
           }
         })
@@ -121,14 +126,11 @@ function Profile({ user }) {
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            const updatedProject = project;
-            const updatedRequests = [...updatedProject.requests];
-            updatedRequests.splice(index, 1);
-
-            updatedProject.requests = updatedRequests;
-
-            setProject(updatedProject);
-
+            // const updatedProject = project;
+            // const updatedRequests = [...updatedProject.requests];
+            // updatedRequests.splice(index, 1);
+            // updatedProject.requests = updatedRequests;
+            setProject(response.data.data.project);
             window.alert("Reject Successful");
           }
         })
@@ -141,8 +143,6 @@ function Profile({ user }) {
     }
   };
 
-  // const [isLoading, setLoading] = useState(true);
-
   const getProject = () => {
     let url = window.location.pathname.split("/");
     let projectId = url[3];
@@ -151,6 +151,8 @@ function Profile({ user }) {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
+          console.log(response.data.data.project);
+          setLoading(false);
           setProject(response.data.data.project);
         }
       })
@@ -159,89 +161,9 @@ function Profile({ user }) {
       });
   };
 
-  // useEffect(() => {
-  //   getProject();
-  // }, []);
-
-  const dummyTags = [
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-    { _id: "dummy", name: "Node.js" },
-  ];
-
-  const dummyUsers = [
-    {
-      _id: "dummy",
-      name: "Shrirang",
-      image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    {
-      _id: "dummy",
-      name: "Shrirang",
-      image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    {
-      _id: "dummy",
-      name: "Shrirang",
-      image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    {
-      _id: "dummy",
-      name: "Shrirang",
-      image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    {
-      _id: "dummy",
-      name: "Shrirang",
-      image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-    {
-      _id: "dummy",
-      name: "Shrirang",
-      image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-    },
-  ];
-
-  const dummyRequests = [
-    {
-      requester: {
-        _id: "dummy",
-        name: "Shrirang",
-        image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-      },
-      message: "I am willing to contribute",
-    },
-    {
-      requester: {
-        _id: "dummy",
-        name: "Shrirang",
-        image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-      },
-      message: "I am willing to contribute",
-    },
-    {
-      requester: {
-        _id: "dummy",
-        name: "Shrirang",
-        image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-      },
-      message: "I am willing to contribute",
-    },
-    {
-      requester: {
-        _id: "dummy",
-        name: "Shrirang",
-        image: "https://avatars.githubusercontent.com/u/64681029?v=4",
-      },
-      message: "I am willing to contribute",
-    },
-  ];
+  useEffect(() => {
+    getProject();
+  }, []);
 
   let modal = (
     <Dialog
@@ -296,372 +218,407 @@ function Profile({ user }) {
     </Dialog>
   );
 
-  const form = (
-    <Container
-      maxWidth={false}
-      component={Box}
-      marginTop="-6rem"
-      classes={{ root: classes.containerRoot }}
-    >
-      <Grid container>
-        <Grid
-          item
-          xs={12}
-          xl={8}
-          component={Box}
-          marginBottom="3rem"
-          classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
-        >
-          <Card
-            classes={{
-              root: classes.cardRoot + " " + classes.cardRootSecondary,
-            }}
-          >
-            <CardHeader
-              classes={{ root: classes.cardHeaderRoot }}
-              subheader={
-                <Grid
-                  container
-                  component={Box}
-                  alignItems="center"
-                  justifyContent="space-between"
-                >
-                  <Grid item xs="auto">
+  //owner settings
+
+  let form = null;
+  let editButtons = null;
+  let joinRequests = null;
+  let ownerLabel = null;
+  let joinRequestButton = null;
+
+  if (!isLoading && project) {
+    //Owner settings
+    ownerLabel = project.owner.name;
+    if (project.owner._id === user._id) {
+      ownerLabel = "You";
+
+      editButtons = (
+        <Grid item xs="auto">
+          <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+            <IconButton color="primary" variant="contained" component="span">
+              <EditIcon />
+            </IconButton>
+            <IconButton color="primary" variant="contained" component="span">
+              <DeleteOutlineIcon />
+            </IconButton>
+          </Box>
+        </Grid>
+      );
+
+      joinRequests =
+        project.requests.length > 0 ? (
+          <>
+            <Box
+              component={Typography}
+              variant="h6"
+              color={theme.palette.gray[600] + "!important"}
+              paddingTop=".25rem"
+              paddingBottom=".25rem"
+              fontSize=".75rem!important"
+              letterSpacing=".04em"
+              marginBottom="1.5rem!important"
+              classes={{ root: classes.typographyRootH6 }}
+            >
+              Join Requests
+            </Box>
+            <div className={classes.plLg4}>
+              <Grid container>
+                <Grid item xs={12} lg={12}>
+                  <TableContainer>
                     <Box
-                      component={Typography}
-                      variant="h3"
+                      component={Table}
+                      alignItems="center"
                       marginBottom="0!important"
                     >
-                      Project Title
-                    </Box>
-                  </Grid>
-                  <Grid item xs="auto">
-                    <Box
-                      justifyContent="flex-end"
-                      display="flex"
-                      flexWrap="wrap"
-                    >
-                      <IconButton
-                        color="primary"
-                        variant="contained"
-                        component="span"
-                      >
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton
-                        color="primary"
-                        variant="contained"
-                        component="span"
-                      >
-                        <DeleteOutlineIcon />
-                      </IconButton>
-                    </Box>
-                  </Grid>
-                </Grid>
-              }
-            ></CardHeader>
-            <CardContent>
-              <Box
-                component={Typography}
-                variant="h6"
-                color={theme.palette.gray[600] + "!important"}
-                paddingTop=".25rem"
-                paddingBottom=".25rem"
-                fontSize=".75rem!important"
-                letterSpacing=".04em"
-                marginBottom="1.5rem!important"
-                classes={{ root: classes.typographyRootH6 }}
-              >
-                Project Details
-              </Box>
-              <div className={classes.plLg4}>
-                <Grid container>
-                  <Grid item xs="auto">
-                    <Box component={Typography} variant="h5" display="inline">
-                      Owner &nbsp;&nbsp;
-                    </Box>
-                    <Chip
-                      variant="outlined"
-                      label={user.name}
-                      avatar={<Avatar src={user.image} />}
-                      style={{
-                        color: "black!important",
-                      }}
-                    />
-                    <br />
-                    <br />
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} style={{ marginBottom: "10px" }}>
-                    <Box component={Typography} variant="h5">
-                      Collaborators &nbsp;&nbsp;
-                    </Box>
-
-                    {dummyUsers.length > 0
-                      ? dummyUsers.map((collaborator, index) => {
-                          return (
-                            <li
-                              key={index}
-                              style={{ display: "inline", margin: "3px" }}
+                      <TableBody>
+                        {project.requests.map((request, id) => (
+                          <TableRow>
+                            <TableCell
+                              style={{ verticalAlign: "middle" }}
+                              key={id}
                             >
                               <Chip
                                 variant="outlined"
-                                label={collaborator.name}
-                                avatar={<Avatar src={collaborator.image} />}
+                                label={request.requester.name}
+                                avatar={
+                                  <Avatar src={request.requester.image} />
+                                }
                                 style={{ color: "black!important" }}
                               />
-                            </li>
-                          );
-                        })
-                      : null}
-                  </Grid>
+                            </TableCell>
 
-                  <Grid
-                    item
-                    xs={12}
-                    lg={12}
-                    style={{ marginBottom: "1rem!important" }}
-                  >
-                    <br />
-                    <Box component={Typography} variant="h5">
-                      Description &nbsp;&nbsp;
-                    </Box>
-                    <p
-                      style={{
-                        textAlign: "justify",
-                        textJustify: "inter-word",
-                        paddingLeft: "1%",
-                        paddingRight: "1%",
-                      }}
-                    >
-                      Description includes the idea of the project and what you
-                      intend to do. Any other specific requirements like only
-                      specific year's or branch's should be mentioned here.
-                    </p>
-                  </Grid>
-                </Grid>
-                <Grid container>
-                  <Grid item xs={12} lg={6}>
-                    <br />
-
-                    <Box component={Typography} variant="h5">
-                      Pre Requisite &nbsp;&nbsp;
-                    </Box>
-
-                    <span
-                      style={{
-                        textAlign: "justify",
-                        textJustify: "inter-word",
-                        paddingLeft: "1%",
-                        paddingRight: "1%",
-                      }}
-                    >
-                      Python is necessary
-                    </span>
-                  </Grid>
-
-                  <Grid item xs={12} lg={6}>
-                    <br />
-
-                    <Box component={Typography} variant="h5">
-                      Duration &nbsp;&nbsp;
-                    </Box>
-
-                    <span
-                      style={{
-                        textAlign: "justify",
-                        textJustify: "inter-word",
-                        paddingLeft: "1%",
-                        paddingRight: "1%",
-                      }}
-                    >
-                      2 Days: 23/06/2021 and 24/06/2021
-                    </span>
-                  </Grid>
-
-                  <Grid item xs={12} lg={12} style={{ marginBottom: "10px" }}>
-                    <br />
-                    <br />
-                    <Box component={Typography} variant="h5">
-                      Tags &nbsp;&nbsp;
-                    </Box>
-
-                    {dummyTags.length > 0
-                      ? dummyTags.map((tag, index) => {
-                          return (
-                            <li
-                              key={index}
+                            <TableCell style={{ verticalAlign: "middle" }}>
+                              <Box component="span">
+                                <span display="inline">{request.note}</span>
+                              </Box>
+                            </TableCell>
+                            <TableCell
                               style={{
-                                display: "inline",
-                                margin: "3px",
+                                verticalAlign: "middle",
+                                padding: "0",
                               }}
                             >
-                              <Chip
-                                variant="default"
-                                // size="small"
-                                label={tag.name}
-                                color="primary"
-                                style={{ marginBottom: "5px!important" }}
-                              />
-                            </li>
-                          );
-                        })
-                      : null}
-                  </Grid>
+                              <Box>
+                                <IconButton
+                                  color="primary"
+                                  variant="contained"
+                                  component="span"
+                                  onClick={() => acceptRequest(request, id)}
+                                >
+                                  <CheckIcon />
+                                </IconButton>
+                                <IconButton
+                                  color="primary"
+                                  variant="contained"
+                                  component="span"
+                                  onClick={() => rejectRequest(request, id)}
+                                >
+                                  <ClearIcon />
+                                </IconButton>
+                              </Box>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Box>
+                  </TableContainer>
                 </Grid>
-              </div>
-              <Box
-                component={Divider}
-                marginBottom="0.8rem!important"
-                marginTop="0.8rem!important"
-              />
-              <Box
-                component={Typography}
-                variant="h6"
-                color={theme.palette.gray[600] + "!important"}
-                paddingTop=".25rem"
-                paddingBottom=".25rem"
-                fontSize=".75rem!important"
-                letterSpacing=".04em"
-                marginBottom="1.5rem!important"
-                classes={{ root: classes.typographyRootH6 }}
-              >
-                Contact Information
-              </Box>
-              <div className={classes.plLg4}>
-                <Grid container>
-                  <Grid item xs={12} lg={12}>
-                    <span
-                      style={{
-                        textAlign: "justify",
-                        textJustify: "inter-word",
-                      }}
-                    >
-                      Contact on WhatsApp 12345567890
-                    </span>
-                  </Grid>
-                </Grid>
-              </div>
+              </Grid>
+            </div>
+          </>
+        ) : null;
+    }
 
-              <Box
-                component={Divider}
-                marginBottom="0.8rem!important"
-                marginTop="0.8rem!important"
-              />
-              {dummyRequests.length > 0 ? (
-                <>
-                  <Box
-                    component={Typography}
-                    variant="h6"
-                    color={theme.palette.gray[600] + "!important"}
-                    paddingTop=".25rem"
-                    paddingBottom=".25rem"
-                    fontSize=".75rem!important"
-                    letterSpacing=".04em"
-                    marginBottom="1.5rem!important"
-                    classes={{ root: classes.typographyRootH6 }}
-                  >
-                    Join Requests
-                  </Box>
-                  <div className={classes.plLg4}>
-                    <Grid container>
-                      <Grid item xs={12} lg={12}>
-                        <TableContainer>
-                          <Box
-                            component={Table}
-                            alignItems="center"
-                            marginBottom="0!important"
-                          >
-                            <TableBody>
-                              {dummyRequests.map((request, id) => (
-                                <TableRow>
-                                  <TableCell
-                                    style={{ verticalAlign: "middle" }}
-                                    key={id}
-                                  >
-                                    <Chip
-                                      variant="outlined"
-                                      label={request.requester.name}
-                                      avatar={
-                                        <Avatar src={request.requester.image} />
-                                      }
-                                      style={{ color: "black!important" }}
-                                    />
-                                  </TableCell>
-
-                                  <TableCell
-                                    style={{ verticalAlign: "middle" }}
-                                  >
-                                    <Box component="span">
-                                      <span display="inline">
-                                        {request.note}
-                                      </span>
-                                    </Box>
-                                  </TableCell>
-                                  <TableCell
-                                    style={{
-                                      verticalAlign: "middle",
-                                      padding: "0",
-                                    }}
-                                  >
-                                    <Box>
-                                      <IconButton
-                                        color="primary"
-                                        variant="contained"
-                                        component="span"
-                                        onClick={() =>
-                                          acceptRequest(request, id)
-                                        }
-                                      >
-                                        <EditIcon />
-                                      </IconButton>
-                                      <IconButton
-                                        color="primary"
-                                        variant="contained"
-                                        component="span"
-                                        onClick={() =>
-                                          rejectRequest(request, id)
-                                        }
-                                      >
-                                        <DeleteOutlineIcon />
-                                      </IconButton>
-                                    </Box>
-                                  </TableCell>
-                                </TableRow>
-                              ))}
-                            </TableBody>
-                          </Box>
-                        </TableContainer>
-                      </Grid>
-                    </Grid>
-                  </div>
-                </>
-              ) : null}
-            </CardContent>
-
-            <Divider />
-
-            <Grid item xs="auto">
-              <Box alignItems="flex-end" display="flex" flexWrap="wrap">
-                <Button
-                  size="small"
-                  variant="contained"
-                  component="span"
-                  classes={{ root: classes.buttonRootDark }}
-                  style={{ marginLeft: "auto", marginRight: "auto" }}
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  Request to Join
-                </Button>
-              </Box>
-            </Grid>
-          </Card>
+    const check = project.requests.some(
+      (request) => request.requester._id === user._id
+    );
+    if (
+      !(user._id === project.owner._id) &&
+      !(
+        project.collaborators.some(
+          (collaborator) => collaborator._id === user._id
+        ) && !check
+      )
+    ) {
+      joinRequestButton = (
+        <Grid item xs="auto">
+          <Box alignItems="flex-end" display="flex" flexWrap="wrap">
+            <Button
+              size="small"
+              variant="contained"
+              component="span"
+              disabled={button}
+              classes={{ root: classes.buttonRootDark }}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
+              onClick={() => {
+                setOpen(true);
+              }}
+            >
+              Request to Join
+            </Button>
+          </Box>
         </Grid>
-      </Grid>
-    </Container>
-  );
+      );
+    } else if (check) {
+      joinRequestButton = (
+        <Grid item xs="auto">
+          <Box alignItems="flex-end" display="flex" flexWrap="wrap">
+            <Button
+              size="small"
+              variant="contained"
+              component="span"
+              disabled={true}
+              classes={{ root: classes.buttonRootDark }}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
+            >
+              Your Request is Registered
+            </Button>
+          </Box>
+        </Grid>
+      );
+    }
+
+    form = (
+      <Container
+        maxWidth={false}
+        component={Box}
+        marginTop="-6rem"
+        classes={{ root: classes.containerRoot }}
+      >
+        <Grid container>
+          <Grid
+            item
+            xs={12}
+            xl={8}
+            component={Box}
+            marginBottom="3rem"
+            classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
+          >
+            <Card
+              classes={{
+                root: classes.cardRoot + " " + classes.cardRootSecondary,
+              }}
+            >
+              <CardHeader
+                classes={{ root: classes.cardHeaderRoot }}
+                subheader={
+                  <Grid
+                    container
+                    component={Box}
+                    alignItems="center"
+                    justifyContent="space-between"
+                  >
+                    <Grid item xs="auto">
+                      <Box
+                        component={Typography}
+                        variant="h3"
+                        marginBottom="0!important"
+                      >
+                        {project.title}
+                      </Box>
+                    </Grid>
+                    {editButtons}
+                  </Grid>
+                }
+              ></CardHeader>
+              <CardContent>
+                <Box
+                  component={Typography}
+                  variant="h6"
+                  color={theme.palette.gray[600] + "!important"}
+                  paddingTop=".25rem"
+                  paddingBottom=".25rem"
+                  fontSize=".75rem!important"
+                  letterSpacing=".04em"
+                  marginBottom="1.5rem!important"
+                  classes={{ root: classes.typographyRootH6 }}
+                >
+                  Project Details
+                </Box>
+                <div className={classes.plLg4}>
+                  <Grid container>
+                    <Grid item xs="auto">
+                      <Box component={Typography} variant="h5" display="inline">
+                        Owner &nbsp;&nbsp;
+                      </Box>
+                      <Chip
+                        variant="outlined"
+                        label={ownerLabel}
+                        avatar={<Avatar src={project.owner.image} />}
+                        style={{
+                          color: "black!important",
+                        }}
+                      />
+                      <br />
+                      <br />
+                    </Grid>
+
+                    <Grid item xs={12} lg={12} style={{ marginBottom: "10px" }}>
+                      <Box component={Typography} variant="h5">
+                        Collaborators &nbsp;&nbsp;
+                      </Box>
+
+                      {project.collaborators.length > 0
+                        ? project.collaborators.map((collaborator, index) => {
+                            return (
+                              <li
+                                key={index}
+                                style={{ display: "inline", margin: "3px" }}
+                              >
+                                <Chip
+                                  variant="outlined"
+                                  label={collaborator.name}
+                                  avatar={<Avatar src={collaborator.image} />}
+                                  style={{ color: "black!important" }}
+                                />
+                              </li>
+                            );
+                          })
+                        : null}
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      lg={12}
+                      style={{ marginBottom: "1rem!important" }}
+                    >
+                      <br />
+                      <Box component={Typography} variant="h5">
+                        Description &nbsp;&nbsp;
+                      </Box>
+                      <p
+                        style={{
+                          textAlign: "justify",
+                          textJustify: "inter-word",
+                          paddingLeft: "1%",
+                          paddingRight: "1%",
+                        }}
+                      >
+                        {project.description}
+                      </p>
+                    </Grid>
+                  </Grid>
+                  <Grid container>
+                    <Grid item xs={12} lg={6}>
+                      <br />
+
+                      <Box component={Typography} variant="h5">
+                        Pre Requisite &nbsp;&nbsp;
+                      </Box>
+
+                      <span
+                        style={{
+                          textAlign: "justify",
+                          textJustify: "inter-word",
+                          paddingLeft: "1%",
+                          paddingRight: "1%",
+                        }}
+                      >
+                        {project.preRequisite}
+                      </span>
+                    </Grid>
+
+                    <Grid item xs={12} lg={6}>
+                      <br />
+
+                      <Box component={Typography} variant="h5">
+                        Duration &nbsp;&nbsp;
+                      </Box>
+
+                      <span
+                        style={{
+                          textAlign: "justify",
+                          textJustify: "inter-word",
+                          paddingLeft: "1%",
+                          paddingRight: "1%",
+                        }}
+                      >
+                        {project.duration}
+                      </span>
+                    </Grid>
+
+                    <Grid item xs={12} lg={12} style={{ marginBottom: "10px" }}>
+                      <br />
+                      <br />
+                      <Box component={Typography} variant="h5">
+                        Tags &nbsp;&nbsp;
+                      </Box>
+
+                      {project.tags.length > 0
+                        ? project.tags.map((tag, index) => {
+                            return (
+                              <li
+                                key={index}
+                                style={{
+                                  display: "inline",
+                                  margin: "3px",
+                                }}
+                              >
+                                <Chip
+                                  variant="default"
+                                  // size="small"
+                                  label={tag.name}
+                                  color="primary"
+                                  style={{ marginBottom: "5px!important" }}
+                                />
+                              </li>
+                            );
+                          })
+                        : null}
+                    </Grid>
+                  </Grid>
+                </div>
+                <Box
+                  component={Divider}
+                  marginBottom="0.8rem!important"
+                  marginTop="0.8rem!important"
+                />
+                {joinRequests}
+                <Box
+                  component={Typography}
+                  variant="h6"
+                  color={theme.palette.gray[600] + "!important"}
+                  paddingTop=".25rem"
+                  paddingBottom=".25rem"
+                  fontSize=".75rem!important"
+                  letterSpacing=".04em"
+                  marginBottom="1.5rem!important"
+                  classes={{ root: classes.typographyRootH6 }}
+                >
+                  Contact Information
+                </Box>
+                <div className={classes.plLg4}>
+                  <Grid container>
+                    <Grid item xs={12} lg={12}>
+                      <span
+                        style={{
+                          textAlign: "justify",
+                          textJustify: "inter-word",
+                        }}
+                      >
+                        {project.communication}
+                      </span>
+                    </Grid>
+                  </Grid>
+                </div>
+
+                <Box
+                  component={Divider}
+                  marginBottom="0.8rem!important"
+                  marginTop="0.8rem!important"
+                />
+              </CardContent>
+
+              <Divider />
+
+              {joinRequestButton}
+            </Card>
+          </Grid>
+        </Grid>
+      </Container>
+    );
+  }
 
   return (
     <>

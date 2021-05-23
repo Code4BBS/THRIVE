@@ -10,6 +10,7 @@ import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
 import Projects from "views/admin/Project/Projects.js";
 import AddProject from "views/admin/Project/Add Project.js";
+import Project from "views/admin/Project/Project.js";
 import Quora from "views/admin/Quora/index.js";
 import ViewQuestion from "views/admin/Quora/viewQuestion";
 
@@ -116,6 +117,16 @@ var routes = [
     component: ViewQuestion,
     layout: "/admin",
   },
+
+  {
+    path: "/project/:id",
+    name: "Demo Project",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: Project,
+    layout: "/admin",
+  },
+
   // {
   //   path: "/login",
   //   name: "Login",
