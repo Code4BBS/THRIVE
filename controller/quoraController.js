@@ -42,7 +42,7 @@ exports.getAllQuestions = catchAsync(async (req,res,next) => {
 })
 
 exports.getAQuestion = catchAsync(async(req,res,next) => {
-    const question = await Question.findById(req.params.id);
+    const question = await (await Question.findById(req.params.id)).populate(`answers`);
     res.status(200).json({
         status : "success",
         question

@@ -23,6 +23,8 @@ import Archive from "@material-ui/icons/Archive";
 import CreateIcon from "@material-ui/icons/Create";
 import QuestionCard from './../../../components/Cards/QuestionCard';
 import { withStyles } from "@material-ui/core";
+import ViewQuestion from "./viewQuestion";
+// import viewQuestion from "./viewQuestion";
 
 class Quora extends Component {
   state = {
@@ -30,12 +32,20 @@ class Quora extends Component {
     question : {
       body : "",
       isAnanymous : false
-    }
+    },
+    viewQuestion : false,
+    qId : null
   }
   render() {
+    const QcardClicked = (e,id) => {
+        e.preventDefault();
+        alert(id);
+        this.setState({viewQuestion : true});
+        this.setState({qId : id});
+    }
     const { classes } = this.props;
     let ques = null;
-    if(this.props.QuoraQuestions.length != 0) {
+    if(this.state.viewQuestion == false && this.props.QuoraQuestions.length != 0) {
       ques = this.props.QuoraQuestions.map((el,idx) => {
         // let user = "Ananymous";
         let user = el.isAnanymous == 0 ? el.user.name : "Ananymous"
@@ -44,14 +54,16 @@ class Quora extends Component {
           paddingLeft="15px"
           paddingRight="15px">
           <QuestionCard name = {user} isAnanymous = {el.isAnanymous} upvotes = {el.upvotes} downvotes = {el.downvotes} 
-            question = {el.questionBody} answers = {el.answers} time = {el.createdAt} key = {idx}/>
+            question = {el.questionBody} answers = {el.answers} time = {el.createdAt} key = {idx} 
+            cardClicked = {(e,id) => {QcardClicked(e,el._id)} }/>
           </Grid>
         )
       } )
     }
     return(
       <>
-        <Grid container component={Box} marginBottom="39px">
+        {!this.state.viewQuestion ? (
+          <Grid container component={Box} marginBottom="39px">
           <Grid item xs={12}>
             <Card classes={{ root: classes.cardRoot }}>
               <CardHeader
@@ -79,7 +91,10 @@ class Quora extends Component {
               </CardContent>
             </Card>
           </Grid>
-        </Grid>
+          </Grid>
+        ) : (<ViewQuestion id = {this.state.qId}/>)
+        }
+        
     </>
     )
     }

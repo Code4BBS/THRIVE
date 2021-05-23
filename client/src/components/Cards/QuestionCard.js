@@ -28,7 +28,7 @@ const ImgMediaCard = (props) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} onClick = {props.cardClicked}>
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

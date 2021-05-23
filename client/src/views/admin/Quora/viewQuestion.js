@@ -12,21 +12,47 @@ import {Grid, Box, Container, withStyles, CardHeader, Card, Typography, CardCont
 
 class QuoraCont extends Component {
     state = {
-        questions : [],
+        question : {},
         isLoading : false,
+        answers : [],
+        answersLength : 0,
+        newAnswer : ""
     }
-    getAllQuestions = () => {
+    getQuestion = (id) => {
         this.setState({isLoading : true})
-        axios.get('/api/v1/quora/questions').then((res) => {
-            console.log(res.data.questions);
+        axios.get(`/api/v1/quora/questions/${id}`).then((res) => {
+            // console.log(res.data.question);
             this.setState({
                 isLoading : false,
-                questions : res.data.questions
+                question : res.data.question,   
+                answersLength : res.data.question.answers.length,
+                answers : res.data.question.answers
             })
+            console.log(res)
+        })
+    }
+    addAnswer = () => {
+        let answer = {
+            answer : this.state.newAnswer,
+            isAnonymous : 0
+        }
+        axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {
+            // console.log(res.data.finalQuestion.answers);
+            // console.log(this.state.answers)
+            // let newAnswer = 
+            
+            this.setState({question : res.data.finalQuestion ,answersLength : res.data.finalQuestion.answers.length, newAnswer : ""});
+            // this.setState({answers : [...res.data.finalQuestion.answers]})
+//.............................xxxxx   //Facing issue with updating answers array. Need to fix later
         })
     }
     componentDidMount = () => {
-        this.getAllQuestions();
+        this.getQuestion(this.props.id);
+    }
+    InputChanged = (e) => {
+        e.preventDefault();
+        this.setState({newAnswer : e.target.value});
+        console.log(e.target.value);
     }
     render() {
         const { classes } = this.props;
@@ -34,13 +60,13 @@ class QuoraCont extends Component {
             <div>
                 {!this.state.isLoading ? (
                 <>
-                    <Header />
+                    {/* <Header />
                     <Container
                     maxWidth={false}
                     component={Box}
                     marginTop="-6rem"
                     classes={{ root: classes.containerRoot }}
-                    >
+                    > */}
                     {/* <Quora QuoraQuestions = {this.state.questions}/> */}
                     <Grid container>
                         <Grid
@@ -93,7 +119,8 @@ class QuoraCont extends Component {
                                         <Card>
                                             <CardContent>
                                                 <Typography variant = "p" component = "p">
-                                                A question is an utterance which typically functions as a request for information, which is expected to be provided in the form of an answer. Questions can thus be understood as a kind of illocutionary act in the field of pragmatics or as special kinds of propositions in frameworks of formal semantics such as alternative semantics or inquisitive semantics. Questions are often conflated with interrogatives, which are the grammatical forms typically used to achieve them. Rhetorical questions, for example, are interrogative in form but may not be considered true questions as they are not expected to be answered. Conversely, non-interrogative grammatical structures may be considered questions as in the case of the imperative sentence "tell me your name."
+                                                {/* A question is an utterance which typically functions as a request for information, which is expected to be provided in the form of an answer. Questions can thus be understood as a kind of illocutionary act in the field of pragmatics or as special kinds of propositions in frameworks of formal semantics such as alternative semantics or inquisitive semantics. Questions are often conflated with interrogatives, which are the grammatical forms typically used to achieve them. Rhetorical questions, for example, are interrogative in form but may not be considered true questions as they are not expected to be answered. Conversely, non-interrogative grammatical structures may be considered questions as in the case of the imperative sentence "tell me your name." */}
+                                                {this.state.question.questionBody}
                                                 </Typography>
                                             </CardContent>
                                         </Card>
@@ -102,19 +129,19 @@ class QuoraCont extends Component {
                                 <Grid container>
                                     <Grid item xs = {2} lg = {1}>
                                         <IconButton>
-                                            <Typography>36</Typography>
+                                            <Typography>{this.state.question.upvotes}</Typography>
                                             <ThumbUpOutlinedIcon/>
                                         </IconButton>       
                                     </Grid>
                                     <Grid item xs = {2} lg = {1}>
                                         <IconButton>
-                                            <Typography>4</Typography>
+                                            <Typography>{this.state.question.downvotes}</Typography>
                                             <ThumbDownOutlinedIcon/>
                                         </IconButton>
                                     </Grid>
                                     <Grid item xs = {2} lg = {1}>
                                         <IconButton>
-                                            <Typography>3</Typography>
+                                            <Typography>{this.state.answersLength}</Typography>
                                             <QuestionAnswerOutlinedIcon/>
                                         </IconButton>
                                     </Grid>
@@ -137,25 +164,27 @@ class QuoraCont extends Component {
                                           shrink: true,
                                         }}
                                         variant="outlined"
+                                        onChange = {(e) => this.InputChanged(e)}
                                         />
                                     </Grid>
                                     <Grid item xs = {4}>
-                                        <Button variant="contained" color="primary">Add Answer</Button>
+                                        <Button variant="contained" color="primary" onClick = {() => this.addAnswer()}>Add Answer</Button>
                                     </Grid>
                                   </Grid>
                                 </CardContent>
                                   <Grid container>
                                     <Grid item xs = {12}>
                                         <Card>
-                                            <CardContent>
-                                                <Typography variant = "h5">Shrirang Deshmukh</Typography>
-                                                <Divider/>
-                                                <Typography variant = "p">I was talking to a friend on WhatsApp video call and I 
-                                                was trying to explain a funny situation from a picture I have in my phone. So I 
-                                                thought let me send the picture instead. I opened my photo gallery and started 
-                                                scrolling to look for that picture. But before I find that picture, I found the following 
-                                                picture:</Typography>
-                                            </CardContent>
+                                            {this.state.answers.map((el,id) => {
+                                                return(
+                                                <CardContent key = {id}>
+                                                    <Typography variant = "h5">{el.user}</Typography>
+                                                    <Divider/>
+                                                    <Typography variant = "p">{el.answer}</Typography>
+                                                </CardContent>
+                                                )
+                                                })
+                                            }
                                         </Card>
                                     </Grid>
                                   </Grid>
@@ -163,7 +192,7 @@ class QuoraCont extends Component {
                             </Card>
                         </Grid>
                     </Grid>
-                    </Container>
+                    {/* </Container> */}
                 </>
                 ) : null}
             </div>
