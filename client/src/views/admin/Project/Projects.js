@@ -20,9 +20,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
-// import Tooltip from "@material-ui/core/Tooltip";
+import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui/lab components
-// import AvatarGroup from "@material-ui/lab/AvatarGroup";
+import AvatarGroup from "@material-ui/lab/AvatarGroup";
 // import Pagination from "@material-ui/lab/Pagination";
 // @material-ui/icons components
 import MoreVert from "@material-ui/icons/MoreVert";
@@ -80,7 +80,7 @@ const Tables = ({ user }) => {
     setPage(newPage);
   };
 
-  const headers = ["Project", "Owner", "Tags", "Duration", "More Details"];
+  const headers = ["Project", "Owner", "Tags", "Collaborators", "More Details"];
 
   if (user && user.role === "admin") {
     headers.push("");
@@ -252,11 +252,25 @@ const Tables = ({ user }) => {
                             <TableCell
                               classes={{ root: classes.tableCellRoot }}
                             >
-                              {project.duration
-                                ? project.duration
-                                : "Not Specified"}
+                              {project.collaborators.length > 0 ? (
+                                <AvatarGroup>
+                                  {project.collaborators.map((collaborator) => {
+                                    return (
+                                      <Tooltip
+                                        title={collaborator.name}
+                                        placement="top"
+                                      >
+                                        <Avatar
+                                          classes={{ root: classes.avatarRoot }}
+                                          alt="..."
+                                          src={collaborator.image}
+                                        />
+                                      </Tooltip>
+                                    );
+                                  })}
+                                </AvatarGroup>
+                              ) : null}
                             </TableCell>
-
                             <TableCell
                               classes={{ root: classes.tableCellRoot }}
                             >

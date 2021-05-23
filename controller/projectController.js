@@ -48,8 +48,15 @@ const createProject = catchAsync(async (req, res, next) => {
   const owner = req.user.id;
   if (!owner) return next(new AppError("No user Found", 500));
 
-  const { title, description, preRequisite, communication, duration, tags } =
-    req.body;
+  const {
+    title,
+    description,
+    preRequisite,
+    communication,
+    duration,
+    tags,
+    collaborators,
+  } = req.body;
   console.log(tags);
   if (!title || !description || !communication)
     return next(new AppError("All Required Fields not there", 400));
@@ -62,6 +69,7 @@ const createProject = catchAsync(async (req, res, next) => {
     communication,
     owner,
     duration,
+    collaborators,
   });
   const message = `Project ${title} requirements are matching your profile`;
   console.log(message);
