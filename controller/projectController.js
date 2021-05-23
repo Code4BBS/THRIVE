@@ -30,9 +30,9 @@ const getProject = catchAsync(async (req, res, next) => {
       model: "Tag",
       select: "name ",
     })
-    .populate({ path: "owner", model: "User", select: "name image" });
-  // .populate({ path: "collaborators", model: "User", select: "name image" })
-  // .populate({ path: "request", model: "User", select: "name image" });
+    .populate({ path: "owner", model: "User", select: "name image" })
+    .populate({ path: "collaborators", model: "User", select: "name image" })
+    .populate({ path: "request", model: "User", select: "name image" });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -169,6 +169,74 @@ const getAllBlacklistedProjects = async (req, res, next) => {
   });
 };
 
+const requestToJoin = catchAsync(async (req, res, next) => {
+  const { request } = req.body;
+
+  const updatedProject = await Project.findByIdAndUpdate(
+    req.params.id,
+    { $push: { requests: request } },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!updatedProject) return next(new AppError("Project not found", 404));
+
+  res.status(200).json({
+    status: "success",
+    message: "Project updated successfully",
+    data: { project: updatedProject },
+  });
+});
+
+const acceptRequest = catchAsync(async (req, res, next) => {
+  const requesterId = req.query.id;
+
+  const project = await Project.findById(
+    req.params.id,
+    {
+      $pull: { requests: { requester: requesterId } },
+      $push: { collaborators: requesterId },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!project) return next(new AppError("Project not found", 404));
+
+  res.status(200).json({
+    status: "success",
+    message: "Request Updated successfully",
+    data: { project },
+  });
+});
+
+const rejectRequest = catchAsync(async (req, res, next) => {
+  const requesterId = req.query.id;
+
+  const project = await Project.findById(
+    req.params.id,
+    {
+      $pull: { requests: { requester: requesterId } },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!project) return next(new AppError("Project not found", 404));
+
+  res.status(200).json({
+    status: "success",
+    message: "Request Updated successfully",
+    data: { project },
+  });
+});
+
 module.exports = {
   getAllProjects,
   getProject,
@@ -178,4 +246,7 @@ module.exports = {
   whitelistProject,
   blacklistProject,
   getAllBlacklistedProjects,
+  requestToJoin,
+  acceptRequest,
+  rejectRequest,
 };

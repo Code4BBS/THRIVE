@@ -34,4 +34,10 @@ router.put(
   projectController.whitelistProject
 );
 
+router.put("/request/:id/join", projectController.requestToJoin);
+
+router.put("/request/:id/accept", projectController.acceptRequest);
+
+router.put("/request/:id/reject", projectController.rejectRequest);
+
 module.exports = router;
