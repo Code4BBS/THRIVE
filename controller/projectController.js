@@ -83,8 +83,12 @@ const createProject = catchAsync(async (req, res, next) => {
     message: message,
     projectId: newProject._id,
   };
+  let projectOwners = collaborators;
+  projectOwners.push(owner);
+
   const updatedUsers = await User.updateMany(
     {
+      _id: { $nin: projectOwners },
       tags: { $all: tags },
     },
     { $push: { notifications: notification }, notificationsSeen: false }
