@@ -41,7 +41,7 @@ const Tables = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [modalDetails, setModalDetails] = React.useState(null);
+  // const [modalDetails, setModalDetails] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [projects, setProjects] = React.useState([]);
   const [anchorId, setAnchorId] = React.useState(null);
@@ -49,15 +49,15 @@ const Tables = ({ user }) => {
   const [limit, setLimit] = React.useState(10);
   const [page, setPage] = React.useState(0);
 
-  const handleModalOpen = (project) => {
-    setModalDetails({
-      title: project.title,
-      description: project.description,
-      communication: project.communication,
-      preRequisite: project.preRequisite,
-    });
-    setOpen(true);
-  };
+  // const handleModalOpen = (project) => {
+  //   setModalDetails({
+  //     title: project.title,
+  //     description: project.description,
+  //     communication: project.communication,
+  //     preRequisite: project.preRequisite,
+  //   });
+  //   setOpen(true);
+  // };
 
   const handleModalClose = () => {
     setOpen(false);
@@ -101,19 +101,19 @@ const Tables = ({ user }) => {
     getProjects();
   }, []);
 
-  let modal = null;
-  if (modalDetails !== null && modalDetails !== undefined) {
-    modal = (
-      <Modal
-        open={open}
-        handleClose={handleModalClose}
-        title={modalDetails.title}
-        description={modalDetails.description}
-        communication={modalDetails.communication}
-        preRequisite={modalDetails.preRequisite}
-      />
-    );
-  }
+  // let modal = null;
+  // if (modalDetails !== null && modalDetails !== undefined) {
+  //   modal = (
+  //     <Modal
+  //       open={open}
+  //       handleClose={handleModalClose}
+  //       title={modalDetails.title}
+  //       description={modalDetails.description}
+  //       communication={modalDetails.communication}
+  //       preRequisite={modalDetails.preRequisite}
+  //     />
+  //   );
+  // }
 
   const blacklistProject = (project, index) => {
     axios.put(`/api/v1/project/blacklist/${project._id}`).then((response) => {
@@ -278,7 +278,9 @@ const Tables = ({ user }) => {
                                 variant="contained"
                                 size="small"
                                 style={{ marginRight: "0.5rem" }}
-                                onClick={() => handleModalOpen(project)}
+                                onClick={() =>
+                                  (window.location.href = `/admin/project/${project._id}`)
+                                }
                               >
                                 Click Here
                               </Button>
@@ -350,7 +352,7 @@ const Tables = ({ user }) => {
           </Card>
         </Box>
 
-        {modal}
+        {/* {modal} */}
       </Container>
     </>
   );

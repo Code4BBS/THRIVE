@@ -32,7 +32,14 @@ const getProject = catchAsync(async (req, res, next) => {
     })
     .populate({ path: "owner", model: "User", select: "name image" })
     .populate({ path: "collaborators", model: "User", select: "name image" })
-    .populate({ path: "request", model: "User", select: "name image" });
+    .populate({
+      path: "requests",
+      populate: {
+        path: "requester",
+        model: "User",
+        select: "name image",
+      },
+    });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -171,6 +178,7 @@ const getAllBlacklistedProjects = async (req, res, next) => {
 
 const requestToJoin = catchAsync(async (req, res, next) => {
   const { request } = req.body;
+  console.log(request);
 
   const updatedProject = await Project.findByIdAndUpdate(
     req.params.id,
@@ -192,8 +200,9 @@ const requestToJoin = catchAsync(async (req, res, next) => {
 
 const acceptRequest = catchAsync(async (req, res, next) => {
   const requesterId = req.query.id;
+  console.log(requesterId);
 
-  const project = await Project.findById(
+  const project = await Project.findByIdAndUpdate(
     req.params.id,
     {
       $pull: { requests: { requester: requesterId } },
@@ -203,7 +212,22 @@ const acceptRequest = catchAsync(async (req, res, next) => {
       new: true,
       runValidators: true,
     }
-  );
+  )
+    .populate({
+      path: "tags",
+      model: "Tag",
+      select: "name ",
+    })
+    .populate({ path: "owner", model: "User", select: "name image" })
+    .populate({ path: "collaborators", model: "User", select: "name image" })
+    .populate({
+      path: "requests",
+      populate: {
+        path: "requester",
+        model: "User",
+        select: "name image",
+      },
+    });
 
   if (!project) return next(new AppError("Project not found", 404));
 
@@ -217,7 +241,7 @@ const acceptRequest = catchAsync(async (req, res, next) => {
 const rejectRequest = catchAsync(async (req, res, next) => {
   const requesterId = req.query.id;
 
-  const project = await Project.findById(
+  const project = await Project.findByIdAndUpdate(
     req.params.id,
     {
       $pull: { requests: { requester: requesterId } },
@@ -226,7 +250,22 @@ const rejectRequest = catchAsync(async (req, res, next) => {
       new: true,
       runValidators: true,
     }
-  );
+  )
+    .populate({
+      path: "tags",
+      model: "Tag",
+      select: "name ",
+    })
+    .populate({ path: "owner", model: "User", select: "name image" })
+    .populate({ path: "collaborators", model: "User", select: "name image" })
+    .populate({
+      path: "requests",
+      populate: {
+        path: "requester",
+        model: "User",
+        select: "name image",
+      },
+    });
 
   if (!project) return next(new AppError("Project not found", 404));
 
