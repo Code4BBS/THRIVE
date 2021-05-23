@@ -70,6 +70,10 @@ const Results = ({
     }
   };
 
+  const resetSelections = () => {
+    setSelectedCollaborators([]);
+  };
+
   useEffect(() => {
     filterResults();
   }, [search]);
@@ -113,73 +117,69 @@ const Results = ({
       <Box mt={3}>
         <Card classes={{ root: classes.cardRoot }}>
           <CardContent style={{ padding: 0 }}>
-            <TableContainer>
-              <TableContainer
-                className={classes.table}
-                aria-label="simple table"
-                style={{ margin: 0 }}
-              >
-                <TableBody>
-                  <TableRow>
-                    <TableCell
-                      component="th"
-                      scope="row"
-                      className={classes.cellB}
-                      style={{ verticalAlign: "middle" }}
-                    >
-                      Add Collaborator for your project
-                    </TableCell>
+            <TableContainer
+              className={classes.table}
+              aria-label="simple table"
+              style={{ margin: 0 }}
+            >
+              <TableBody>
+                <TableRow>
+                  <TableCell
+                    component="th"
+                    scope="row"
+                    className={classes.cellB}
+                    style={{ verticalAlign: "middle" }}
+                  >
+                    Add Collaborator for your project
+                  </TableCell>
 
-                    <TableCell align="right" className={classes.cell}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ alignSelf: "right" }}
-                        onClick={sendCollaborators}
-                      >
-                        Save
-                      </Button>
-                      &nbsp;&nbsp;
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={resetSearch}
-                        disabled={selectedCollaborators === []}
-                        style={{ alignSelf: "right" }}
-                      >
-                        Reset
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                  <TableRow style={{ marginLeft: "5px", marginTop: "5px" }}>
-                    {selectedCollaborators.length > 0
-                      ? customers.map((collaborater, index) => {
-                          if (
-                            selectedCollaborators.includes(collaborater._id)
-                          ) {
-                            return (
-                              <li
-                                key={index}
-                                style={{ display: "inline", margin: "3px" }}
-                              >
-                                <Chip
-                                  variant="default"
-                                  size="small"
-                                  label={collaborater.name}
-                                  color="primary"
-                                  onClick={() =>
-                                    changeCollaborators(collaborater)
-                                  }
-                                />
-                              </li>
-                            );
-                          }
-                          return null;
-                        })
-                      : null}
-                  </TableRow>
-                </TableBody>
-              </TableContainer>
+                  <TableCell align="right" className={classes.cell}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      style={{ alignSelf: "right" }}
+                      onClick={sendCollaborators}
+                    >
+                      Save
+                    </Button>
+                    &nbsp;&nbsp;
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={resetSelections}
+                      disabled={selectedCollaborators === []}
+                      style={{ alignSelf: "right" }}
+                    >
+                      Reset
+                    </Button>
+                  </TableCell>
+                </TableRow>
+                <TableRow style={{ marginLeft: "5px", marginTop: "5px" }}>
+                  {selectedCollaborators.length > 0
+                    ? customers.map((collaborater, index) => {
+                        if (selectedCollaborators.includes(collaborater._id)) {
+                          return (
+                            <li
+                              key={index}
+                              style={{ display: "inline", margin: "3px" }}
+                            >
+                              <Chip
+                                variant="default"
+                                size="small"
+                                label={collaborater.name}
+                                color="primary"
+                                onClick={() =>
+                                  changeCollaborators(collaborater)
+                                }
+                              />
+                            </li>
+                          );
+                        }
+                        return null;
+                      })
+                    : null}
+                </TableRow>
+              </TableBody>
             </TableContainer>
           </CardContent>
         </Card>

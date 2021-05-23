@@ -97,6 +97,19 @@ const componentStyles = (theme) => ({
   checkBoxLabel: {
     fontSize: "0.8rem",
   },
+
+  searchInput: {
+    color: "black",
+    width: "270px",
+    backgroundColor: "initial",
+    border: 0,
+    boxShadow: "none",
+    padding: "0",
+    "&::placeholder": {
+      color: theme.palette.dark[200],
+      fontSize: "1rem",
+    },
+  },
 });
 
 export default componentStyles;

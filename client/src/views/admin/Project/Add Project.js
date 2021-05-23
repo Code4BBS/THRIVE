@@ -238,6 +238,7 @@ function Profile({ user }) {
                           name="title"
                           onChange={handleChange}
                           value={values.title}
+                          classes={{ input: classes.searchInput }}
                         />
                       </FormControl>
                     </FormGroup>
@@ -257,7 +258,7 @@ function Profile({ user }) {
                             paddingLeft: "0.75rem",
                             paddingRight: "0.75rem",
                           }}
-                          // className={classes.textAreaRoot}
+                          classes={{ input: classes.searchInput }}
                           fullWidth
                           multiline
                           rows="4"
@@ -290,17 +291,16 @@ function Profile({ user }) {
                             paddingLeft: "0.75rem",
                             paddingRight: "0.75rem",
                           }}
+                          classes={{ input: classes.searchInput }}
                           type="text"
                           value={values.preRequisite}
                           label="Pre Requisite"
                           name="preRequisite"
                           onChange={handleChange}
                           disabled={preRequisite}
+                          placeholder="E.g. Python is required skill."
                         />
                       </FormControl>
-                      <FormHelperText variant="outlined">
-                        E.g. Python is required skill.
-                      </FormHelperText>
 
                       <FormControl>
                         <FormControlLabel
@@ -345,17 +345,16 @@ function Profile({ user }) {
                             paddingLeft: "0.75rem",
                             paddingRight: "0.75rem",
                           }}
+                          classes={{ input: classes.searchInput }}
                           type="text"
                           value={values.duration}
                           label="Duration"
                           name="duration"
                           onChange={handleChange}
                           disabled={duration}
+                          placeholder="E.g. 1 month from June 2021"
                         />
                       </FormControl>
-                      <FormHelperText variant="outlined">
-                        E.g. 1 month from June 2021
-                      </FormHelperText>
 
                       <FormControl>
                         <FormControlLabel
@@ -490,9 +489,10 @@ function Profile({ user }) {
                             paddingLeft: "0.75rem",
                             paddingRight: "0.75rem",
                           }}
+                          classes={{ input: classes.searchInput }}
                           fullWidth
                           multiline
-                          rows="4"
+                          rows="3"
                           label="communication"
                           name="communication"
                           placeholder="Enter Contact Details"
