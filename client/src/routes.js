@@ -8,11 +8,12 @@ import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
-
-import Projects from "views/admin/Projects.js";
-import AddProject from "views/admin/Add Project.js";
+import Projects from "views/admin/Project/Projects.js";
+import AddProject from "views/admin/Project/Add Project.js";
+import Project from "views/admin/Project/Project.js";
 import Quora from "views/admin/Quora/index.js";
 import ViewQuestion from "views/admin/Quora/viewQuestion";
+
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -116,6 +117,16 @@ var routes = [
     component: ViewQuestion,
     layout: "/admin",
   },
+
+  {
+    path: "/project/:id",
+    name: "Demo Project",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: Project,
+    layout: "/admin",
+  },
+
   // {
   //   path: "/login",
   //   name: "Login",

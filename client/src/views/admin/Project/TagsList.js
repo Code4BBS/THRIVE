@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { clone } from "ramda";
-import TagGroup from "./../admin/customer/CustomerListView/TagGroup";
+import TagGroup from "../customer/CustomerListView/TagGroup";
 
 import {
   Avatar,

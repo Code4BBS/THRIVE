@@ -16,8 +16,28 @@ router.put("/:id", projectController.updateProject);
 
 router.delete("/:id", projectController.deleteProject);
 
-router.put("/blacklist/:id", projectController.blacklistProject);
+router.get(
+  "/blacklisted",
+  authController.restrictTo("admin"),
+  projectController.getAllBlacklistedProjects
+);
 
-router.put("/whitelist/:id", projectController.whitelistProject);
+router.put(
+  "/blacklist/:id",
+  authController.restrictTo("admin"),
+  projectController.blacklistProject
+);
+
+router.put(
+  "/whitelist/:id",
+  authController.restrictTo("admin"),
+  projectController.whitelistProject
+);
+
+router.put("/request/:id/join", projectController.requestToJoin);
+
+router.put("/request/:id/accept", projectController.acceptRequest);
+
+router.put("/request/:id/reject", projectController.rejectRequest);
 
 module.exports = router;
