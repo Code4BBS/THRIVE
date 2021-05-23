@@ -62,12 +62,15 @@ const createProject = catchAsync(async (req, res, next) => {
     duration,
   });
   const message = `Project ${title} requirements are matching your profile`;
-  console.log(message);
+  let notification = {
+    message: message,
+    projectId: newProject._id,
+  };
   const updatedUsers = await User.updateMany(
     {
       tags: { $all: tags },
     },
-    { $push: { notifications: message }, notificationsSeen: false }
+    { $push: { notifications: notification }, notificationsSeen: false }
   );
 
   res.status(201).json({

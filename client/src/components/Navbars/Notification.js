@@ -21,7 +21,6 @@ const useStyles = makeStyles({
     boxShadow: "0px 0px",
     padding: 0,
     margin: 0,
-    cursor: "default",
   },
   bullet: {
     display: "inline-block",
@@ -54,6 +53,7 @@ const useStyles = makeStyles({
       color: "rgb(255,255,255)",
       boxShadow: "0px 3px 5px rgb(0,0,0,0.4)",
     },
+    cursor: "pointer",
   },
   head: {
     fontWeight: 600,
@@ -73,7 +73,10 @@ function Notification({ user }) {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([
-    "You have no Notifications",
+    {
+      message: "You have no Notifications",
+      link: "NULL",
+    },
   ]);
 
   const [status, setNotificationStatus] = useState(user.notificationsSeen);
@@ -94,8 +97,11 @@ function Notification({ user }) {
       })
       .then((response) => {
         let userNotifications = response.data.data.notifications;
+        let notificationsInorder = userNotifications.reverse();
         let notificationStatus = response.data.data.status;
-        setNotifications(userNotifications);
+        console.log(notificationsInorder);
+        if (notificationsInorder.length > 0)
+          setNotifications(notificationsInorder);
         setNotificationStatus(true);
       })
       .catch((err) => {
@@ -103,6 +109,9 @@ function Notification({ user }) {
       });
   };
 
+  const redirectToProject = (projectId) => {
+    alert(projectId);
+  };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   const cardContent = (
@@ -112,7 +121,7 @@ function Notification({ user }) {
         style={{ padding: "10px 0px 0px 10px", margin: 0 }}
       />
       <CardContent style={{ padding: 0, margin: 0 }}>
-        {notifications.reverse().map((message, key) => {
+        {notifications.map((notification, key) => {
           return (
             <div className={classes.tile}>
               <div
@@ -126,10 +135,10 @@ function Notification({ user }) {
               </div>
               <div>
                 <Typography className={classes.head}>
-                  {message.split("requirements are")[0]}
+                  {notification.message.split("requirements are")[0]}
                 </Typography>
                 <Typography className={classes.desc}>
-                  {message.split("requirements are")[1]}
+                  {notification.message.split("requirements are")[1]}
                 </Typography>
               </div>
             </div>

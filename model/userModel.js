@@ -84,7 +84,16 @@ const userSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
-    notifications: [String],
+    notifications: [
+      {
+        message: {
+          type: String,
+        },
+        projectId: {
+          type: String,
+        },
+      },
+    ],
     notificationsSeen: {
       type: Boolean,
       default: true,
