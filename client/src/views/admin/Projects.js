@@ -1,5 +1,5 @@
 import React from "react";
-
+import PerfectScrollbar from "react-perfect-scrollbar";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -19,6 +19,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import TablePagination from "@material-ui/core/TablePagination";
 // import Tooltip from "@material-ui/core/Tooltip";
 // @material-ui/lab components
 // import AvatarGroup from "@material-ui/lab/AvatarGroup";
@@ -45,6 +46,8 @@ const Tables = ({ user }) => {
   const [projects, setProjects] = React.useState([]);
   const [anchorId, setAnchorId] = React.useState(null);
   const [currentAnchor, setCurrentAnchor] = React.useState(null);
+  const [limit, setLimit] = React.useState(10);
+  const [page, setPage] = React.useState(0);
 
   const handleModalOpen = (project) => {
     setModalDetails({
@@ -67,6 +70,14 @@ const Tables = ({ user }) => {
 
   const handleMenuClose = () => {
     setAnchorId(null);
+  };
+
+  const handleLimitChange = (event) => {
+    setLimit(event.target.value);
+  };
+
+  const handlePageChange = (event, newPage) => {
+    setPage(newPage);
   };
 
   const headers = ["Project", "Owner", "Tags", "Duration", "More Details"];
@@ -131,168 +142,200 @@ const Tables = ({ user }) => {
           marginTop="3rem"
           classes={{ root: classes.cardRoot + " " + classes.cardRootDark }}
         >
-          <CardHeader
-            className={classes.cardHeader}
-            title="Projects"
-            titleTypographyProps={{
-              component: Box,
-              marginBottom: "0!important",
-              variant: "h3",
-            }}
-          ></CardHeader>
-          <TableContainer>
-            <Box
-              component={Table}
-              alignItems="center"
-              marginBottom="0!important"
-            >
-              <TableHead>
-                <TableRow>
-                  {headers.map((header, i) => {
-                    return (
-                      <TableCell
-                        key={i}
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootHead,
-                        }}
-                      >
-                        {header}
-                      </TableCell>
-                    );
-                  })}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {projects.map((project, index) => {
-                  return (
-                    <TableRow key={index}>
-                      <TableCell
-                        classes={{
-                          root:
-                            classes.tableCellRoot +
-                            " " +
-                            classes.tableCellRootBodyHead,
-                        }}
-                        component="th"
-                        variant="head"
-                        scope="row"
-                      >
-                        <Box alignItems="center" display="flex">
-                          <Box display="flex" alignItems="flex-start">
-                            <Box fontSize=".875rem" component="span">
-                              {project.title}
-                            </Box>
-                          </Box>
-                        </Box>
-                      </TableCell>
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <Box alignItems="center" display="flex">
-                          <Avatar
-                            style={{
-                              marginRight: "1rem",
-                              height: "2rem",
-                              width: "2rem",
+          <Card
+            classes={{ root: classes.cardRoot + " " + classes.cardRootDark }}
+          >
+            <CardHeader
+              className={classes.cardHeader}
+              title="Projects"
+              titleTypographyProps={{
+                component: Box,
+                marginBottom: "0!important",
+                variant: "h3",
+              }}
+            ></CardHeader>
+            <TableContainer>
+              <PerfectScrollbar>
+                <Box
+                  component={Table}
+                  alignItems="center"
+                  marginBottom="0!important"
+                >
+                  <TableHead>
+                    <TableRow>
+                      {headers.map((header, i) => {
+                        return (
+                          <TableCell
+                            key={i}
+                            classes={{
+                              root:
+                                classes.tableCellRoot +
+                                " " +
+                                classes.tableCellRootHead,
                             }}
-                            alt="..."
-                            src={project.owner.image}
-                          />
-                          <Box display="flex" alignItems="flex-start">
-                            <Box fontSize=".875rem" component="span">
-                              <a
-                                href={`/admin/${project.owner._id}`}
-                                style={{ textDecoration: "none" }}
-                              >
-                                {project.owner.name}
-                              </a>
-                            </Box>
-                          </Box>
-                        </Box>
-                      </TableCell>
-
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {project.tags.map((tag) => {
-                          return (
-                            <Button
-                              variant="contained"
-                              color="primary"
-                              size="small"
-                              style={{ marginRight: "0.5rem" }}
-                              // key={tag._id}
-                            >
-                              {tag.name}
-                            </Button>
-                          );
-                        })}
-                      </TableCell>
-
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        {project.duration ? project.duration : "Not Specified"}
-                      </TableCell>
-
-                      <TableCell classes={{ root: classes.tableCellRoot }}>
-                        <Button
-                          variant="contained"
-                          size="small"
-                          style={{ marginRight: "0.5rem" }}
-                          onClick={() => handleModalOpen(project)}
-                        >
-                          Click Here
-                        </Button>
-                      </TableCell>
-
-                      {user && user.role === "admin" ? (
-                        <TableCell
-                          classes={{ root: classes.tableCellRoot }}
-                          align="right"
-                        >
-                          <Box
-                            aria-controls={`simple-menu-${index}`}
-                            aria-haspopup="true"
-                            onClick={(e) => handleMenuClick(e, index)}
-                            size="small"
-                            component={Button}
-                            width="2rem!important"
-                            height="2rem!important"
-                            minWidth="2rem!important"
-                            minHeight="2rem!important"
                           >
-                            <Box
-                              component={MoreVert}
-                              width="1.25rem!important"
-                              height="1.25rem!important"
-                              position="relative"
-                              top="2px"
-                              color={theme.palette.gray[500]}
-                            />
-                          </Box>
-                          <Menu
-                            id={`simple-menu-${index}`}
-                            anchorEl={currentAnchor}
-                            keepMounted
-                            open={anchorId === index}
-                            onClose={handleMenuClose}
-                          >
-                            <MenuItem
-                              onClick={() => {
-                                blacklistProject(project, index);
-                                handleMenuClose();
-                              }}
-                            >
-                              Blacklist Project
-                            </MenuItem>
-                          </Menu>
-                        </TableCell>
-                      ) : null}
+                            {header}
+                          </TableCell>
+                        );
+                      })}
                     </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Box>
-          </TableContainer>
+                  </TableHead>
+                  <TableBody>
+                    {projects
+                      .slice(page * limit, (page + 1) * limit)
+                      .map((project, index) => {
+                        return (
+                          <TableRow key={index}>
+                            <TableCell
+                              classes={{
+                                root:
+                                  classes.tableCellRoot +
+                                  " " +
+                                  classes.tableCellRootBodyHead,
+                              }}
+                              component="th"
+                              variant="head"
+                              scope="row"
+                            >
+                              <Box alignItems="center" display="flex">
+                                <Box display="flex" alignItems="flex-start">
+                                  <Box fontSize=".875rem" component="span">
+                                    {project.title}
+                                  </Box>
+                                </Box>
+                              </Box>
+                            </TableCell>
+                            <TableCell
+                              classes={{ root: classes.tableCellRoot }}
+                            >
+                              <Box alignItems="center" display="flex">
+                                <Avatar
+                                  style={{
+                                    marginRight: "1rem",
+                                    height: "2rem",
+                                    width: "2rem",
+                                  }}
+                                  alt="..."
+                                  src={project.owner.image}
+                                />
+                                <Box display="flex" alignItems="flex-start">
+                                  <Box fontSize=".875rem" component="span">
+                                    <a
+                                      href={`/admin/${project.owner._id}`}
+                                      style={{ textDecoration: "none" }}
+                                    >
+                                      {project.owner.name}
+                                    </a>
+                                  </Box>
+                                </Box>
+                              </Box>
+                            </TableCell>
+
+                            <TableCell
+                              classes={{ root: classes.tableCellRoot }}
+                            >
+                              {project.tags.map((tag) => {
+                                return (
+                                  <Button
+                                    variant="contained"
+                                    color="primary"
+                                    size="small"
+                                    style={{ marginRight: "0.5rem" }}
+                                    // key={tag._id}
+                                  >
+                                    {tag.name}
+                                  </Button>
+                                );
+                              })}
+                            </TableCell>
+
+                            <TableCell
+                              classes={{ root: classes.tableCellRoot }}
+                            >
+                              {project.duration
+                                ? project.duration
+                                : "Not Specified"}
+                            </TableCell>
+
+                            <TableCell
+                              classes={{ root: classes.tableCellRoot }}
+                            >
+                              <Button
+                                variant="contained"
+                                size="small"
+                                style={{ marginRight: "0.5rem" }}
+                                onClick={() => handleModalOpen(project)}
+                              >
+                                Click Here
+                              </Button>
+                            </TableCell>
+
+                            {user && user.role === "admin" ? (
+                              <TableCell
+                                classes={{ root: classes.tableCellRoot }}
+                                align="right"
+                              >
+                                <Box
+                                  aria-controls={`simple-menu-${index}`}
+                                  aria-haspopup="true"
+                                  onClick={(e) => handleMenuClick(e, index)}
+                                  size="small"
+                                  component={Button}
+                                  width="2rem!important"
+                                  height="2rem!important"
+                                  minWidth="2rem!important"
+                                  minHeight="2rem!important"
+                                >
+                                  <Box
+                                    component={MoreVert}
+                                    width="1.25rem!important"
+                                    height="1.25rem!important"
+                                    position="relative"
+                                    top="2px"
+                                    color={theme.palette.gray[500]}
+                                  />
+                                </Box>
+                                <Menu
+                                  id={`simple-menu-${index}`}
+                                  anchorEl={currentAnchor}
+                                  keepMounted
+                                  open={anchorId === index}
+                                  onClose={handleMenuClose}
+                                >
+                                  <MenuItem
+                                    onClick={() => {
+                                      blacklistProject(project, index);
+                                      handleMenuClose();
+                                    }}
+                                  >
+                                    Blacklist Project
+                                  </MenuItem>
+                                </Menu>
+                              </TableCell>
+                            ) : null}
+                          </TableRow>
+                        );
+                      })}
+                  </TableBody>
+                </Box>
+              </PerfectScrollbar>
+            </TableContainer>
+
+            <TablePagination
+              component="div"
+              count={projects.length}
+              onChangePage={handlePageChange}
+              onChangeRowsPerPage={handleLimitChange}
+              page={page}
+              rowsPerPage={limit}
+              rowsPerPageOptions={[5, 10, 25]}
+              SelectProps={{
+                variant: "outlined",
+              }}
+            />
+          </Card>
         </Box>
+
         {modal}
       </Container>
     </>
