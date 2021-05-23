@@ -395,7 +395,7 @@ function Profile({ user }) {
                     </FormGroup>
                   </Grid>
 
-                  <Grid item xs={6} lg={6} style={{ marginBottom: "10px" }}>
+                  <Grid item xs={12} lg={6} style={{ marginBottom: "10px" }}>
                     <Button variant="outlined" size="small" onClick={showTags}>
                       {!selectedTags.length > 0 ? "Select Tags" : "Edit Tags"}
                     </Button>
@@ -425,7 +425,7 @@ function Profile({ user }) {
                     </div>
                   </Grid>
 
-                  <Grid item xs={6} lg={6} style={{ marginBottom: "10px" }}>
+                  <Grid item xs={12} lg={6} style={{ marginBottom: "10px" }}>
                     <Button
                       variant="outlined"
                       size="small"
@@ -453,7 +453,7 @@ function Profile({ user }) {
                                     // color="primary"
                                     label={collaborator.name}
                                     avatar={<Avatar src={collaborator.image} />}
-                                    styles={{ color: "black!important" }}
+                                    style={{ color: "black!important" }}
                                   />
 
                                   {/* <Chip

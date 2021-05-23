@@ -167,7 +167,7 @@ const Results = ({
                                 variant="outlined"
                                 label={collaborator.name}
                                 avatar={<Avatar src={collaborator.image} />}
-                                styles={{ color: "black!important" }}
+                                style={{ color: "black!important" }}
                                 onClick={() =>
                                   changeCollaborators(collaborator)
                                 }
