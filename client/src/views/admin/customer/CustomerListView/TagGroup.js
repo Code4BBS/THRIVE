@@ -1,8 +1,8 @@
-import React from 'react';
-import CustomChip from './CustomChip';
-import { TableCell, TableRow } from '@material-ui/core';
+import React from "react";
+import CustomChip from "./CustomChip";
+import { TableCell, TableRow } from "@material-ui/core";
 
-const TagGroup = props => {
+const TagGroup = (props) => {
   return (
     <>
       <TableRow>
@@ -19,7 +19,7 @@ const TagGroup = props => {
             })
             .map((tag, index) => {
               return (
-                <li key={index} style={{ display: 'inline' }}>
+                <li key={index} style={{ display: "inline" }}>
                   <CustomChip
                     tag={tag}
                     classes={props.classes}

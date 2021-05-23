@@ -30,7 +30,7 @@ import MoreVert from "@material-ui/icons/MoreVert";
 import Modal from "components/Custom/Modals/Modal.js";
 
 // core components
-import Header from "../../components/Headers/Header.js";
+import Header from "../../../components/Headers/Header.js";
 
 import axios from "axios";
 import componentStyles from "assets/theme/views/admin/tables.js";
