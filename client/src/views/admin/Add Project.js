@@ -25,7 +25,7 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import School from "@material-ui/icons/School";
 
 // core components
-import UserHeader from "../../components/Headers/UserHeader.js";
+import Header from "../../components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
@@ -104,7 +104,7 @@ function Profile({ user }) {
   };
   return (
     <>
-      <UserHeader user={user} />
+      <Header />
       {/* Page content */}
       {!tagsPane ? (
         <Container
