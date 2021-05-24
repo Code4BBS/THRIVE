@@ -45,6 +45,7 @@ var routes = [
     iconColor: "Primary",
     component: Dashboard,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/projects",
@@ -53,6 +54,7 @@ var routes = [
     iconColor: "PrimaryLight",
     component: Projects,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/icons",
@@ -61,6 +63,7 @@ var routes = [
     iconColor: "Primary",
     component: Icons,
     layout: "/admin",
+    show: false,
   },
   {
     path: "/maps",
@@ -69,6 +72,7 @@ var routes = [
     iconColor: "Warning",
     component: Maps,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/user-profile",
@@ -77,6 +81,7 @@ var routes = [
     iconColor: "WarningLight",
     component: Profile,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/tables",
@@ -85,6 +90,7 @@ var routes = [
     iconColor: "Error",
     component: Tables,
     layout: "/admin",
+    show: false,
   },
   {
     path: "/discover",
@@ -93,6 +99,7 @@ var routes = [
     iconColor: "Primary",
     component: CustomerListView,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/quora",
@@ -101,6 +108,7 @@ var routes = [
     iconColor: "Warning",
     component: Quora,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/addProject",
@@ -109,6 +117,7 @@ var routes = [
     iconColor: "Primary",
     component: AddProject,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/viewQuestion",
@@ -117,6 +126,7 @@ var routes = [
     iconColor: "Primary",
     component: ViewQuestion,
     layout: "/admin",
+    show: true,
   },
 
   {
@@ -126,6 +136,7 @@ var routes = [
     iconColor: "Primary",
     component: EditProject,
     layout: "/admin",
+    show: true,
   },
   {
     path: "/project/:id",
@@ -134,6 +145,7 @@ var routes = [
     iconColor: "Primary",
     component: Project,
     layout: "/admin",
+    show: true,
   },
 
   // {
@@ -154,24 +166,29 @@ var routes = [
   // },
   {
     divider: true,
+    show: true,
   },
   {
     title: "Documentation",
+    show: false,
   },
   {
     href: "https://www.creative-tim.com/learning-lab/material-ui/overview/argon-dashboard?ref=admui-admin-sidebar",
     name: "Getting started",
     icon: FlashOn,
+    show: false,
   },
   {
     href: "https://www.creative-tim.com/learning-lab/material-ui/colors/argon-dashboard?ref=admui-admin-sidebar",
     name: "Foundation",
     icon: Palette,
+    show: false,
   },
   {
     href: "https://www.creative-tim.com/learning-lab/material-ui/alerts/argon-dashboard?ref=admui-admin-sidebar",
     name: "Components",
     icon: Dns,
+    show: false,
   },
 ];
 export default routes;
