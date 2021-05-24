@@ -1,3 +1,4 @@
+//Rectify the username value  (Currently Hard Coded)
 import React, {Component} from 'react';
 import axios from "axios";
 import IconButton from '@material-ui/core/IconButton';
@@ -38,9 +39,6 @@ class QuoraCont extends Component {
             isAnonymous : 0
         }
         axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {            
-            // this.setState({question : res.data.finalQuestion ,answersLength : res.data.finalQuestion.answers.length, newAnswer : ""});
-            // console.log(res.data.finalQuestion.answers);
-            // this.setState({answers : res.data.finalQuestion.answers});
             this.getQuestion();
         })
     }
@@ -117,7 +115,9 @@ class QuoraCont extends Component {
                                 <Box component={Typography} variant="h6" paddingTop=".25rem" paddingBottom=".25rem" fontSize=".75rem!important"
                                     letterSpacing=".04em" marginBottom="1.5rem!important" classes={{ root: classes.typographyRootH6 }}
                                 >
+                                 {/* Asked by {this.state.question.isAnonymous ? "An Anonymous User" : this.state.question} */}
                                  Asked by Navaneeth
+                                 {/* {console.log(typeof this.state.question.user)} */}
                                 </Box>
                                 <Box>
                                 <Grid container>
