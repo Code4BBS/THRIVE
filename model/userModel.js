@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["user", "admin", "superAdmin", "respresentative"],
+      enum: ["user", "admin", "superAdmin", "respresentative", "Teacher"],
       default: "user",
     },
     image: {
@@ -90,6 +90,9 @@ const userSchema = new mongoose.Schema(
           type: String,
         },
         projectId: {
+          type: String,
+        },
+        topic: {
           type: String,
         },
       },

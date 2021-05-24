@@ -15,6 +15,7 @@ const courseSchema = new mongoose.Schema(
     teacher: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
+      required: [true, "Course must have a teacher"],
     },
     createdAt: {
       type: Date,
@@ -29,10 +30,12 @@ const courseSchema = new mongoose.Schema(
     year: {
       type: String,
       default: "Second year",
+      required: [true, "Course must have year field"],
     },
     branch: {
       type: String,
       enum: ["CSE", "ECE", "EE", "ME", "MM"],
+      required: [true, "Course must belong to a branch"],
     },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
