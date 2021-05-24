@@ -235,7 +235,14 @@ function Profile({ user }) {
       editButtons = (
         <Grid item xs="auto">
           <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
-            <IconButton color="primary" variant="contained" component="span">
+            <IconButton
+              color="primary"
+              variant="contained"
+              component="span"
+              onClick={() =>
+                (window.location.href = `/admin/project/edit/${project._id}`)
+              }
+            >
               <EditIcon />
             </IconButton>
             <IconButton color="primary" variant="contained" component="span">

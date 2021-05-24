@@ -11,6 +11,7 @@ import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 import Projects from "views/admin/Project/Projects.js";
 import AddProject from "views/admin/Project/Add Project.js";
 import Project from "views/admin/Project/Project.js";
+import EditProject from "views/admin/Project/EditProject.js";
 import Quora from "views/admin/Quora/index.js";
 import ViewQuestion from "views/admin/Quora/viewQuestion";
 
@@ -118,6 +119,14 @@ var routes = [
     layout: "/admin",
   },
 
+  {
+    path: "/project/edit/:id",
+    name: "Demo Edit Project",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: EditProject,
+    layout: "/admin",
+  },
   {
     path: "/project/:id",
     name: "Demo Project",

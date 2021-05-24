@@ -110,7 +110,7 @@ const Results = ({
     getCollaboraters(selectedCollaborators);
   };
 
-  const headings = ["Name", "Email", "Selected"];
+  const headings = ["Name", "Selected"];
 
   return (
     <div>
@@ -258,7 +258,7 @@ const Results = ({
                           <TableCell
                             classes={{
                               root:
-                                classes.tableCellRoot +
+                                classes.tableCellRootNew +
                                 " " +
                                 classes.tableCellRootBodyHead,
                             }}
@@ -287,16 +287,33 @@ const Results = ({
                             </Box>
                           </TableCell>
 
-                          <TableCell>{user.email}</TableCell>
+                          {/* <TableCell>{user.email}</TableCell> */}
                           <TableCell
-                            style={{
-                              verticalAlign: "middle",
+                            classes={{
+                              root:
+                                classes.tableCellRootNew +
+                                " " +
+                                classes.tableCellRootBodyHead,
                             }}
                           >
                             {user._id === currentUser._id ? (
-                              "Owner"
+                              <Button
+                                size="small"
+                                variant="contained"
+                                color="primary"
+                                style={{ alignSelf: "center" }}
+                              >
+                                Owner
+                              </Button>
                             ) : selectedCollaborators.includes(user._id) ? (
-                              <CheckCircleIcon color="primary" />
+                              <Button
+                                size="small"
+                                variant="contained"
+                                color="transparent"
+                                style={{ alignSelf: "center" }}
+                              >
+                                Selected
+                              </Button>
                             ) : null}
                           </TableCell>
                         </TableRow>
