@@ -8,7 +8,7 @@ import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
-import Projects from "views/admin/Project/Projects.js";
+import Projects from "views/admin/Project/ProjectBoard.js";
 import AddProject from "views/admin/Project/Add Project.js";
 import Project from "views/admin/Project/Project.js";
 import EditProject from "views/admin/Project/EditProject.js";

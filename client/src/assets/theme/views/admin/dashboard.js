@@ -23,6 +23,12 @@ const componentStyles = (theme) => ({
       paddingRight: "39px",
     },
   },
+  newContainerRoot: {
+    [theme.breakpoints.up("md")]: {
+      paddingLeft: "10px",
+      paddingRight: "10px",
+    },
+  },
   buttonRootUnselected: {
     background: theme.palette.white.main + "!important",
     color: theme.palette.primary.main + "!important",
