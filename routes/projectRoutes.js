@@ -12,7 +12,7 @@ router.get("/:id", projectController.getProject);
 
 router.post("/", projectController.createProject);
 
-router.put("/:id", projectController.updateProject);
+router.patch("/:id", projectController.updateProject);
 
 router.delete("/:id", projectController.deleteProject);
 
@@ -22,22 +22,22 @@ router.get(
   projectController.getAllBlacklistedProjects
 );
 
-router.put(
+router.patch(
   "/blacklist/:id",
   authController.restrictTo("admin"),
   projectController.blacklistProject
 );
 
-router.put(
+router.patch(
   "/whitelist/:id",
   authController.restrictTo("admin"),
   projectController.whitelistProject
 );
 
-router.put("/request/:id/join", projectController.requestToJoin);
+router.patch("/request/:id/join", projectController.requestToJoin);
 
-router.put("/request/:id/accept", projectController.acceptRequest);
+router.patch("/request/:id/accept", projectController.acceptRequest);
 
-router.put("/request/:id/reject", projectController.rejectRequest);
+router.patch("/request/:id/reject", projectController.rejectRequest);
 
 module.exports = router;

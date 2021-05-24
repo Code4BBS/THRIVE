@@ -172,7 +172,7 @@ function Profile({ user }) {
     let collaborators = selectedCollaborators;
 
     axios
-      .put(`/api/v1/project/${project._id}`, { ...values, tags, collaborators })
+      .patch(`/api/v1/project/${project._id}`, { ...values, tags, collaborators })
       .then((response) => {
         // console.log(response);
         if (response.status === 200) {
