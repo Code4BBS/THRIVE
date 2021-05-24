@@ -80,21 +80,47 @@ const createProject = catchAsync(async (req, res, next) => {
     collaborators,
     createdAt,
   });
-  const message = `Project ${title} requirements are matching your profile`;
-  let notification = {
-    message: message,
-    projectId: newProject._id,
+
+  let matchNotification = {
+    message: `Project ${title} is matching your notification`,
+    project: {
+      _id: newProject._id,
+      title: newProject.title,
+    },
+    type: "profileMatch",
+    requester: null,
   };
+
+  let collabNotification = {
+    message: `You have been added as a collaborator to ${title}`,
+    project: {
+      _id: newProject._id,
+      title: newProject.title,
+    },
+    type: "collaboratorAdd",
+    requester: null,
+  };
+
   let projectOwners = collaborators;
+
+  const updatedCollaborators = await User.updateMany(
+    {
+      _id: { $in: collaborators },
+    },
+    { $push: { notifications: collabNotification }, notificationsSeen: false }
+  );
+
   projectOwners.push(owner);
 
-  const updatedUsers = await User.updateMany(
+  const updatedMatchers = await User.updateMany(
     {
       _id: { $nin: projectOwners },
       tags: { $all: tags },
     },
-    { $push: { notifications: notification }, notificationsSeen: false }
+    { $push: { notifications: matchNotification }, notificationsSeen: false }
   );
+
+  // console.log(updatedCollaborators);
 
   res.status(201).json({
     status: "success",
@@ -206,13 +232,19 @@ const requestToJoin = catchAsync(async (req, res, next) => {
   if (!updatedProject) return next(new AppError("Project not found", 404));
 
   const message = `${req.user.name} has requested to join your Project ${updatedProject.title}`;
-  let notification = {
+  let joinNotification = {
     message: message,
-    projectId: updatedProject._id,
+    project: { _id: updatedProject._id, title: updatedProject.title },
+    type: "joinRequest",
+    requester: {
+      _id: req.user._id,
+      name: req.user.name,
+      image: req.user.image,
+    },
   };
 
   const updatedOwner = await User.findByIdAndUpdate(updatedProject.owner, {
-    $push: { notifications: notification },
+    $push: { notifications: joinNotification },
     notificationsSeen: false,
   });
 
@@ -259,13 +291,15 @@ const acceptRequest = catchAsync(async (req, res, next) => {
   if (!project) return next(new AppError("Project not found", 404));
 
   const message = `Your request for joining Project: ${project.title} is accpeted by project owner`;
-  let notification = {
+  let acceptNotification = {
     message: message,
-    projectId: project._id,
+    project: { _id: project._id, title: project.title },
+    type: "requestAccept",
+    requester: null,
   };
 
   const updateUser = await User.findByIdAndUpdate(requesterId, {
-    $push: { notifications: notification },
+    $push: { notifications: acceptNotification },
     notificationsSeen: false,
   });
 
@@ -310,13 +344,14 @@ const rejectRequest = catchAsync(async (req, res, next) => {
   if (!project) return next(new AppError("Project not found", 404));
 
   const message = `Your request for joining Project: ${project.title} is rejected by project owner`;
-  let notification = {
+  let rejectNotification = {
     message: message,
-    projectId: project._id,
+    project: { _id: project._id, title: project.title },
+    type: "requestReject",
   };
 
   const updateUser = await User.findByIdAndUpdate(requesterId, {
-    $push: { notifications: notification },
+    $push: { notifications: rejectNotification },
     notificationsSeen: false,
   });
 

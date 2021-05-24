@@ -253,7 +253,7 @@ function Profile({ user }) {
                         variant="h3"
                         marginBottom="0!important"
                       >
-                        Add New Project
+                        Edit Current Project
                       </Box>
                       <br />
                       <Chip

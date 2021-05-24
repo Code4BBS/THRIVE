@@ -86,12 +86,19 @@ const userSchema = new mongoose.Schema(
     ],
     notifications: [
       {
-        message: {
+        message: { type: String },
+        project: { _id: String, title: String },
+        type: {
           type: String,
+          enum: [
+            "profileMatch",
+            "collaboratorAdd",
+            "joinRequest",
+            "requestAccept",
+            "requestReject",
+          ],
         },
-        projectId: {
-          type: String,
-        },
+        requester: { _id: String, name: String, image: String },
       },
     ],
     notificationsSeen: {

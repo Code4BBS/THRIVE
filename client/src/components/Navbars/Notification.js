@@ -14,6 +14,7 @@ import axios from "axios";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import { UserX, Users, UserCheck, FileText } from "react-feather";
 import { project } from "ramda";
 
 const useStyles = makeStyles({
@@ -98,6 +99,7 @@ function Notification({ user }) {
         withCredentials: true,
       })
       .then((response) => {
+        console.log(response);
         let userNotifications = response.data.data.notifications;
         let notificationsInorder = userNotifications.reverse();
         let notificationStatus = response.data.data.status;
@@ -117,6 +119,114 @@ function Notification({ user }) {
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
+
+  const makeNotificationIcon = (notification) => {
+    switch (notification.type) {
+      case "profileMatch":
+        return <FileText color="darkblue" size={20} />;
+      // break;
+      case "collaboratorAdd":
+        return <Users color="blue" size={20} />;
+
+      case "joinRequest":
+        return (
+          <Avatar
+            src={notification.requester.image}
+            style={{ height: "30px", width: "30px" }}
+          />
+        );
+
+      case "requestAccept":
+        return <UserCheck color="green" size={20} />;
+
+      case "requestReject":
+        return <UserX color="#f54242" size={20} />;
+
+      default:
+        return <FileText size={20} />;
+    }
+  };
+
+  const makeNotificationMessage = (notification) => {
+    switch (notification.type) {
+      case "profileMatch":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Matches your profile.
+            </Typography>
+          </div>
+        );
+      // break;
+      case "collaboratorAdd":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              You are added as a collaborator.
+            </Typography>
+          </div>
+        );
+
+      case "joinRequest":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.requester.name}
+            </Typography>
+            <Typography className={classes.desc}>
+              Requested to join your project
+              <br />
+              <b>{notification.project.title}</b>
+            </Typography>
+          </div>
+        );
+
+      case "requestAccept":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Your request is accepted by the owner.
+            </Typography>
+          </div>
+        );
+
+      case "requestReject":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Your request is rejected by the owner.
+            </Typography>
+          </div>
+        );
+
+      default:
+        return (
+          <div>
+            <Typography className={classes.head}>
+              {notification.message}
+            </Typography>
+          </div>
+        );
+    }
+  };
+
   const cardContent = (
     <Card className={classes.root}>
       <CardHeader
@@ -128,7 +238,7 @@ function Notification({ user }) {
           return (
             <div
               className={classes.tile}
-              onClick={() => redirectToProject(notification.projectId)}
+              onClick={() => redirectToProject(notification.project._id)}
               key={key}
             >
               <div
@@ -138,16 +248,9 @@ function Notification({ user }) {
                   margin: "0px 10px 0px 3px",
                 }}
               >
-                <AssignmentIcon style={{ width: 30, height: 30 }} />
+                {makeNotificationIcon(notification)}
               </div>
-              <div>
-                <Typography className={classes.head}>
-                  {notification.message.split("requirements are")[0]}
-                </Typography>
-                <Typography className={classes.desc}>
-                  {notification.message.split("requirements are")[1]}
-                </Typography>
-              </div>
+              {makeNotificationMessage(notification)}
             </div>
           );
         })}
