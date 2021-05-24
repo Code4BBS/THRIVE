@@ -118,6 +118,7 @@ const Tables = ({ user }) => {
         console.log(data);
         console.log("response");
         if (data) setProjects(data);
+        setPage(0);
       })
       .catch((err) => console.log(err));
   };
