@@ -39,13 +39,11 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Tables = ({ user }) => {
+const Tables = ({ user, Projects, hideTable }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  // const [modalDetails, setModalDetails] = React.useState(null);
-  const [open, setOpen] = React.useState(false);
-  const [projects, setProjects] = React.useState([]);
+  const [projects, setProjects] = React.useState(Projects);
   const [anchorId, setAnchorId] = React.useState(null);
   const [currentAnchor, setCurrentAnchor] = React.useState(null);
   const [limit, setLimit] = React.useState(10);
@@ -53,19 +51,6 @@ const Tables = ({ user }) => {
   const [tagsPane, setShowTagsPane] = React.useState(false);
   const [tagsList, setTagsList] = React.useState([]);
   const [selectedTags, setSelectedTags] = React.useState([]);
-  // const handleModalOpen = (project) => {
-  //   setModalDetails({
-  //     title: project.title,
-  //     description: project.description,
-  //     communication: project.communication,
-  //     preRequisite: project.preRequisite,
-  //   });
-  //   setOpen(true);
-  // };
-
-  const handleModalClose = () => {
-    setOpen(false);
-  };
 
   const handleMenuClick = (event, index) => {
     setCurrentAnchor(event.currentTarget);
@@ -129,38 +114,23 @@ const Tables = ({ user }) => {
     headers.push("");
   }
 
-  const getProjects = () => {
-    axios.get("/api/v1/project").then((response) => {
-      console.log(response);
-      if (response.status === 200) {
-        if (response.data.data.res > 0) {
-          setProjects(response.data.data.projects);
-        }
-      }
-    });
-  };
+  // const getProjects = () => {
+  //   axios.get("/api/v1/project").then((response) => {
+  //     console.log(response);
+  //     if (response.status === 200) {
+  //       if (response.data.data.res > 0) {
+  //         setProjects(response.data.data.projects);
+  //       }
+  //     }
+  //   });
+  // };
 
   React.useEffect(() => {
-    if (selectedTags.length == 0) getProjects();
-    else getAllProjectsByTags();
+    if (selectedTags.length != 0) getAllProjectsByTags();
   }, [selectedTags]);
 
-  // let modal = null;
-  // if (modalDetails !== null && modalDetails !== undefined) {
-  //   modal = (
-  //     <Modal
-  //       open={open}
-  //       handleClose={handleModalClose}
-  //       title={modalDetails.title}
-  //       description={modalDetails.description}
-  //       communication={modalDetails.communication}
-  //       preRequisite={modalDetails.preRequisite}
-  //     />
-  //   );
-  // }
-
   const blacklistProject = (project, index) => {
-    axios.put(`/api/v1/project/blacklist/${project._id}`).then((response) => {
+    axios.patch(`/api/v1/project/blacklist/${project._id}`).then((response) => {
       // console.log(response);
       if (response.status === 200) {
         window.alert("Project blacklisted successfully");
@@ -177,7 +147,7 @@ const Tables = ({ user }) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       {/* Page content */}
       {!tagsPane ? (
         <Container
@@ -223,7 +193,7 @@ const Tables = ({ user }) => {
                         display="flex"
                         flexWrap="wrap"
                       >
-                        {selectedTags.length == 0 ? (
+                        {selectedTags.length === 0 ? (
                           <Button
                             variant="outlined"
                             color="primary"
@@ -242,6 +212,15 @@ const Tables = ({ user }) => {
                             Reset
                           </Button>
                         )}
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          size="small"
+                          onClick={hideTable}
+                          style={{ marginLeft: "0.25rem" }}
+                        >
+                          Back
+                        </Button>
                       </Box>
                     </Grid>
                   </Grid>
@@ -277,7 +256,6 @@ const Tables = ({ user }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {console.log(projects)}
                       {projects &&
                         projects
                           .slice(page * limit, (page + 1) * limit)
