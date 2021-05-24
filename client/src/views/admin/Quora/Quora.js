@@ -94,12 +94,12 @@ class Quora extends Component {
     )
     if(this.props.QuoraQuestions.length != 0) {
       ques = this.props.QuoraQuestions.map((el,idx) => {
-        let user = el.isAnanymous == 0 ? el.user.name : "Ananymous"
+        let user = el.isAnonymous == 0 ? el.user.name : "Anonymous"
         return (
           <Grid item xs = {12} sm = {6} md = {4} component={Box}
           paddingLeft="15px"
           paddingRight="15px">
-          <QuestionCard name = {user} isAnanymous = {el.isAnanymous} upvotes = {el.upvotes} downvotes = {el.downvotes} 
+          <QuestionCard name = {user} isAnonymous = {el.isAnonymous} upvotes = {el.upvotes} downvotes = {el.downvotes} 
             question = {el.questionBody} answers = {el.answers} time = {el.createdAt} key = {idx} 
             id = {el._id}/>
           </Grid>
@@ -146,6 +146,4 @@ class Quora extends Component {
 export default withStyles(componentStyles)(Quora);
 
 //Deleting Questions
-//Creating Questions
-//Managing Comments under each question
 //Delete Comment

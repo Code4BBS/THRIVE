@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ["user", "admin", "superAdmin", "respresentative"],
+      enum: ["user", "admin", "superAdmin", "respresentative", "Teacher"],
       default: "user",
     },
     image: {
@@ -99,6 +99,9 @@ const userSchema = new mongoose.Schema(
           ],
         },
         requester: { _id: String, name: String, image: String },
+        topic: {
+          type: String,
+        },
       },
     ],
     notificationsSeen: {

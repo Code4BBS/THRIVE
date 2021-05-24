@@ -4,18 +4,18 @@ const catchAsync = require("./../utils/catchAsync");
 
 exports.createQuestion = catchAsync(async (req,res,next) => {
     let question = {};
-    if(req.body.isAnanymous) {
+    if(req.body.isAnonymous) {
         question = {
             questionBody : req.body.questionBody,
             createdAt : Date.now(),
-            isAnanymous : req.body.isAnanymous
+            isAnonymous : req.body.isAnonymous
         }
     } else{
         question = {
             questionBody : req.body.questionBody,
             createdAt : Date.now(),
             user : req.user,
-            isAnanymous : req.body.isAnonymous
+            isAnonymous : req.body.isAnonymous
         }
     }
 
@@ -59,19 +59,25 @@ exports.createAnswer = catchAsync(async (req,res,next) => {
     if(req.body.isAnonymous) {
         Answer = {
             answer : req.body.answer,
-            isAnanymous : req.body.isAnanymous,
+            isAnonymous : req.body.isAnonymous,
             // question : req.params.qId
         }
     } else {
         Answer = {
             answer : req.body.answer,
-            isAnanymous : req.body.isAnanymous,
+            isAnonymous : req.body.isAnonymous,
             user : req.user,
             // question : req.params.qId
         }
     }
+    
     let question = await Question.findById(req.params.qId);
+    console.log("******");
+    console.log(Answer);
     question.answers.push(Answer);
+    
+    console.log('....................');
+    console.log(question.answers)
     let finalQuestion = await question.save();
 
     res.status(201).json({
@@ -149,5 +155,13 @@ exports.deleteQuestion = catchAsync(async(req,res,next) => {
     res.status(203).json({
         status : "success",
         message : "question deleted successfully"
+    })
+})
+
+exports.deleteAllQuestions = catchAsync(async(req,res,next) => {
+    await Question.deleteMany({})
+    res.status(200).json({
+        status : "success",
+        message : "Deleted All Questions"
     })
 })

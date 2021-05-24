@@ -36,7 +36,7 @@ const ImgMediaCard = (props) => {
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {!props.isAnanymous ? props.name : "An Anonymous user"} Asked
+            {!props.isAnonymous ? props.name : "An Anonymous user"} Asked
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             {props.question}

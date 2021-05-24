@@ -8,7 +8,7 @@ import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
 import Divider from '@material-ui/core/Divider';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
-import {Grid, Box, Container, withStyles, CardHeader, Card, Typography, CardContent, TextField, Button } from "@material-ui/core";
+import {Grid, Box, Container, withStyles, CardHeader, Card, Typography, CardContent, TextField, Button, Switch } from "@material-ui/core";
 
 class QuoraCont extends Component {
     state = {
@@ -16,7 +16,9 @@ class QuoraCont extends Component {
         isLoading : false,
         answers : [],
         answersLength : 0,
-        newAnswer : ""
+        newAnswer : "",
+        isAnonymous : false,
+        askedBy : ""
     }
     getQuestion = () => {
         this.setState({isLoading : true})
@@ -27,8 +29,11 @@ class QuoraCont extends Component {
                 isLoading : false,
                 question : res.data.question,   
                 answersLength : res.data.question.answers.length,
-                answers : res.data.question.answers
+                answers : res.data.question.answers,
             })
+            if(!res.data.question.isAnonymous) {
+                this.setState({askedBy : res.data.question.user.name});
+            }
             console.log(res.data.question)
             console.log(this.state.question.user)
         })
@@ -36,7 +41,7 @@ class QuoraCont extends Component {
     addAnswer = () => {
         let answer = {
             answer : this.state.newAnswer,
-            isAnonymous : 0
+            isAnonymous : this.state.isAnonymous
         }
         axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {            
             this.getQuestion();
@@ -48,18 +53,25 @@ class QuoraCont extends Component {
     InputChanged = (e) => {
         e.preventDefault();
         this.setState({newAnswer : e.target.value});
-        console.log(e.target.value);
+        // console.log(e.target.value);
+    }
+    toggleChanged = (e) => {
+        e.preventDefault();
+        this.setState(prevState => ({
+            isAnonymous : !prevState.isAnonymous
+        }));
+        // console.log(this.state)
     }
     upVoteClicked = () => {
         axios.post(`/api/v1/quora/questions/upvote/${this.state.question._id}`,{}).then((res) => {
             this.setState({question : res.data.newQuestion});
-            console.log(res);
+            // console.log(res);
         })
     }
     downVoteClicked = () => {
         axios.post(`/api/v1/quora/questions/downvote/${this.state.question._id}`,{}).then((res) => {
             this.setState({question : res.data.newQuestion});
-            console.log(res);
+            // console.log(res);
         })
     }
     render() {
@@ -115,8 +127,8 @@ class QuoraCont extends Component {
                                 <Box component={Typography} variant="h6" paddingTop=".25rem" paddingBottom=".25rem" fontSize=".75rem!important"
                                     letterSpacing=".04em" marginBottom="1.5rem!important" classes={{ root: classes.typographyRootH6 }}
                                 >
-                                 {/* Asked by {this.state.question.isAnonymous ? "An Anonymous User" : this.state.question} */}
-                                 Asked by Navaneeth
+                                 Asked by {this.state.askedBy == "" ? "An Anonymous User" : this.state.question.user.name}
+                                 {/* Asked by Navaneeth */}
                                  {/* {console.log(typeof this.state.question.user)} */}
                                 </Box>
                                 <Box>
@@ -156,7 +168,7 @@ class QuoraCont extends Component {
                             
                                 <CardContent classes={{root: classes.cardRoot + " " + classes.cardRootSecondary,}}>
                                   <Grid container>
-                                    <Grid item xs = {8}>
+                                    <Grid item xs = {12}>
                                         <TextField
                                         id="write-comment"
                                         placeholder="Add Answer"
@@ -168,18 +180,29 @@ class QuoraCont extends Component {
                                         onChange = {(e) => this.InputChanged(e)}
                                         />
                                     </Grid>
-                                    <Grid item xs = {4}>
+                                    {/* <Grid item xs = {4}>
                                         <Button variant="contained" color="primary" onClick = {() => this.addAnswer()}>Add Answer</Button>
-                                    </Grid>
+                                    </Grid> */}
+                                  </Grid>
+                                  <br />
+                                  <Grid container>
+                                      <Grid item xs = {8}>
+                                        <Typography variant = "b" style = {{marginRight : "30px"}}>{"Answer Anonymously"}</Typography>
+                                        <Switch color="primary" onChange = {(e) => this.toggleChanged(e)} />
+                                      </Grid> 
+                                      <Grid item xs = {4}>
+                                        <Button variant="contained" color="primary" onClick = {() => this.addAnswer()}>Add Answer</Button>
+                                      </Grid> 
                                   </Grid>
                                 </CardContent>
                                   <Grid container>
                                     <Grid item xs = {12}>
                                         <Card>
                                             {this.state.answers.map((el,id) => {
+                                                {console.log(el)}
                                                 return(
                                                 <CardContent key = {id}>
-                                                    <Typography variant = "h5">{el.user.name}</Typography>
+                                                    <Typography variant = "h5">{!el.isAnonymous ? el.user.name : "An Anonymous user"}</Typography>
                                                     <Divider/>
                                                     <Typography variant = "p">{el.answer}</Typography>
                                                 </CardContent>
