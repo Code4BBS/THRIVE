@@ -110,7 +110,7 @@ const Results = ({
     getCollaboraters(selectedCollaborators);
   };
 
-  const headings = ["Name", "Selected"];
+  const headings = ["Name", "Email", "Selected"];
 
   return (
     <div>
@@ -287,7 +287,7 @@ const Results = ({
                             </Box>
                           </TableCell>
 
-                          {/* <TableCell>{user.email}</TableCell> */}
+                          <TableCell>{user.email}</TableCell>
                           <TableCell
                             classes={{
                               root:
