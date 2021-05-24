@@ -13,7 +13,7 @@ import AddProject from "views/admin/Project/Add Project.js";
 import Project from "views/admin/Project/Project.js";
 import EditProject from "views/admin/Project/EditProject.js";
 import Quora from "views/admin/Quora/index.js";
-import ViewQuestion from "views/admin/Quora/viewQuestion";
+import Question from "views/admin/Quora/Question.js";
 
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
@@ -102,6 +102,15 @@ var routes = [
     show: true,
   },
   {
+    path: "/quora/:qId",
+    name: "View Question",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: Question,
+    layout: "/admin",
+    show: false,
+  },
+  {
     path: "/quora",
     name: "Quora",
     icon: ContactSupportTwoToneIcon,
@@ -119,15 +128,7 @@ var routes = [
     layout: "/admin",
     show: true,
   },
-  {
-    path: "/viewQuestion",
-    name: "View Question",
-    icon: ContactSupportTwoToneIcon,
-    iconColor: "Primary",
-    component: ViewQuestion,
-    layout: "/admin",
-    show: true,
-  },
+  
 
   {
     path: "/project/edit/:id",

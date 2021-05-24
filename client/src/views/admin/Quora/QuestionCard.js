@@ -24,11 +24,15 @@ const useStyles = makeStyles({
   },
 });
 
+// const Clicked = () => {
+//   window.location.href = (`/admin/quora/${}`)
+// }
+
 const ImgMediaCard = (props) => {
   const classes = useStyles();
 
   return (
-    <Card className={classes.root} onClick = {props.cardClicked}>
+    <Card className={classes.root} onClick = {() => (window.location.href = `/admin/quora/${props.id}`)}>
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

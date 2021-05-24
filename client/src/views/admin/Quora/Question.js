@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Quora from "./Quora.js";
 import axios from "axios";
 import IconButton from '@material-ui/core/IconButton';
 import Header from "components/Headers/Header.js";
@@ -18,10 +17,11 @@ class QuoraCont extends Component {
         answersLength : 0,
         newAnswer : ""
     }
-    getQuestion = (id) => {
+    getQuestion = () => {
         this.setState({isLoading : true})
-        axios.get(`/api/v1/quora/questions/${id}`).then((res) => {
-            // console.log(res.data.question);
+        let url = window.location.pathname.split('/');
+        let qId = url[3];
+        axios.get(`/api/v1/quora/questions/${qId}`).then((res) => {
             this.setState({
                 isLoading : false,
                 question : res.data.question,   
@@ -37,18 +37,12 @@ class QuoraCont extends Component {
             answer : this.state.newAnswer,
             isAnonymous : 0
         }
-        axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {
-            // console.log(res.data.finalQuestion.answers);
-            // console.log(this.state.answers)
-            // let newAnswer = 
-            
+        axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {            
             this.setState({question : res.data.finalQuestion ,answersLength : res.data.finalQuestion.answers.length, newAnswer : ""});
-            // this.setState({answers : [...res.data.finalQuestion.answers]})
-//.............................xxxxx   //Facing issue with updating answers array. Need to fix later
         })
     }
     componentDidMount = () => {
-        this.getQuestion(this.props.id);
+        this.getQuestion();
     }
     InputChanged = (e) => {
         e.preventDefault();
@@ -73,25 +67,18 @@ class QuoraCont extends Component {
         let upvoteColor = "";
         let downvoteColor = "";
         console.log(this.state.question);
-        // console.log(this.props.user._id);
-        // if(this.state.question.upvotedBy.includes(this.props.user._id)) {
-        //     upvoteColor = "primary"
-        // }
-        // if(this.state.question.downvotedBy.includes(this.props.user._id)) {
-        //     downvoteColor = "secondary"
-        // }
         return(
             <div>
                 {!this.state.isLoading ? (
                 <>
-                    {/* <Header />
+                    <Header />
                     <Container
                     maxWidth={false}
                     component={Box}
                     marginTop="-6rem"
                     classes={{ root: classes.containerRoot }}
-                    > */}
-                    {/* <Quora QuoraQuestions = {this.state.questions}/> */}
+                    >
+
                     <Grid container>
                         <Grid
                         item
@@ -127,10 +114,6 @@ class QuoraCont extends Component {
                                 <Box component={Typography} variant="h6" paddingTop=".25rem" paddingBottom=".25rem" fontSize=".75rem!important"
                                     letterSpacing=".04em" marginBottom="1.5rem!important" classes={{ root: classes.typographyRootH6 }}
                                 >
-                                 
-                                {/* {console.log(this.state.question.user)} */}
-                                {/* {this.state.question.isAnanymous ? "An Ananymous user" : this.state.question.user.name} */}
-                                
                                  Asked by Navaneeth
                                 </Box>
                                 <Box>
@@ -174,12 +157,8 @@ class QuoraCont extends Component {
                                     <Grid item xs = {8}>
                                         <TextField
                                         id="write-comment"
-                                        // label="Label"
-                                        // style={{ margin: 1 }}
                                         placeholder="Add Answer"
-                                        // helperText="Full width!"
                                         fullWidth
-                                        // margin="normal"
                                         InputLabelProps={{
                                           shrink: true,
                                         }}
@@ -212,7 +191,7 @@ class QuoraCont extends Component {
                             </Card>
                         </Grid>
                     </Grid>
-                    {/* </Container> */}
+                    </Container>
                 </>
                 ) : null}
             </div>

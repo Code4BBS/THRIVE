@@ -1,30 +1,17 @@
-import React, { useState, Component } from "react";
-// react component that copies the given text inside your clipboard
-import { CopyToClipboard } from "react-copy-to-clipboard";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
+import React, {Component} from "react";
+
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
-import Hidden from "@material-ui/core/Hidden";
-import Tooltip from "@material-ui/core/Tooltip";
-import Avatar from "@material-ui/core/Avatar";
 import IconButton from "@material-ui/core/IconButton";
-// core components
-import Header from "components/Headers/Header.js";
+
 // import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
 import componentStyles from "assets/theme/views/admin/icons.js";
-import Archive from "@material-ui/icons/Archive";
 import CreateIcon from "@material-ui/icons/Create";
-import QuestionCard from './../../../components/Cards/QuestionCard';
+import QuestionCard from './QuestionCard';
 import { withStyles } from "@material-ui/core";
-import ViewQuestion from "./viewQuestion";
-// import viewQuestion from "./viewQuestion";
 
 class Quora extends Component {
   state = {
@@ -33,21 +20,12 @@ class Quora extends Component {
       body : "",
       isAnanymous : false
     },
-    viewQuestion : false,
-    qId : null
   }
   render() {
-    const QcardClicked = (e,id) => {
-        e.preventDefault();
-        alert(id);
-        this.setState({viewQuestion : true});
-        this.setState({qId : id});
-    }
     const { classes } = this.props;
     let ques = null;
-    if(this.state.viewQuestion == false && this.props.QuoraQuestions.length != 0) {
+    if(this.props.QuoraQuestions.length != 0) {
       ques = this.props.QuoraQuestions.map((el,idx) => {
-        // let user = "Ananymous";
         let user = el.isAnanymous == 0 ? el.user.name : "Ananymous"
         return (
           <Grid item xs = {12} sm = {6} md = {4} component={Box}
@@ -55,14 +33,13 @@ class Quora extends Component {
           paddingRight="15px">
           <QuestionCard name = {user} isAnanymous = {el.isAnanymous} upvotes = {el.upvotes} downvotes = {el.downvotes} 
             question = {el.questionBody} answers = {el.answers} time = {el.createdAt} key = {idx} 
-            cardClicked = {(e,id) => {QcardClicked(e,el._id)} }/>
+            id = {el._id}/>
           </Grid>
         )
       } )
     }
     return(
       <>
-        {!this.state.viewQuestion ? (
           <Grid container component={Box} marginBottom="39px">
           <Grid item xs={12}>
             <Card classes={{ root: classes.cardRoot }}>
@@ -81,7 +58,6 @@ class Quora extends Component {
                     </IconButton>
                 }
               >
-              
               </CardHeader>
              
               <CardContent>
@@ -91,10 +67,7 @@ class Quora extends Component {
               </CardContent>
             </Card>
           </Grid>
-          </Grid>
-        ) : (<ViewQuestion id = {this.state.qId} {...this.props}/>)
-        }
-        
+          </Grid> 
     </>
     )
     }

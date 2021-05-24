@@ -4,16 +4,15 @@ import axios from "axios";
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
 import { Box, Container, withStyles } from "@material-ui/core";
-import ViewQuestion from "./viewQuestion";
+
 
 class QuoraCont extends Component {
     state = {
         questions : [],
         isLoading : false,
-        viewingQuestion : false
     }
     getAllQuestions = () => {
-        this.setState({isLoading : true})
+        this.setState({isLoading : true});
         axios.get('/api/v1/quora/questions').then((res) => {
             console.log(res.data.questions);
             this.setState({
@@ -25,9 +24,7 @@ class QuoraCont extends Component {
     componentDidMount = () => {
         this.getAllQuestions();
     }
-    viewQuestion = () => {
-        this.setState({viewingQuestion : true});
-    }
+    
     render() {
         console.log(this.props);
         const { classes } = this.props;
@@ -40,14 +37,11 @@ class QuoraCont extends Component {
                     marginTop="-6rem"
                     classes={{ root: classes.containerRoot }}
                     >
-                    <Quora QuoraQuestions = {this.state.questions} viewQuestion = {() => this.viewQuestion()} {...this.props}/>
-                    {/* <ViewQuestion/> */}
+                    <Quora QuoraQuestions = {this.state.questions} {...this.props}/>
             </Container>
             </>
         )
-        // if(this.state.viewingQuestion) {
-        //     view = <ViewQuestion/>
-        // }
+
         return(
             <div>
                 {!this.state.isLoading ? (
