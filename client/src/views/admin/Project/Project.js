@@ -68,7 +68,7 @@ function Profile({ user }) {
     setOpen(false);
     if (project) {
       axios
-        .put(`/api/v1/project/request/${project._id}/join`, {
+        .patch(`/api/v1/project/request/${project._id}/join`, {
           request: request,
         })
         .then((response) => {
@@ -90,7 +90,7 @@ function Profile({ user }) {
   const acceptRequest = (request, index) => {
     if (project) {
       axios
-        .put(
+        .patch(
           `/api/v1/project/request/${project._id}/accept?id=${request.requester._id}`
         )
         .then((response) => {
@@ -120,7 +120,7 @@ function Profile({ user }) {
   const rejectRequest = (request, index) => {
     if (project) {
       axios
-        .put(
+        .patch(
           `/api/v1/project/request/${project._id}/reject?id=${request.requester._id}`
         )
         .then((response) => {
@@ -140,6 +140,34 @@ function Profile({ user }) {
         });
     } else {
       window.alert("Something went wrong ! Try again Later");
+    }
+  };
+
+  const deleteProject = () => {
+    if (project) {
+      axios
+        .delete(`/api/v1/project/${project._id}`)
+        .then((response) => {
+          if (response.status === 204) {
+            window.alert("Project deleted successfully");
+            window.location.href = `/admin/projects`;
+          } else {
+            window.alert("Something went wrong ! Try again Later");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
+  const confirmDelete = () => {
+    let confirm = window.confirm(
+      "Are you sure you want to delete this project?"
+    );
+
+    if (confirm) {
+      deleteProject();
     }
   };
 
@@ -245,7 +273,12 @@ function Profile({ user }) {
             >
               <EditIcon />
             </IconButton>
-            <IconButton color="primary" variant="contained" component="span">
+            <IconButton
+              color="primary"
+              variant="contained"
+              component="span"
+              onClick={() => confirmDelete()}
+            >
               <DeleteOutlineIcon />
             </IconButton>
           </Box>
