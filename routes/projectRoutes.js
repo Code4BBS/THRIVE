@@ -8,6 +8,8 @@ router.use(authController.verifyJwtToken, authController.loggedInUser);
 
 router.get("/", projectController.getAllProjects);
 
+router.get("/myProjects", projectController.getAllProjectsOfAUser);
+
 router.get("/:id", projectController.getProject);
 
 router.post("/", projectController.createProject);

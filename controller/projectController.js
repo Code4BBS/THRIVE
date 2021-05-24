@@ -329,6 +329,28 @@ const rejectRequest = catchAsync(async (req, res, next) => {
   });
 });
 
+const getAllProjectsOfAUser = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const projects = await Project.find({
+    $or: [{ owner: userId }, { collaborators: { $in: [userId] } }],
+  })
+    .populate({
+      path: "tags",
+      model: "Tag",
+      select: "name ",
+    })
+    .populate({ path: "owner", model: "User", select: "name image" })
+    .populate({ path: "collaborators", model: "User", select: "name image" });
+
+  // console.log(projects);
+
+  res.status(200).json({
+    status: "success",
+    data: { res: projects.length, projects },
+  });
+});
+
 module.exports = {
   getAllProjects,
   getProject,
@@ -341,4 +363,5 @@ module.exports = {
   requestToJoin,
   acceptRequest,
   rejectRequest,
+  getAllProjectsOfAUser,
 };
