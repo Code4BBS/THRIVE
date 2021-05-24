@@ -25,6 +25,7 @@ const TagGroup = (props) => {
                     classes={props.classes}
                     addToSelected={props.addToSelected}
                     removeFromSelected={props.removeFromSelected}
+                    tagsSelected={props.tagsSelected}
                   />
                 </li>
               );

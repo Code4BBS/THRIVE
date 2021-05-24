@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import { Chip } from '@material-ui/core';
+import React, { useState } from "react";
+import { Chip } from "@material-ui/core";
 
 const CustomChip = (props) => {
-  const [variant, setVariant] = useState('outlined');
+  const [variant, setVariant] = useState(
+    props.tagsSelected.includes(props.tag._id) ? "default" : "outlined"
+  );
   let toggle = () => {
-    if (variant === 'outlined') {
-      setVariant('default');
+    if (variant === "outlined") {
+      setVariant("default");
       props.addToSelected(props.tag._id);
     } else {
-      setVariant('outlined');
+      setVariant("outlined");
       props.removeFromSelected(props.tag._id);
     }
   };
@@ -21,7 +23,7 @@ const CustomChip = (props) => {
       clickable
       onClick={toggle}
       variant={variant}
-      style={{ margin: '2px' }}
+      style={{ margin: "2px" }}
       color="primary"
     />
   );

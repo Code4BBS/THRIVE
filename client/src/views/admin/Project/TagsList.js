@@ -39,9 +39,9 @@ const TagList = ({ tags, hide, getTags, tagsSelected }) => {
   const [sortedTags, setSortedTags] = useState([]);
   const [processedTags, setProcessTags] = useState(false);
   // let navigate = useNavigate();
-
+  console.log(selectedTags);
   const displayFilterPane = () => {
-    setSelectedTags([]);
+    // setSelectedTags([]);
     if (!processedTags) {
       let tagMap = {};
       for (let tag of tags) {
