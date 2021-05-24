@@ -129,6 +129,7 @@ function Notification({ user }) {
             <div
               className={classes.tile}
               onClick={() => redirectToProject(notification.projectId)}
+              key={key}
             >
               <div
                 style={{
