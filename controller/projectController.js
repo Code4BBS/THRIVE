@@ -99,18 +99,22 @@ const createProject = catchAsync(async (req, res, next) => {
 });
 
 const updateProject = catchAsync(async (req, res, next) => {
-  const updateBody = {
-    title: req.body.title,
-    description: req.body.description,
-    preRequsite: req.body.preRequsite,
-    communication: req.body.communication,
-    lastUpdatedAt: new Date(),
-  };
+  // const updateBody = {
+  //   title: req.body.title,
+  //   description: req.body.description,
+  //   preRequsite: req.body.preRequsite,
+  //   communication: req.body.communication,
+  //   lastUpdatedAt: new Date(),
+  // };
 
-  const project = await Project.findByIdAndUpdate(req.params.id, updateBody, {
-    new: true,
-    runValidators: true,
-  }).populate({ path: "owner", model: "User", select: "name" });
+  const project = await Project.findByIdAndUpdate(
+    req.params.id,
+    { ...req.body, lastUpdatedAt: new Date() },
+    {
+      new: true,
+      runValidators: true,
+    }
+  ).populate({ path: "owner", model: "User", select: "name" });
 
   if (!project) return next(new AppError("Project cannot be updated", 500));
 
