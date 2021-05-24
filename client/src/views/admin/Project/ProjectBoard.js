@@ -90,9 +90,6 @@ function Dashboard({ user }) {
             classes={{
               root: classes.cardHeaderRoot + " " + classes.cardRootBgGradient,
             }}
-            onClick={() => {
-              getAllProjects();
-            }}
           >
             <CardHeader
               subheader={
@@ -101,7 +98,7 @@ function Dashboard({ user }) {
                     component={Typography}
                     variant="h2"
                     className={classes.textUppercase}
-                    marginBottom="1.5rem!important"
+                    marginBottom="1rem!important"
                   >
                     <Box
                       component="span"
@@ -129,7 +126,17 @@ function Dashboard({ user }) {
               }
               classes={{ root: classes.cardHeaderRoot }}
             ></CardHeader>
-            <CardContent></CardContent>
+            <CardContent classes={{ root: classes.cardHeaderRoot }}>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => {
+                  getAllProjects();
+                }}
+              >
+                {!isLoading ? "Explore" : "Loading..."}
+              </Button>
+            </CardContent>
           </Card>
         </Grid>
 
@@ -145,9 +152,6 @@ function Dashboard({ user }) {
           <Card
             classes={{
               root: classes.cardHeaderRoot + " " + classes.cardRootBgGradient,
-            }}
-            onClick={() => {
-              getMyProjects();
             }}
           >
             <CardHeader
@@ -186,7 +190,17 @@ function Dashboard({ user }) {
               }
               classes={{ root: classes.cardHeaderRoot }}
             ></CardHeader>
-            <CardContent></CardContent>
+            <CardContent classes={{ root: classes.cardHeaderRoot }}>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => {
+                  getMyProjects();
+                }}
+              >
+                {!isLoading ? "Explore" : "Loading..."}
+              </Button>
+            </CardContent>
           </Card>
         </Grid>
         <Grid item sm={12} md={2} xs={12} xl={2}></Grid>
