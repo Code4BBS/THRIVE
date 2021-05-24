@@ -59,7 +59,7 @@ const UserHeader = ({ user }) => {
                 fontSize="1rem"
               >
                 This is your profile page. You can see your general public
-                profile and edit it
+                profile and edit it.
               </Box>
             </Grid>
           </Grid>
