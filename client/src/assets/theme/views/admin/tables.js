@@ -181,6 +181,11 @@ const componentStyles = (theme) => ({
     boxShadow: "none",
     padding: "0",
   },
+
+  select: {
+    backgroundColor: "transparent",
+    borderRadius: "5px",
+  },
 });
 
 export default componentStyles;

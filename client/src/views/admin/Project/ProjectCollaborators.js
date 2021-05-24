@@ -96,12 +96,10 @@ const Results = ({
         const newCollaborators = [...selectedCollaborators];
         newCollaborators.splice(index, 1);
         setSelectedCollaborators(newCollaborators);
-        console.log(newCollaborators);
       } else {
         const newCollaborators = [...selectedCollaborators];
         newCollaborators.push(user._id);
         setSelectedCollaborators(newCollaborators);
-        console.log(newCollaborators);
       }
     }
   };
@@ -168,7 +166,7 @@ const Results = ({
                                 label={collaborator.name}
                                 avatar={<Avatar src={collaborator.image} />}
                                 style={{ color: "black!important" }}
-                                onClick={() =>
+                                onDelete={() =>
                                   changeCollaborators(collaborator)
                                 }
                               />
