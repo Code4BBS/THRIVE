@@ -38,7 +38,10 @@ class QuoraCont extends Component {
             isAnonymous : 0
         }
         axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {            
-            this.setState({question : res.data.finalQuestion ,answersLength : res.data.finalQuestion.answers.length, newAnswer : ""});
+            // this.setState({question : res.data.finalQuestion ,answersLength : res.data.finalQuestion.answers.length, newAnswer : ""});
+            // console.log(res.data.finalQuestion.answers);
+            // this.setState({answers : res.data.finalQuestion.answers});
+            this.getQuestion();
         })
     }
     componentDidMount = () => {
@@ -122,7 +125,6 @@ class QuoraCont extends Component {
                                         <Card>
                                             <CardContent>
                                                 <Typography variant = "p" component = "p">
-                                                {/* A question is an utterance which typically functions as a request for information, which is expected to be provided in the form of an answer. Questions can thus be understood as a kind of illocutionary act in the field of pragmatics or as special kinds of propositions in frameworks of formal semantics such as alternative semantics or inquisitive semantics. Questions are often conflated with interrogatives, which are the grammatical forms typically used to achieve them. Rhetorical questions, for example, are interrogative in form but may not be considered true questions as they are not expected to be answered. Conversely, non-interrogative grammatical structures may be considered questions as in the case of the imperative sentence "tell me your name." */}
                                                 {this.state.question.questionBody}
                                                 </Typography>
                                             </CardContent>
@@ -177,7 +179,7 @@ class QuoraCont extends Component {
                                             {this.state.answers.map((el,id) => {
                                                 return(
                                                 <CardContent key = {id}>
-                                                    <Typography variant = "h5">{el.user}</Typography>
+                                                    <Typography variant = "h5">{el.user.name}</Typography>
                                                     <Divider/>
                                                     <Typography variant = "p">{el.answer}</Typography>
                                                 </CardContent>
