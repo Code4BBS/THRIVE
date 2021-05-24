@@ -191,7 +191,8 @@ const getAllBlacklistedProjects = async (req, res, next) => {
 
 const requestToJoin = catchAsync(async (req, res, next) => {
   const { request } = req.body;
-  console.log(request);
+  // console.log(request);
+  // console.log(req.user);
 
   const updatedProject = await Project.findByIdAndUpdate(
     req.params.id,
@@ -204,6 +205,19 @@ const requestToJoin = catchAsync(async (req, res, next) => {
 
   if (!updatedProject) return next(new AppError("Project not found", 404));
 
+  const message = `${req.user.name} has requested to join your Project ${updatedProject.title}`;
+  let notification = {
+    message: message,
+    projectId: updatedProject._id,
+  };
+
+  const updatedOwner = await User.findByIdAndUpdate(updatedProject.owner, {
+    $push: { notifications: notification },
+    notificationsSeen: false,
+  });
+
+  if (!updatedOwner) return next(new AppError("Owner not present", 500));
+
   res.status(200).json({
     status: "success",
     message: "Project updated successfully",
@@ -213,7 +227,7 @@ const requestToJoin = catchAsync(async (req, res, next) => {
 
 const acceptRequest = catchAsync(async (req, res, next) => {
   const requesterId = req.query.id;
-  console.log(requesterId);
+  // console.log(requesterId);
 
   const project = await Project.findByIdAndUpdate(
     req.params.id,
@@ -243,6 +257,19 @@ const acceptRequest = catchAsync(async (req, res, next) => {
     });
 
   if (!project) return next(new AppError("Project not found", 404));
+
+  const message = `Your request for joining Project: ${project.title} is accpeted by project owner`;
+  let notification = {
+    message: message,
+    projectId: project._id,
+  };
+
+  const updateUser = await User.findByIdAndUpdate(requesterId, {
+    $push: { notifications: notification },
+    notificationsSeen: false,
+  });
+
+  if (!updateUser) return next(new AppError("The user is absent !", 404));
 
   res.status(200).json({
     status: "success",
@@ -281,6 +308,19 @@ const rejectRequest = catchAsync(async (req, res, next) => {
     });
 
   if (!project) return next(new AppError("Project not found", 404));
+
+  const message = `Your request for joining Project: ${project.title} is rejected by project owner`;
+  let notification = {
+    message: message,
+    projectId: project._id,
+  };
+
+  const updateUser = await User.findByIdAndUpdate(requesterId, {
+    $push: { notifications: notification },
+    notificationsSeen: false,
+  });
+
+  if (!updateUser) return next(new AppError("The user is absent !", 404));
 
   res.status(200).json({
     status: "success",
