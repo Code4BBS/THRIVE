@@ -11,4 +11,8 @@ router
   .route("/tags")
   .post(authController.verifyJwtToken, searchController.searchByTag);
 
+router
+  .route("/project/tags")
+  .post(authController.verifyJwtToken, searchController.searchProjectsByTag);
+
 module.exports = router;

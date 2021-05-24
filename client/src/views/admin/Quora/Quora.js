@@ -92,7 +92,7 @@ class Quora extends Component {
             </Card>
           </Grid>
           </Grid>
-        ) : (<ViewQuestion id = {this.state.qId}/>)
+        ) : (<ViewQuestion id = {this.state.qId} {...this.props}/>)
         }
         
     </>

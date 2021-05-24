@@ -28,7 +28,8 @@ class QuoraCont extends Component {
                 answersLength : res.data.question.answers.length,
                 answers : res.data.question.answers
             })
-            console.log(res)
+            console.log(res.data.question)
+            console.log(this.state.question.user)
         })
     }
     addAnswer = () => {
@@ -54,8 +55,31 @@ class QuoraCont extends Component {
         this.setState({newAnswer : e.target.value});
         console.log(e.target.value);
     }
+    upVoteClicked = () => {
+        axios.post(`/api/v1/quora/questions/upvote/${this.state.question._id}`,{}).then((res) => {
+            this.setState({question : res.data.newQuestion});
+            console.log(res);
+        })
+    }
+    downVoteClicked = () => {
+        axios.post(`/api/v1/quora/questions/downvote/${this.state.question._id}`,{}).then((res) => {
+            this.setState({question : res.data.newQuestion});
+            console.log(res);
+        })
+    }
     render() {
+        console.log(this.props)
         const { classes } = this.props;
+        let upvoteColor = "";
+        let downvoteColor = "";
+        console.log(this.state.question);
+        // console.log(this.props.user._id);
+        // if(this.state.question.upvotedBy.includes(this.props.user._id)) {
+        //     upvoteColor = "primary"
+        // }
+        // if(this.state.question.downvotedBy.includes(this.props.user._id)) {
+        //     downvoteColor = "secondary"
+        // }
         return(
             <div>
                 {!this.state.isLoading ? (
@@ -100,18 +124,14 @@ class QuoraCont extends Component {
                                   classes={{ root: classes.cardHeaderRoot }}>
                                 </CardHeader>
                                 <CardContent>
-                                <Box
-                                    component={Typography}
-                                    variant="h6"
-                                    // color={theme.palette.gray[600] + "!important"}
-                                    paddingTop=".25rem"
-                                    paddingBottom=".25rem"
-                                    fontSize=".75rem!important"
-                                    letterSpacing=".04em"
-                                    marginBottom="1.5rem!important"
-                                    classes={{ root: classes.typographyRootH6 }}
+                                <Box component={Typography} variant="h6" paddingTop=".25rem" paddingBottom=".25rem" fontSize=".75rem!important"
+                                    letterSpacing=".04em" marginBottom="1.5rem!important" classes={{ root: classes.typographyRootH6 }}
                                 >
-                                    Question From Navaneeth
+                                 
+                                {/* {console.log(this.state.question.user)} */}
+                                {/* {this.state.question.isAnanymous ? "An Ananymous user" : this.state.question.user.name} */}
+                                
+                                 Asked by Navaneeth
                                 </Box>
                                 <Box>
                                 <Grid container>
@@ -128,15 +148,15 @@ class QuoraCont extends Component {
                                 </Grid>
                                 <Grid container>
                                     <Grid item xs = {2} lg = {1}>
-                                        <IconButton>
+                                        <IconButton onClick = {() => this.upVoteClicked()}>
                                             <Typography>{this.state.question.upvotes}</Typography>
-                                            <ThumbUpOutlinedIcon/>
+                                            <ThumbUpOutlinedIcon color = {upvoteColor}/>
                                         </IconButton>       
                                     </Grid>
                                     <Grid item xs = {2} lg = {1}>
-                                        <IconButton>
+                                        <IconButton onClick = {() => this.downVoteClicked()}>
                                             <Typography>{this.state.question.downvotes}</Typography>
-                                            <ThumbDownOutlinedIcon/>
+                                            <ThumbDownOutlinedIcon color = {downvoteColor}/>
                                         </IconButton>
                                     </Grid>
                                     <Grid item xs = {2} lg = {1}>

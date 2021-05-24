@@ -1,6 +1,6 @@
-import "./Notification.css";
-
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import "./Notification.css";
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Typography from "@material-ui/core/Typography";
@@ -14,6 +14,7 @@ import axios from "axios";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import { project } from "ramda";
 
 const useStyles = makeStyles({
   root: {
@@ -70,6 +71,7 @@ const useStyles = makeStyles({
 // }));
 
 function Notification({ user }) {
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([
@@ -110,7 +112,8 @@ function Notification({ user }) {
   };
 
   const redirectToProject = (projectId) => {
-    alert(projectId);
+    let projectUrl = `/admin/project/${projectId}`;
+    history.push(projectUrl);
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -123,7 +126,10 @@ function Notification({ user }) {
       <CardContent style={{ padding: 0, margin: 0 }}>
         {notifications.map((notification, key) => {
           return (
-            <div className={classes.tile}>
+            <div
+              className={classes.tile}
+              onClick={() => redirectToProject(notification.projectId)}
+            >
               <div
                 style={{
                   alignItems: "center",

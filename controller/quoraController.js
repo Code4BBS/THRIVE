@@ -42,7 +42,7 @@ exports.getAllQuestions = catchAsync(async (req,res,next) => {
 })
 
 exports.getAQuestion = catchAsync(async(req,res,next) => {
-    const question = await (await Question.findById(req.params.id)).populate(`answers`);
+    const question = await Question.findById(req.params.id).populate('user');
     res.status(200).json({
         status : "success",
         question
@@ -78,9 +78,10 @@ exports.createAnswer = catchAsync(async (req,res,next) => {
 exports.upVote = catchAsync(async(req,res,next) => {
     let question = await Question.findById(req.params.qId);
     if(question.upvotedBy.includes(req.user.id)) {
+        let newQuestion = question
         res.status(200).json({
             message : "already upvoted",
-            question
+            newQuestion
         })
         return (next);
     } else if(question.downvotedBy.includes(req.user.id)) {
@@ -109,9 +110,10 @@ exports.upVote = catchAsync(async(req,res,next) => {
 exports.downVote = catchAsync(async(req,res,next) => {
     let question = await Question.findById(req.params.qId);
     if(question.downvotedBy.includes(req.user.id)) {
+        let newQuestion = question;
         res.status(200).json({
             message : "already downvoted",
-            question
+            newQuestion
         })
         return (next);
     } else if(question.upvotedBy.includes(req.user.id)) {
