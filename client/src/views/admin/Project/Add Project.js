@@ -86,7 +86,7 @@ function Profile({ user }) {
       });
   };
 
-  function getAllTags() {
+  const getAllTags = () => {
     let data = ["hello"];
     axios
       .get("/api/v1/user/tag", { withCredentials: true })
@@ -98,12 +98,17 @@ function Profile({ user }) {
         setShowTagsPane(true);
       })
       .catch((err) => console.log(err));
-  }
+  };
   const hideTagsPane = () => {
     setShowTagsPane(false);
   };
   const showTags = () => {
-    getAllTags();
+    if (tagsList.length > 0) {
+      setCollaboratorsPane(false);
+      setShowTagsPane(true);
+    } else {
+      getAllTags();
+    }
   };
 
   const getSelectedTags = (tagsSelected) => {
@@ -131,7 +136,12 @@ function Profile({ user }) {
   };
 
   const showCollaboratorsPane = () => {
-    getAllUsers();
+    if (customers.length > 0) {
+      setShowTagsPane(false);
+      setCollaboratorsPane(true);
+    } else {
+      getAllUsers();
+    }
   };
 
   const hideCollaboratorsPane = () => {
