@@ -6,13 +6,13 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
-const methodOverride = require("method-override");
+// const methodOverride = require("method-override");
 const config = require("./../utils/config");
 const app = express();
-
+const fs = require("fs");
 // Middleware
 app.use(bodyParser.json());
-app.use(methodOverride("_method"));
+// app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 
 // Create mongo connection
@@ -95,6 +95,8 @@ app.get("/", (req, res) => {
 // @desc  Uploads file to DB
 app.post("/upload", upload.single("file"), (req, res) => {
   // res.json({ file: req.file });
+  // console.log(req.query);
+
   res.redirect("/");
 });
 
@@ -124,8 +126,18 @@ app.get("/files/:filename", (req, res) => {
         err: "No file exists",
       });
     }
+    if (file.contentType !== "image/jpeg" || file.contentType !== "image/png") {
+      // Read output to browser
+      const readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: "Not an image",
+      });
+    }
     // File exists
-    return res.json(file);
+    // console.log(file);
+    // return res.json(file);
   });
 });
 
@@ -155,7 +167,7 @@ app.get("/image/:filename", (req, res) => {
 
 // @route DELETE /files/:id
 // @desc  Delete file
-app.delete("/files/:id", (req, res) => {
+app.post("/files/:id", (req, res) => {
   gfs.remove({ _id: req.params.id, root: "uploads" }, (err, gridStore) => {
     if (err) {
       return res.status(404).json({ err: err });

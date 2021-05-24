@@ -4,7 +4,7 @@
   "description": "Simple app to upload files to MongoDB",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "nodemon app.js",
     "dev": "nodemon app.js"
   },
   "author": "",
@@ -21,6 +21,6 @@
     "multer-gridfs-storage": "^3.0.0"
   },
   "devDependencies": {
-    "nodemon": "^1.17.1"
+    "nodemon": "^1.19.4"
   }
 }
