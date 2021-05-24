@@ -136,7 +136,7 @@ var routes = [
     iconColor: "Primary",
     component: EditProject,
     layout: "/admin",
-    show: true,
+    show: false,
   },
   {
     path: "/project/:id",
@@ -145,7 +145,7 @@ var routes = [
     iconColor: "Primary",
     component: Project,
     layout: "/admin",
-    show: true,
+    show: false,
   },
 
   // {
