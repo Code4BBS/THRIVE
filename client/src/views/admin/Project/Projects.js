@@ -448,6 +448,9 @@ const Tables = ({ user }) => {
                 rowsPerPageOptions={[5, 10, 25]}
                 SelectProps={{
                   variant: "outlined",
+                  classes: {
+                    select: classes.select,
+                  },
                 }}
               />
             </Card>
