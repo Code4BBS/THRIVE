@@ -9,7 +9,7 @@ const questionSchema = new mongoose.Schema({
         type : Date,
         required : true
     },
-    isAnanymous : {
+    isAnonymous : {
         type : Boolean,
         default : 0
     },
@@ -33,7 +33,7 @@ const questionSchema = new mongoose.Schema({
             type : String,
             required : true
         },
-        isAnanymous : {
+        isAnonymous : {
             type : Boolean,
             default : 0
         },

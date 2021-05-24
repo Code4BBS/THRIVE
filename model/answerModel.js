@@ -5,7 +5,7 @@ const answerSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    isAnanymous : {
+    isAnonymous : {
         type : Boolean,
         default : 0
     },

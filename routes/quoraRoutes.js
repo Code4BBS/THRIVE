@@ -5,6 +5,7 @@ const authController = require("./../controller/authController");
 
 router.use(authController.verifyJwtToken,authController.loggedInUser);
 
+
 router.delete('/questions/:qId', quoraController.deleteQuestion);
 router.post('/questions/upvote/:qId', quoraController.upVote);
 router.post('/questions/downvote/:qId', quoraController.downVote);
