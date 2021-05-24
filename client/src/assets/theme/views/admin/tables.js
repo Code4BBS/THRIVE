@@ -76,6 +76,12 @@ const componentStyles = (theme) => ({
     paddingRight: "1.5rem",
     borderTop: "0",
   },
+  tableCellRootNew: {
+    verticalAlign: "middle",
+    paddingLeft: "0.75rem",
+    paddingRight: "0.75rem",
+    borderTop: "0",
+  },
   tableCellRootHead: {
     backgroundColor: theme.palette.gray[100],
     color: theme.palette.gray[600],
