@@ -50,7 +50,6 @@ function Profile({ user }) {
   const [open, setOpen] = useState(false);
   const [requestNote, setRequestNote] = useState("");
   const [isLoading, setLoading] = useState(true);
-  const [button, setButton] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -74,7 +73,6 @@ function Profile({ user }) {
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
-            setButton(true);
             window.alert("Request Sent Successfully");
           }
         })
@@ -117,6 +115,16 @@ function Profile({ user }) {
     }
   };
 
+  const confirmAccept = (request, index) => {
+    let confirm = window.confirm(
+      `Are you sure you want to accept request of ${request.requester.name}?`
+    );
+
+    if (confirm) {
+      acceptRequest(request, index);
+    }
+  };
+
   const rejectRequest = (request, index) => {
     if (project) {
       axios
@@ -140,6 +148,16 @@ function Profile({ user }) {
         });
     } else {
       window.alert("Something went wrong ! Try again Later");
+    }
+  };
+
+  const confirmReject = (request, index) => {
+    let confirm = window.confirm(
+      `Are you sure you want to reject request of ${request.requester.name}?`
+    );
+
+    if (confirm) {
+      rejectRequest(request, index);
     }
   };
 
@@ -177,9 +195,9 @@ function Profile({ user }) {
     axios
       .get(`/api/v1/project/${projectId}`)
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.status === 200) {
-          console.log(response.data.data.project);
+          // console.log(response.data.data.project);
           setLoading(false);
           setProject(response.data.data.project);
         }
@@ -343,7 +361,7 @@ function Profile({ user }) {
                                   color="primary"
                                   variant="contained"
                                   component="span"
-                                  onClick={() => acceptRequest(request, id)}
+                                  onClick={() => confirmAccept(request, id)}
                                 >
                                   <CheckIcon />
                                 </IconButton>
@@ -351,7 +369,7 @@ function Profile({ user }) {
                                   color="primary"
                                   variant="contained"
                                   component="span"
-                                  onClick={() => rejectRequest(request, id)}
+                                  onClick={() => confirmReject(request, id)}
                                 >
                                   <ClearIcon />
                                 </IconButton>
@@ -369,16 +387,37 @@ function Profile({ user }) {
         ) : null;
     }
 
-    const check = project.requests.some(
+    //Join Button Functionality
+    const ownerCheck = project.owner._id === user._id;
+
+    const requesterCheck = project.requests.findIndex(
       (request) => request.requester._id === user._id
     );
-    if (
-      !(user._id === project.owner._id) &&
-      !(
-        project.collaborators.some(
-          (collaborator) => collaborator._id === user._id
-        ) && !check
-      )
+
+    const collaboratorCheck = project.collaborators.findIndex(
+      (collaborator) => collaborator._id === user._id
+    );
+
+    if (!ownerCheck && collaboratorCheck === -1 && requesterCheck > -1) {
+      joinRequestButton = (
+        <Grid item xs="auto">
+          <Box alignItems="flex-end" display="flex" flexWrap="wrap">
+            <Button
+              size="small"
+              variant="outlined"
+              component="span"
+              classes={{ root: classes.buttonRootDark }}
+              style={{ marginLeft: "auto", marginRight: "auto" }}
+            >
+              Your Request is Registered
+            </Button>
+          </Box>
+        </Grid>
+      );
+    } else if (
+      !ownerCheck &&
+      collaboratorCheck === -1 &&
+      requesterCheck === -1
     ) {
       joinRequestButton = (
         <Grid item xs="auto">
@@ -387,7 +426,7 @@ function Profile({ user }) {
               size="small"
               variant="contained"
               component="span"
-              disabled={button}
+              // disabled={button}
               classes={{ root: classes.buttonRootDark }}
               style={{ marginLeft: "auto", marginRight: "auto" }}
               onClick={() => {
@@ -395,23 +434,6 @@ function Profile({ user }) {
               }}
             >
               Request to Join
-            </Button>
-          </Box>
-        </Grid>
-      );
-    } else if (check) {
-      joinRequestButton = (
-        <Grid item xs="auto">
-          <Box alignItems="flex-end" display="flex" flexWrap="wrap">
-            <Button
-              size="small"
-              variant="contained"
-              component="span"
-              disabled={true}
-              classes={{ root: classes.buttonRootDark }}
-              style={{ marginLeft: "auto", marginRight: "auto" }}
-            >
-              Your Request is Registered
             </Button>
           </Box>
         </Grid>
@@ -507,7 +529,11 @@ function Profile({ user }) {
                               >
                                 <Chip
                                   variant="outlined"
-                                  label={collaborator.name}
+                                  label={
+                                    collaborator.name === user._id
+                                      ? "You"
+                                      : collaborator.name
+                                  }
                                   avatar={<Avatar src={collaborator.image} />}
                                   style={{ color: "black!important" }}
                                 />
