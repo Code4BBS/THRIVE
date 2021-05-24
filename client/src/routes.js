@@ -128,11 +128,10 @@ var routes = [
     layout: "/admin",
     show: true,
   },
-  
 
   {
     path: "/project/edit/:id",
-    name: "Demo Edit Project",
+    name: "Edit Project",
     icon: ContactSupportTwoToneIcon,
     iconColor: "Primary",
     component: EditProject,
