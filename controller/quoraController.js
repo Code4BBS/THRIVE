@@ -42,7 +42,12 @@ exports.getAllQuestions = catchAsync(async (req,res,next) => {
 })
 
 exports.getAQuestion = catchAsync(async(req,res,next) => {
-    const question = await Question.findById(req.params.id).populate('user');
+    const question = await Question.findById(req.params.id)
+        .populate('user')
+        .populate( {
+            path : "answers.user",
+            select : "name",
+        })
     res.status(200).json({
         status : "success",
         question
