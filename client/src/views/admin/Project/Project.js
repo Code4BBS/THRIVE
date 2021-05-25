@@ -26,6 +26,7 @@ import Table from "@material-ui/core/Table";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
+import Chip from "@material-ui/core/Chip";
 
 // @material-ui/icons components
 import EditIcon from "@material-ui/icons/Edit";
@@ -37,7 +38,8 @@ import ClearIcon from "@material-ui/icons/Clear";
 import Header from "../../../components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
-import Chip from "@material-ui/core/Chip";
+
+import formatDate from "../Quora/formatDate.js";
 import axios from "axios";
 
 const useStyles = makeStyles(componentStyles);
@@ -286,7 +288,7 @@ function Profile({ user }) {
               variant="contained"
               component="span"
               onClick={() =>
-                window.location.href = `/admin/projects/edit/${project._id}`
+                (window.location.href = `/admin/projects/edit/${project._id}`)
               }
             >
               <EditIcon />
@@ -499,7 +501,7 @@ function Profile({ user }) {
                 </Box>
                 <div className={classes.plLg4}>
                   <Grid container>
-                    <Grid item xs="auto">
+                    <Grid item xs={12} lg={6}>
                       <Box component={Typography} variant="h5" display="inline">
                         Owner &nbsp;&nbsp;
                       </Box>
@@ -511,6 +513,21 @@ function Profile({ user }) {
                           color: "black!important",
                         }}
                       />
+                      <br />
+                      <br />
+                    </Grid>
+
+                    <Grid item xs={12} lg={6}>
+                      <Box component={Typography} variant="h5" display="inline">
+                        {project.lastUpdatedAt ? "Last Updated" : "Created"}:
+                        &nbsp;&nbsp;
+                      </Box>
+                      <span>
+                        {project.lastUpdatedAt
+                          ? formatDate(project.lastUpdatedAt)
+                          : formatDate(project.createdAt)}
+                      </span>
+
                       <br />
                       <br />
                     </Grid>
@@ -530,7 +547,7 @@ function Profile({ user }) {
                                 <Chip
                                   variant="outlined"
                                   label={
-                                    collaborator.name === user._id
+                                    collaborator._id === user._id
                                       ? "You"
                                       : collaborator.name
                                   }
