@@ -6,9 +6,15 @@ import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/tables.js";
 import ThumbUpOutlinedIcon from '@material-ui/icons/ThumbUpOutlined';
 import ThumbDownOutlinedIcon from '@material-ui/icons/ThumbDownOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Divider from '@material-ui/core/Divider';
 import QuestionAnswerOutlinedIcon from '@material-ui/icons/QuestionAnswerOutlined';
 import {Grid, Box, Container, withStyles, CardHeader, Card, Typography, CardContent, TextField, Button, Switch } from "@material-ui/core";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 class QuoraCont extends Component {
     state = {
@@ -18,13 +24,15 @@ class QuoraCont extends Component {
         answersLength : 0,
         newAnswer : "",
         isAnonymous : false,
-        askedBy : ""
+        askedBy : "",
+        deleteClicked : false
     }
     getQuestion = () => {
         this.setState({isLoading : true})
         let url = window.location.pathname.split('/');
         let qId = url[3];
         axios.get(`/api/v1/quora/questions/${qId}`).then((res) => {
+            console.log(res.data)
             this.setState({
                 isLoading : false,
                 question : res.data.question,   
@@ -34,7 +42,7 @@ class QuoraCont extends Component {
             if(!res.data.question.isAnonymous) {
                 this.setState({askedBy : res.data.question.user.name});
             }
-            console.log(res.data.question)
+            
             console.log(this.state.question.user)
         })
     }
@@ -45,6 +53,7 @@ class QuoraCont extends Component {
         }
         axios.post(`/api/v1/quora/answers/${this.state.question._id}`, answer).then(res => {            
             this.getQuestion();
+            // this.setState({question : res.data.finalQuestion})
         })
     }
     componentDidMount = () => {
@@ -74,12 +83,51 @@ class QuoraCont extends Component {
             // console.log(res);
         })
     }
+    deleteConfirmed = () => {
+        axios.delete(`/api/v1/quora/questions/${this.state.question._id}`).then((res) => {
+            window.location.href = `/admin/quora`;
+        })
+    }
     render() {
         console.log(this.props)
         const { classes } = this.props;
         let upvoteColor = "";
         let downvoteColor = "";
         console.log(this.state.question);
+        let deleteButton;
+        if(this.state.question != null && this.state.question.isAnonymous == false && this.state.question.user._id == this.props.user._id) {
+            deleteButton = (
+                    <IconButton size = "large" onClick = {() => (this.setState({deleteClicked : true}))}>
+                        <DeleteIcon fontSize = {"large"}/>
+                    </IconButton>
+            );
+        } else {
+            deleteButton = null;
+        }
+        const deleteModal = (
+            <div>
+                <Dialog open={this.state.deleteClicked} onClose={() => {this.setState({deleteClicked : false})}} 
+                    aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Confirm Deletion</DialogTitle>
+                <DialogContent>
+                    <Grid container>
+                        <Grid item>
+                            <Button variant = "contained" style = {{color : "white", backgroundColor : "red"}} 
+                                onClick = {() => (this.deleteConfirmed())}>
+                                Confirm
+                            </Button>
+                        </Grid>
+                        <Grid item>
+                            <Button onClick={this.AddQuestion} variant = "contained" onClick={() => (this.setState({deleteClicked : false}))} 
+                            style = {{color : "white", backgroundColor : "green"}} >
+                                Cancel
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </DialogContent>
+                </Dialog>
+            </div>
+        )
         return(
             <div>
                 {!this.state.isLoading ? (
@@ -101,6 +149,7 @@ class QuoraCont extends Component {
                         marginBottom="3rem"
                         classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
                         >
+                            {deleteModal}
                             <Card classes={{root: classes.cardRoot + " " + classes.cardRootSecondary,}}>
                                 <CardHeader
                                 subheader={
@@ -121,6 +170,7 @@ class QuoraCont extends Component {
                                       </Grid>
                                     </Grid>
                                   }
+                                  action = {deleteButton}
                                   classes={{ root: classes.cardHeaderRoot }}>
                                 </CardHeader>
                                 <CardContent>
