@@ -353,7 +353,7 @@ const ProjectTable = ({ user }) => {
                                         color="primary"
                                         size="small"
                                         style={{ marginRight: "0.5rem" }}
-                                        // key={tag._id}
+                                        key={tag._id}
                                       >
                                         {tag.name}
                                       </Button>
