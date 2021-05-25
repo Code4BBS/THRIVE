@@ -6,10 +6,19 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const GridFsStorage = require("multer-gridfs-storage");
 const Grid = require("gridfs-stream");
+const cors = require("cors");
 // const methodOverride = require("method-override");
 const config = require("./../utils/config");
 const app = express();
 const fs = require("fs");
+
+app.use(
+  cors({
+    origin: "http://localhost:3001",
+    credentials: true,
+  })
+);
+
 // Middleware
 app.use(bodyParser.json());
 // app.use(methodOverride("_method"));
@@ -66,7 +75,7 @@ const storage = new GridFsStorage({
     });
   },
 });
-const upload = multer({ storage });
+const upload = multer({ storage: storage }).single("file");
 
 // @route GET /
 // @desc Loads form
@@ -93,16 +102,18 @@ app.get("/", (req, res) => {
 
 // @route POST /upload
 // @desc  Uploads file to DB
-app.post("/upload", upload.single("file"), (req, res) => {
-  // res.json({ file: req.file });
-  // console.log(req.query);
-
-  res.redirect("/");
+app.post("/upload", (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      res.sendStatus(500);
+    }
+    res.send(req.file);
+  });
 });
 
 // @route GET /files
 // @desc  Display all files in JSON
-app.get("/files", (req, res) => {
+app.get("/file", (req, res) => {
   gfs.files.find().toArray((err, files) => {
     // Check if files
     if (!files || files.length === 0) {
@@ -130,6 +141,7 @@ app.get("/files/:filename", (req, res) => {
       // Read output to browser
       const readstream = gfs.createReadStream(file.filename);
       readstream.pipe(res);
+      console.log("here");
     } else {
       res.status(404).json({
         err: "Not an image",

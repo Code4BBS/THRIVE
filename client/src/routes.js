@@ -14,7 +14,7 @@ import Project from "views/admin/Project/Project.js";
 import EditProject from "views/admin/Project/EditProject.js";
 import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
-
+import File from "views/admin/FileUpload";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -128,7 +128,6 @@ var routes = [
     layout: "/admin",
     show: true,
   },
-  
 
   {
     path: "/project/edit/:id",
@@ -147,6 +146,15 @@ var routes = [
     component: Project,
     layout: "/admin",
     show: false,
+  },
+  {
+    path: "/file",
+    name: "File upload",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: File,
+    layout: "/admin",
+    show: true,
   },
 
   // {
