@@ -113,7 +113,7 @@ app.post("/upload", (req, res) => {
 
 // @route GET /files
 // @desc  Display all files in JSON
-app.get("/file", (req, res) => {
+app.get("/files", (req, res) => {
   gfs.files.find().toArray((err, files) => {
     // Check if files
     if (!files || files.length === 0) {
@@ -140,7 +140,9 @@ app.get("/files/:filename", (req, res) => {
     if (file.contentType !== "image/jpeg" || file.contentType !== "image/png") {
       // Read output to browser
       const readstream = gfs.createReadStream(file.filename);
+
       readstream.pipe(res);
+      // res.json(file);
       console.log("here");
     } else {
       res.status(404).json({
