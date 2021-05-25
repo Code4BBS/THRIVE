@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const Tag = require("./tagModel");
+const Course = require("./courseModel");
+
 const userSchema = new mongoose.Schema(
   {
     name: {
@@ -116,6 +118,12 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    coursesEnrolled: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: "Course",
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },

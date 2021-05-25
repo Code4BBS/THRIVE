@@ -52,7 +52,7 @@ export default function AuthNavbar() {
     >
       <ListItem
         component={Link}
-        to="/admin/dashboard"
+        to="/dashboard"
         onClick={handleMenuClose}
         classes={{
           root: classes.listItemRoot,
@@ -100,7 +100,7 @@ export default function AuthNavbar() {
       </ListItem>
       <ListItem
         component={Link}
-        to="/admin/user-profile"
+        to="/user-profile"
         onClick={handleMenuClose}
         classes={{
           root: classes.listItemRoot,

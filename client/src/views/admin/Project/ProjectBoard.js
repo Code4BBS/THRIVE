@@ -131,7 +131,7 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/admin/projects/all";
+                  window.location.href = "/projects/all";
                   // getAllProjects();
                 }}
               >
@@ -195,7 +195,7 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/admin/projects/myProjects";
+                  window.location.href = "/projects/myProjects";
 
                   // getMyProjects();
                 }}
@@ -206,7 +206,7 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/admin/projects/add";
+                  window.location.href = "/projects/add";
                 }}
               >
                 Add New Project

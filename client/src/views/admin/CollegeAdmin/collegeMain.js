@@ -131,7 +131,7 @@ function CollegeDashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/admin/courses/all";
+                  window.location.href = "/courses/all";
                   // getAllProjects();
                 }}
               >
@@ -195,7 +195,7 @@ function CollegeDashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/admin/projects/myProjects";
+                  window.location.href = "/projects/myProjects";
 
                   // getMyProjects();
                 }}
@@ -206,7 +206,7 @@ function CollegeDashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/admin/projects/add";
+                  window.location.href = "/projects/add";
                 }}
               >
                 Add New Project

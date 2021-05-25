@@ -78,7 +78,7 @@ function Profile({ user }) {
         if (response.status === 201) {
           let confirm = window.confirm("Project Added Successfully");
           if (confirm) {
-            window.location.href = "/admin/projects";
+            window.location.href = "/projects";
           }
         } else {
           window.alert("Failed to Add Project! Try Again after some time");
