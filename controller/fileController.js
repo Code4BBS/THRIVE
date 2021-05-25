@@ -71,12 +71,12 @@ exports.getAllFiles = (req, res) => {
 
 // @route POST /upload
 // @desc  Uploads file to DB
-exports.uploadFile = (req, res) => {
+exports.uploadFile = (req, res, next) => {
   upload(req, res, (err) => {
     if (err) {
       res.sendStatus(500);
     }
-    res.send(req.file);
+    next();
   });
 };
 

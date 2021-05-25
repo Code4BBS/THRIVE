@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
 const User = require("./userModel");
-
+const Course = require("./courseModel");
 const assignmentSchema = new mongoose.Schema(
   {
     name: {
@@ -10,13 +10,17 @@ const assignmentSchema = new mongoose.Schema(
       default: "Assignment",
     },
     courseId: {
-      type: String,
-      required: [true, "Course must have a code"],
+      type: mongoose.Schema.ObjectId,
+      ref: "Course",
+      required: [true, "Course must have a courseId"],
     },
     teacher: {
       type: mongoose.Schema.ObjectId,
       ref: "User",
       required: [true, "Course must have a teacher"],
+    },
+    assignmentFileName: {
+      type: String,
     },
     createdAt: {
       type: Date,

@@ -1,11 +1,14 @@
 const Project = require("../model/projectModel");
 const Tag = require("./../model/tagModel");
 const User = require("./../model/userModel");
+const Assignment = require("./../model/AssignmentModel");
 const Course = require("./../model/courseModel");
+
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
+const { assign } = require("nodemailer/lib/shared");
 
-exports.getAllCoures = catchAsync(async (req, res, next) => {
+exports.getAllCourses = catchAsync(async (req, res, next) => {
   const courses = await Course.find()
     .sort("name")
     .populate({
@@ -95,5 +98,38 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
   res.status(200).json({
     status: "success",
     updatedCourse: course,
+  });
+});
+
+exports.createAssignment = catchAsync(async (req, res, next) => {
+  // if (!req.params.id) {
+  //   return next(new AppError("Course Id is not mentioned", 404));
+  // }
+  console.log(req.query);
+  const courseId = req.query.courseId;
+  const name = req.query.name;
+  // if(req.user.role != "Teacher"){
+  //   return next(new AppError('Only teachers are allowed to post assignment',404));
+  // }
+
+  const teacher = req.user.id;
+  let data = {
+    name: name,
+    teacher: teacher,
+    courseId: courseId,
+  };
+
+  if (req.file) {
+    data.assignmentFileName = req.file.filename;
+  }
+
+  const newAssignment = await Assignment.create(data);
+
+  if (!newAssignment) {
+    return next(new AppError("Some problem occured", 403));
+  }
+  res.status(200).json({
+    status: "success",
+    data: newAssignment,
   });
 });

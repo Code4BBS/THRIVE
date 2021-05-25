@@ -10,7 +10,7 @@ router.use(authController.verifyJwtToken, authController.loggedInUser);
 router.get(
   "/",
   authController.restrictTo("admin"),
-  courseController.getAllCoures
+  courseController.getAllCourses
 );
 
 router.post(
@@ -25,8 +25,12 @@ router.post(
   courseController.enrollStudents
 );
 
-router.post("/file", fileController.uploadFile);
+router.post(
+  "/assignment",
+  fileController.uploadFile,
+  courseController.createAssignment
+);
 
-router.get("/file/:filename", fileController.getFile);
+router.get("/assignment/:filename", fileController.getFile);
 
 module.exports = router;
