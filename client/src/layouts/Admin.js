@@ -34,7 +34,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/admin") {
+      if (prop.layout === "/") {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -65,7 +65,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
         <Sidebar
           routes={routes}
           logo={{
-            innerLink: "/admin/index",
+            innerLink: "/index",
             imgSrc: require("../assets/img/brand/argon-react.png").default,
             imgAlt: "...",
           }}
@@ -100,7 +100,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
           />
           <Switch>
             {getRoutes(routes)}
-            <Redirect from="*" to="/admin/index" />
+            <Redirect from="*" to="/index" />
           </Switch>
           <Container
             maxWidth={false}

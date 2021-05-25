@@ -111,7 +111,7 @@ function Profile({ user }) {
             //   setProject(response.data.data.project);
           } else {
             window.alert("You cannot edit this project");
-            window.location.href = `/admin/projects/${projectId}`;
+            window.location.href = `/projects/${projectId}`;
           }
         }
       })
@@ -172,13 +172,17 @@ function Profile({ user }) {
     let collaborators = selectedCollaborators;
 
     axios
-      .patch(`/api/v1/project/${project._id}`, { ...values, tags, collaborators })
+      .patch(`/api/v1/project/${project._id}`, {
+        ...values,
+        tags,
+        collaborators,
+      })
       .then((response) => {
         // console.log(response);
         if (response.status === 200) {
           let confirm = window.confirm("Project Updated Successfully");
           if (confirm) {
-            window.location.href = `/admin/projects/${project._id}`;
+            window.location.href = `/projects/${project._id}`;
           }
         } else {
           window.alert("Failed to Add Project! Try Again after some time");

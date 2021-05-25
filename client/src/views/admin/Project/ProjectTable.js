@@ -137,7 +137,7 @@ const ProjectTable = ({ user }) => {
           setProjects(response.data.data.projects);
         } else {
           window.alert(noProjectsMessage);
-          window.location.href = "/admin/projects";
+          window.location.href = "/projects";
         }
       }
     });
@@ -241,7 +241,7 @@ const ProjectTable = ({ user }) => {
                             color="primary"
                             size="small"
                             onClick={() =>
-                              (window.location.href = "/admin/projects/add")
+                              (window.location.href = "/projects/add")
                             }
                             style={{
                               marginLeft: "0.25rem",
@@ -329,8 +329,8 @@ const ProjectTable = ({ user }) => {
                                         <a
                                           href={
                                             project.owner._id === user._id
-                                              ? `/admin/user-profile`
-                                              : `/admin/${project.owner._id}`
+                                              ? `/user-profile`
+                                              : `/${project.owner._id}`
                                           }
                                           style={{ textDecoration: "none" }}
                                         >
@@ -396,7 +396,7 @@ const ProjectTable = ({ user }) => {
                                     size="small"
                                     style={{ marginRight: "0.5rem" }}
                                     onClick={() =>
-                                      (window.location.href = `/admin/projects/${project._id}`)
+                                      (window.location.href = `/projects/${project._id}`)
                                     }
                                   >
                                     Click Here

@@ -197,7 +197,7 @@ const CourseTable = ({ user }) => {
                             color="primary"
                             size="small"
                             onClick={() =>
-                              (window.location.href = "/admin/projects/add")
+                              (window.location.href = "/projects/add")
                             }
                             style={{
                               marginLeft: "0.25rem",
@@ -324,8 +324,8 @@ const CourseTable = ({ user }) => {
                                       <a
                                         href={
                                           course.teacher._id === user._id
-                                            ? `/admin/user-profile`
-                                            : `/admin/${course.teacher._id}`
+                                            ? `/user-profile`
+                                            : `/${course.teacher._id}`
                                         }
                                         style={{ textDecoration: "none" }}
                                       >
@@ -363,7 +363,7 @@ const CourseTable = ({ user }) => {
                                   size="small"
                                   style={{ marginRight: "0.5rem" }}
                                   onClick={() =>
-                                    (window.location.href = `/admin/projects/${project._id}`)
+                                    (window.location.href = `/projects/${project._id}`)
                                   }
                                 >
                                   Click Here

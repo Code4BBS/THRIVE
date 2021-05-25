@@ -77,7 +77,7 @@ class Wrapper extends Component {
               <Router>
                 <Switch>
                   <Route
-                    path="/admin"
+                    path="/"
                     render={(props) => (
                       <AdminLayout
                         user={this.state.user}
@@ -87,7 +87,7 @@ class Wrapper extends Component {
                       />
                     )}
                   />
-                  <Redirect from="/" to="/admin/index" />
+                  <Redirect from="/" to="/index" />
                 </Switch>
               </Router>
             ) : (

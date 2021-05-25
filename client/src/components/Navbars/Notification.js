@@ -114,7 +114,7 @@ function Notification({ user }) {
   };
 
   const redirectToProject = (projectId) => {
-    let projectUrl = `/admin/project/${projectId}`;
+    let projectUrl = `/project/${projectId}`;
     history.push(projectUrl);
   };
   const open = Boolean(anchorEl);

@@ -170,7 +170,7 @@ function Profile({ user }) {
         .then((response) => {
           if (response.status === 204) {
             window.alert("Project deleted successfully");
-            window.location.href = `/admin/projects`;
+            window.location.href = `/projects`;
           } else {
             window.alert("Something went wrong ! Try again Later");
           }
@@ -288,7 +288,7 @@ function Profile({ user }) {
               variant="contained"
               component="span"
               onClick={() =>
-                (window.location.href = `/admin/projects/edit/${project._id}`)
+                (window.location.href = `/projects/edit/${project._id}`)
               }
             >
               <EditIcon />
