@@ -8,10 +8,11 @@ import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
-import Projects from "views/admin/Project/ProjectBoard.js";
-import AddProject from "views/admin/Project/Add Project.js";
+import ProjectBoard from "views/admin/Project/ProjectBoard.js";
+import AddProject from "views/admin/Project/AddProject.js";
 import Project from "views/admin/Project/Project.js";
 import EditProject from "views/admin/Project/EditProject.js";
+import ProjectTable from "views/admin/Project/ProjectTable.js";
 import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
 
@@ -47,33 +48,7 @@ var routes = [
     layout: "/admin",
     show: true,
   },
-  {
-    path: "/projects",
-    name: "Projects",
-    icon: EmojiObjectsIcon,
-    iconColor: "PrimaryLight",
-    component: Projects,
-    layout: "/admin",
-    show: true,
-  },
-  {
-    path: "/icons",
-    name: "Icons",
-    icon: Grain,
-    iconColor: "Primary",
-    component: Icons,
-    layout: "/admin",
-    show: false,
-  },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: LocationOn,
-    iconColor: "Warning",
-    component: Maps,
-    layout: "/admin",
-    show: true,
-  },
+
   {
     path: "/user-profile",
     name: "User Profile",
@@ -84,15 +59,6 @@ var routes = [
     show: true,
   },
   {
-    path: "/tables",
-    name: "Tables",
-    icon: FormatListBulleted,
-    iconColor: "Error",
-    component: Tables,
-    layout: "/admin",
-    show: false,
-  },
-  {
     path: "/discover",
     name: "Discover",
     icon: PeopleIcon,
@@ -101,6 +67,66 @@ var routes = [
     layout: "/admin",
     show: true,
   },
+
+  //All Project Routes
+  {
+    path: "/projects/all",
+    name: "All Projects",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: ProjectTable,
+    layout: "/admin",
+    show: false,
+  },
+  {
+    path: "/projects/myProjects",
+    name: "My Projects",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: ProjectTable,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/projects/add",
+    name: "Add Project",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: AddProject,
+    layout: "/admin",
+    show: false,
+  },
+
+  {
+    path: "/projects/edit/:id",
+    name: "Edit Project",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: EditProject,
+    layout: "/admin",
+    show: false,
+  },
+  {
+    path: "/projects/:id",
+    name: "Demo Project",
+    icon: ContactSupportTwoToneIcon,
+    iconColor: "Primary",
+    component: Project,
+    layout: "/admin",
+    show: false,
+  },
+  {
+    path: "/projects",
+    name: "Projects",
+    icon: EmojiObjectsIcon,
+    iconColor: "PrimaryLight",
+    component: ProjectBoard,
+    layout: "/admin",
+    show: true,
+  },
+
+  // Quora Routes
   {
     path: "/quora/:qId",
     name: "View Question",
@@ -120,34 +146,32 @@ var routes = [
     show: true,
   },
   {
-    path: "/addProject",
-    name: "Add Project",
-    icon: CreateIcon,
-    iconColor: "Primary",
-    component: AddProject,
+    path: "/maps",
+    name: "Maps",
+    icon: LocationOn,
+    iconColor: "Warning",
+    component: Maps,
     layout: "/admin",
     show: true,
   },
-
   {
-    path: "/project/edit/:id",
-    name: "Edit Project",
-    icon: ContactSupportTwoToneIcon,
+    path: "/icons",
+    name: "Icons",
+    icon: Grain,
     iconColor: "Primary",
-    component: EditProject,
+    component: Icons,
     layout: "/admin",
     show: false,
   },
   {
-    path: "/project/:id",
-    name: "Demo Project",
-    icon: ContactSupportTwoToneIcon,
-    iconColor: "Primary",
-    component: Project,
+    path: "/tables",
+    name: "Tables",
+    icon: FormatListBulleted,
+    iconColor: "Error",
+    component: Tables,
     layout: "/admin",
     show: false,
   },
-
   // {
   //   path: "/login",
   //   name: "Login",

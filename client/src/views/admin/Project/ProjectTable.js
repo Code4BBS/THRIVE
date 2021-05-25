@@ -28,6 +28,8 @@ import AvatarGroup from "@material-ui/lab/AvatarGroup";
 // @material-ui/icons components
 import MoreVert from "@material-ui/icons/MoreVert";
 
+import Modal from "components/Custom/Modals/Modal.js";
+
 // core components
 import Header from "../../../components/Headers/Header.js";
 import TagList from "./TagsList";
@@ -37,11 +39,14 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Tables = ({ user }) => {
+const ProjectTable = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
 
   const [projects, setProjects] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(true);
+  const [cardTitle, setCardTitle] = React.useState("Projects");
+  const [addButton, showAddButton] = React.useState(false);
   const [anchorId, setAnchorId] = React.useState(null);
   const [currentAnchor, setCurrentAnchor] = React.useState(null);
   const [limit, setLimit] = React.useState(10);
@@ -113,19 +118,37 @@ const Tables = ({ user }) => {
   }
 
   const getProjects = () => {
-    axios.get("/api/v1/project/myProjects").then((response) => {
+    let url = window.location.pathname.split("/");
+    let route = url[3];
+    let axiosRoute = "/api/v1/project";
+    let noProjectsMessage = "Currently no projects available !";
+    if (route === "myProjects") {
+      axiosRoute = `${axiosRoute}/myProjects`;
+      setCardTitle("My Projects");
+      showAddButton(true);
+      noProjectsMessage = "Currently you are not associated with any project.";
+    }
+
+    axios.get(axiosRoute).then((response) => {
       // console.log(response);
       if (response.status === 200) {
+        setLoading(false);
         if (response.data.data.res > 0) {
           setProjects(response.data.data.projects);
+        } else {
+          window.alert(noProjectsMessage);
+          window.location.href = "/admin/projects";
         }
       }
     });
   };
 
   React.useEffect(() => {
-    if (selectedTags.length == 0) getProjects();
-    else getAllProjectsByTags();
+    if (selectedTags.length !== 0) {
+      getAllProjectsByTags();
+    } else {
+      getProjects();
+    }
   }, [selectedTags]);
 
   const blacklistProject = (project, index) => {
@@ -183,7 +206,7 @@ const Tables = ({ user }) => {
                         variant="h3"
                         marginBottom="0!important"
                       >
-                        Projects
+                        {isLoading ? "Loading Projects...." : cardTitle}
                       </Box>
                     </Grid>
                     <Grid item xs="auto">
@@ -192,12 +215,13 @@ const Tables = ({ user }) => {
                         display="flex"
                         flexWrap="wrap"
                       >
-                        {selectedTags.length == 0 ? (
+                        {selectedTags.length === 0 ? (
                           <Button
                             variant="outlined"
                             color="primary"
                             size="small"
                             onClick={() => getAllTags()}
+                            style={{ marginTop: "0.25rem" }}
                           >
                             Search by Tags
                           </Button>
@@ -211,6 +235,22 @@ const Tables = ({ user }) => {
                             Reset
                           </Button>
                         )}
+                        {addButton ? (
+                          <Button
+                            variant="outlined"
+                            color="primary"
+                            size="small"
+                            onClick={() =>
+                              (window.location.href = "/admin/projects/add")
+                            }
+                            style={{
+                              marginLeft: "0.25rem",
+                              marginTop: "0.25rem",
+                            }}
+                          >
+                            Add New Project
+                          </Button>
+                        ) : null}
                       </Box>
                     </Grid>
                   </Grid>
@@ -246,7 +286,6 @@ const Tables = ({ user }) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {console.log(projects)}
                       {projects &&
                         projects
                           .slice(page * limit, (page + 1) * limit)
@@ -288,10 +327,16 @@ const Tables = ({ user }) => {
                                     <Box display="flex" alignItems="flex-start">
                                       <Box fontSize=".875rem" component="span">
                                         <a
-                                          href={`/admin/${project.owner._id}`}
+                                          href={
+                                            project.owner._id === user._id
+                                              ? `/admin/user-profile`
+                                              : `/admin/${project.owner._id}`
+                                          }
                                           style={{ textDecoration: "none" }}
                                         >
-                                          {project.owner.name}
+                                          {project.owner._id === user._id
+                                            ? "You"
+                                            : project.owner.name}
                                         </a>
                                       </Box>
                                     </Box>
@@ -322,11 +367,12 @@ const Tables = ({ user }) => {
                                   {project.collaborators.length > 0 ? (
                                     <AvatarGroup>
                                       {project.collaborators.map(
-                                        (collaborator) => {
+                                        (collaborator, id) => {
                                           return (
                                             <Tooltip
                                               title={collaborator.name}
                                               placement="top"
+                                              key={id}
                                             >
                                               <Avatar
                                                 classes={{
@@ -350,7 +396,7 @@ const Tables = ({ user }) => {
                                     size="small"
                                     style={{ marginRight: "0.5rem" }}
                                     onClick={() =>
-                                      (window.location.href = `/admin/project/${project._id}`)
+                                      (window.location.href = `/admin/projects/${project._id}`)
                                     }
                                   >
                                     Click Here
@@ -425,8 +471,6 @@ const Tables = ({ user }) => {
               />
             </Card>
           </Box>
-
-          {/* {modal} */}
         </Container>
       ) : (
         <Container>
@@ -442,4 +486,4 @@ const Tables = ({ user }) => {
   );
 };
 
-export default Tables;
+export default ProjectTable;

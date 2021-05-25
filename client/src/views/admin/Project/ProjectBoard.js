@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ProjectTable from "./Projects";
+import ProjectTable from "./ProjectTable";
 
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -26,47 +26,47 @@ function Dashboard({ user }) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [showProjectTable, setShowProjectTable] = useState(false);
-  const [projects, setProjects] = useState([]);
+  // const [showProjectTable, setShowProjectTable] = useState(false);
+  // const [projects, setProjects] = useState([]);
   const [isLoading, setLoading] = useState(false);
 
-  const getAllProjects = () => {
-    setLoading(true);
-    axios.get("/api/v1/project").then((response) => {
-      // console.log(response);
-      if (response.status === 200) {
-        setLoading(false);
+  // const getAllProjects = () => {
+  //   setLoading(true);
+  //   axios.get("/api/v1/project").then((response) => {
+  //     // console.log(response);
+  //     if (response.status === 200) {
+  //       setLoading(false);
 
-        if (response.data.data.res > 0) {
-          setProjects(response.data.data.projects);
+  //       if (response.data.data.res > 0) {
+  //         setProjects(response.data.data.projects);
 
-          setShowProjectTable(true);
-        } else {
-          window.alert("Currently no projects available !");
-        }
-      }
-    });
-  };
+  //         setShowProjectTable(true);
+  //       } else {
+  //         window.alert("Currently no projects available !");
+  //       }
+  //     }
+  //   });
+  // };
 
-  const getMyProjects = () => {
-    setLoading(true);
-    axios.get("/api/v1/project/myProjects").then((response) => {
-      // console.log(response);
-      if (response.status === 200) {
-        setLoading(false);
-        if (response.data.data.res > 0) {
-          setProjects(response.data.data.projects);
-          setShowProjectTable(true);
-        } else {
-          window.alert("Currently you are not associated with any project.");
-        }
-      }
-    });
-  };
+  // const getMyProjects = () => {
+  //   setLoading(true);
+  //   axios.get("/api/v1/project/myProjects").then((response) => {
+  //     // console.log(response);
+  //     if (response.status === 200) {
+  //       setLoading(false);
+  //       if (response.data.data.res > 0) {
+  //         setProjects(response.data.data.projects);
+  //         setShowProjectTable(true);
+  //       } else {
+  //         window.alert("Currently you are not associated with any project.");
+  //       }
+  //     }
+  //   });
+  // };
 
-  const hideTable = () => {
-    setShowProjectTable(false);
-  };
+  // const hideTable = () => {
+  //   setShowProjectTable(false);
+  // };
 
   const projectCards = (
     <Container
@@ -131,7 +131,8 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  getAllProjects();
+                  window.location.href = "/admin/projects/all";
+                  // getAllProjects();
                 }}
               >
                 {!isLoading ? "Explore" : "Loading..."}
@@ -184,7 +185,6 @@ function Dashboard({ user }) {
                       Projects you are participating in.
                     </Box>
                     <br />
-                    <br />
                   </Box>
                 </Box>
               }
@@ -195,10 +195,21 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  getMyProjects();
+                  window.location.href = "/admin/projects/myProjects";
+
+                  // getMyProjects();
                 }}
               >
                 {!isLoading ? "Explore" : "Loading..."}
+              </Button>
+              <Button
+                size="small"
+                color="primary"
+                onClick={() => {
+                  window.location.href = "/admin/projects/add";
+                }}
+              >
+                Add New Project
               </Button>
             </CardContent>
           </Card>
@@ -211,11 +222,7 @@ function Dashboard({ user }) {
   return (
     <>
       <Header />
-      {!showProjectTable ? (
-        projectCards
-      ) : showProjectTable && !isLoading ? (
-        <ProjectTable user={user} Projects={projects} hideTable={hideTable} />
-      ) : null}
+      {projectCards}
     </>
   );
 }

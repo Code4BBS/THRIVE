@@ -111,7 +111,7 @@ function Profile({ user }) {
             //   setProject(response.data.data.project);
           } else {
             window.alert("You cannot edit this project");
-            window.location.href = `/admin/project/${projectId}`;
+            window.location.href = `/admin/projects/${projectId}`;
           }
         }
       })
@@ -178,7 +178,7 @@ function Profile({ user }) {
         if (response.status === 200) {
           let confirm = window.confirm("Project Updated Successfully");
           if (confirm) {
-            window.location.href = `/admin/project/${project._id}`;
+            window.location.href = `/admin/projects/${project._id}`;
           }
         } else {
           window.alert("Failed to Add Project! Try Again after some time");

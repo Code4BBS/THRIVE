@@ -286,7 +286,7 @@ function Profile({ user }) {
               variant="contained"
               component="span"
               onClick={() =>
-                (window.location.href = `/admin/project/edit/${project._id}`)
+                window.location.href = `/admin/projects/edit/${project._id}`
               }
             >
               <EditIcon />
