@@ -83,7 +83,10 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
     {
       _id: { $in: studentsList },
     },
-    { $push: { notifications: notification }, notificationsSeen: false }
+    {
+      $push: { notifications: notification, coursesEnrolled: course._id },
+      notificationsSeen: false,
+    }
   );
 
   course.students.push(studentsList);
