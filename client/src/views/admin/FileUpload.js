@@ -75,13 +75,26 @@ class File extends Component {
       );
     }
   };
+  base64ToArrayBuffer = (base64) => {
+    base64 = base64.replace(/^data\:([^\;]+)\;base64,/gim, "");
+    var binaryString = window.atob(base64);
+    var len = binaryString.length;
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+      bytes[i] = binaryString.charCodeAt(i);
+    }
+    return bytes.buffer;
+  };
+
   openFile = () => {
     axios
       .get(`http://localhost:5000/files/${this.state.fileName}`, {
         withCredentials: true,
+        responseType: "arraybuffer",
       })
       .then((response) => {
         console.log(response.data);
+        // var arrBuffer = this.base64ToArrayBuffer(response.data);
         const file = new Blob([response.data], {
           type: "application/pdf",
         });
