@@ -17,6 +17,7 @@ const userRouter = require("./routes/userRoutes.js");
 const searchRouter = require("./routes/searchRoutes.js");
 const projectRouter = require("./routes/projectRoutes");
 const courseRouter = require("./routes/courseRoutes");
+const adminRouter = require("./routes/adminRoutes");
 const app = express();
 
 app.use(helmet());
@@ -43,6 +44,8 @@ app.use("/api/v1/quora", quoraRouter);
 app.use("/api/v1/search", searchRouter);
 app.use("/api/v1/project", projectRouter);
 app.use("/api/v1/course", courseRouter);
+app.use("/api/v1/admin", adminRouter);
+
 app.get("*", (req, res, next) => {
   res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });

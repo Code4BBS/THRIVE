@@ -1,14 +1,14 @@
-const User = require('../model/dbModel/userModel');
-const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
-const Tag = require('../model/dbModel/tagModel');
-const { sendEmail } = require('../utils/sendEmail');
+const User = require("../model/userModel");
+const catchAsync = require("../utils/catchAsync");
+const AppError = require("../utils/appError");
+const Tag = require("../model/tagModel");
+const { sendEmail } = require("../utils/sendEmail");
 
 exports.unpublish = catchAsync(async (req, res, next) => {
   const emails_to_unpublish = req.body.emails;
 
   if (!emails_to_unpublish || emails_to_unpublish == []) {
-    return next(new AppError('There are no emails in the request', 400));
+    return next(new AppError("There are no emails in the request", 400));
   }
 
   // Updating
@@ -42,7 +42,7 @@ exports.unpublish = catchAsync(async (req, res, next) => {
 
   if (unpublish_failed_user_emails.length === 0) {
     res.status(200).json({
-      status: 'success',
+      status: "success",
     });
   } else {
     res.status(200).json({
@@ -55,7 +55,7 @@ exports.publish = catchAsync(async (req, res, next) => {
   const emails_to_publish = req.body.emails;
 
   if (!emails_to_publish || emails_to_publish == []) {
-    return next(new AppError('There are no emails in the request', 400));
+    return next(new AppError("There are no emails in the request", 400));
   }
 
   //Updating
@@ -89,7 +89,7 @@ exports.publish = catchAsync(async (req, res, next) => {
 
   if (publish_failed_user_emails.length === 0) {
     res.status(200).json({
-      status: 'success',
+      status: "success",
     });
   } else {
     res.status(200).json({
@@ -101,7 +101,7 @@ exports.publish = catchAsync(async (req, res, next) => {
 exports.unverify = catchAsync(async (req, res, next) => {
   const emails_to_unverify = req.body.emails;
   if (!emails_to_unverify) {
-    return next(new AppError('There are no emails in the request', 400));
+    return next(new AppError("There are no emails in the request", 400));
   }
 
   await User.updateMany(
@@ -125,7 +125,7 @@ exports.unverify = catchAsync(async (req, res, next) => {
 
   if (unverify_failed_user_emails.length === 0) {
     res.status(200).json({
-      status: 'success',
+      status: "success",
     });
   } else {
     res.status(200).json({
@@ -137,7 +137,7 @@ exports.unverify = catchAsync(async (req, res, next) => {
 exports.verify = catchAsync(async (req, res, next) => {
   const emails_to_verify = req.body.emails;
   if (!emails_to_verify) {
-    return next(new AppError('There are no emails in the request', 401));
+    return next(new AppError("There are no emails in the request", 401));
   }
 
   await User.updateMany(
@@ -158,7 +158,7 @@ exports.verify = catchAsync(async (req, res, next) => {
 
   if (verify_failed_user_emails.length === 0) {
     res.status(200).json({
-      status: 'success',
+      status: "success",
     });
   } else {
     res.status(200).json({
@@ -171,17 +171,17 @@ exports.createTag = catchAsync(async (req, res, next) => {
   const { tagName, tagGroup } = req.body.tag;
 
   if (!tagName || !tagGroup) {
-    return next(new AppError('Either name or group of tag is missing', 400));
+    return next(new AppError("Either name or group of tag is missing", 400));
   }
   const newTag = await Tag.create({
     name: tagName,
     group: tagGroup,
   });
   if (!newTag) {
-    return next(new AppError('A problem occurred while creating the tag', 500));
+    return next(new AppError("A problem occurred while creating the tag", 500));
   }
   res.status(200).json({
-    status: 'success',
+    status: "success",
     tag: newTag,
   });
 });
@@ -189,22 +189,22 @@ exports.createTag = catchAsync(async (req, res, next) => {
 exports.deleteTag = catchAsync(async (req, res, next) => {
   const tagId = req.params.id;
   if (!tagId) {
-    return next(new AppError('There is no tag id mentioned', 400));
+    return next(new AppError("There is no tag id mentioned", 400));
   }
 
   const deletedDocument = await Tag.findByIdAndDelete(tagId);
   if (!deletedDocument)
-    return next(new AppError('No document found with this id', 400));
+    return next(new AppError("No document found with this id", 400));
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
   });
 });
 
 exports.autoVerify = catchAsync(async (req, res, next) => {
   const emails_to_autoVerify = req.body.emails;
   if (!emails_to_autoVerify) {
-    return next(new AppError('There are no emails in the request', 401));
+    return next(new AppError("There are no emails in the request", 401));
   }
 
   await User.updateMany(
@@ -228,7 +228,7 @@ exports.autoVerify = catchAsync(async (req, res, next) => {
 
   if (autoVerify_failed_user_emails.length === 0) {
     res.status(200).json({
-      status: 'success',
+      status: "success",
     });
   } else {
     res.status(200).json({
@@ -239,13 +239,13 @@ exports.autoVerify = catchAsync(async (req, res, next) => {
 
 exports.getAllUnpublishedUsers = catchAsync(async (req, res, next) => {
   const docs = await User.find({ publishStatus: false })
-    .select('name email image verifyStatus')
+    .select("name email image verifyStatus")
     .sort({ verifyStatus: -1, name: 1 })
     .lean();
 
   // SEND RESPONSE
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: docs.length,
     data: {
       docs,
@@ -256,15 +256,15 @@ exports.getAllUnpublishedUsers = catchAsync(async (req, res, next) => {
 exports.getAllReportedUsers = catchAsync(async (req, res, next) => {
   const docs = await User.find({ reportCount: { $gt: 0 } })
     .populate({
-      path: 'reporters',
-      model: 'User',
-      select: 'name email',
+      path: "reporters",
+      model: "User",
+      select: "name email",
     })
     .lean();
 
   // SEND RESPONSE
   res.status(200).json({
-    status: 'success',
+    status: "success",
     results: docs.length,
     data: {
       docs,
@@ -275,7 +275,7 @@ exports.getAllReportedUsers = catchAsync(async (req, res, next) => {
 exports.updateTag = catchAsync(async (req, res, next) => {
   const tagId = req.params.id;
   if (!tagId) {
-    return next(new AppError('There is no tag id mentioned', 400));
+    return next(new AppError("There is no tag id mentioned", 400));
   }
 
   const tag = await Tag.findByIdAndUpdate(tagId, req.body, {
@@ -284,7 +284,7 @@ exports.updateTag = catchAsync(async (req, res, next) => {
   });
 
   res.status(200).json({
-    status: 'success',
+    status: "success",
     data: {
       tag: tag,
     },
@@ -293,7 +293,7 @@ exports.updateTag = catchAsync(async (req, res, next) => {
 
 exports.clearReports = catchAsync(async (req, res, next) => {
   if (!req.query.id) {
-    return next(new AppError('There is no id in query', 403));
+    return next(new AppError("There is no id in query", 403));
   }
 
   let user = await User.findByIdAndUpdate(
@@ -306,11 +306,34 @@ exports.clearReports = catchAsync(async (req, res, next) => {
   );
 
   if (!user) {
-    return next(new AppError('There is no user with this id', 403));
+    return next(new AppError("There is no user with this id", 403));
   }
 
   res.status(200).json({
-    status: 'success',
-    message: 'successfully cleared reports',
+    status: "success",
+    message: "successfully cleared reports",
+  });
+});
+
+exports.assignRoleToTeachers = catchAsync(async (req, res, next) => {
+  const { teachersList } = req.body;
+
+  if (!teachersList) {
+    return next(new AppError("No teachers list is available", 404));
+  }
+
+  const updatedUsers = await User.updateMany(
+    { _id: { $in: teachersList } },
+    { role: "Teacher" },
+    { new: true }
+  );
+
+  if (!updatedUsers) {
+    return next(new AppError("Sorry there is a problem", 404));
+  }
+
+  res.status(200).json({
+    status: "Success",
+    data: updatedUsers,
   });
 });
