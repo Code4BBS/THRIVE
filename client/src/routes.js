@@ -21,6 +21,8 @@ import Question from "views/admin/Quora/Question.js";
 import File from "views/admin/fileUpload";
 import Classroom from "./views/admin/Classroom";
 import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
+import Course from "./views/admin/Course";
+
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -207,22 +209,6 @@ var routes = [
     layout: "/",
     show: true,
   },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   icon: VpnKey,
-  //   iconColor: "Info",
-  //   component: Login,
-  //   layout: "/auth",
-  // },
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   icon: AccountCircle,
-  //   iconColor: "ErrorLight",
-  //   component: Register,
-  //   layout: "/auth",
-  // },
   {
     divider: true,
     show: true,
@@ -250,9 +236,34 @@ var routes = [
     show: true,
   },
   {
+    path: "courses/:code/:id",
+    name: "Your Courses",
+    icon: LibraryBooksIcon,
+    iconColor: "Primary",
+    component: Course,
+    layout: "/",
+    show: false,
+  },
+  {
     divider: true,
     show: true,
   },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   icon: VpnKey,
+  //   iconColor: "Info",
+  //   component: Login,
+  //   layout: "/auth",
+  // },
+  // {
+  //   path: "/register",
+  //   name: "Register",
+  //   icon: AccountCircle,
+  //   iconColor: "ErrorLight",
+  //   component: Register,
+  //   layout: "/auth",
+  // },
   {
     title: "Documentation",
     show: false,

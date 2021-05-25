@@ -1,0 +1,16 @@
+.active {
+  border-radius: 20px !important;
+  height: 40px !important;
+  background-color: rgb(252, 252, 252) !important;
+}
+
+.in-active {
+  border-radius: 20px !important;
+  height: 40px !important;
+  box-shadow: none !important;
+}
+
+.active:hover,
+.in-active:hover {
+  transform: none !important;
+}

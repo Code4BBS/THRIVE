@@ -28,6 +28,30 @@ exports.getAllCourses = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getMyCourses = catchAsync(async (req, res, next) => {
+  console.log(req.body);
+
+  const courses = await Course.find({ _id: { $in: req.body } }).populate({
+    path: "teacher",
+    model: "User",
+    select: "name email image",
+  });
+
+  res.send(courses);
+});
+
+exports.getCourse = catchAsync(async (req, res, next) => {
+  const id = req.params.id;
+
+  const course = await Course.findById(id).populate({
+    path: "teacher",
+    ref: "User",
+    select: "name email image",
+  });
+
+  res.send(course);
+});
+
 exports.createCourse = catchAsync(async (req, res, next) => {
   //Required  : name , courseCode, teacher , year , branch
   const { name, coureseCode, teacher, year, branch } = req.body;

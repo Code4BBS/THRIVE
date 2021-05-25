@@ -15,12 +15,15 @@ import Typography from "@material-ui/core/Typography";
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
 function Classroom({ user }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
   const [isLoading, setLoading] = useState(false);
@@ -29,10 +32,10 @@ function Classroom({ user }) {
 
   useEffect(() => {
     axios
-      .get("/api/v1/course")
+      .post("/api/v1/course/my-courses", user.coursesEnrolled)
       .then((res) => {
-        setCourses(res.data.data);
-        console.log(res.data.data);
+        setCourses(res.data);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -62,7 +65,10 @@ function Classroom({ user }) {
             component={Box}
             marginBottom="3rem!important"
             key={course.courseCode}
-            onClick={() => {}}
+            onClick={() => {
+              console.log("clicked");
+              history.push(`/courses/${course.courseCode}/${course.id}`);
+            }}
           >
             <Card
               classes={{

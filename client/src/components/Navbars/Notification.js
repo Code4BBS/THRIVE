@@ -15,7 +15,6 @@ import SvgIcon from "@material-ui/core/SvgIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { UserX, Users, UserCheck, FileText } from "react-feather";
-import { project } from "ramda";
 
 const useStyles = makeStyles({
   root: {
