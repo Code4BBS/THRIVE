@@ -72,12 +72,7 @@ exports.createAnswer = catchAsync(async (req,res,next) => {
     }
     
     let question = await Question.findById(req.params.qId);
-    console.log("******");
-    console.log(Answer);
     question.answers.push(Answer);
-    
-    console.log('....................');
-    console.log(question.answers)
     let finalQuestion = await question.save();
 
     res.status(201).json({
@@ -151,7 +146,17 @@ exports.downVote = catchAsync(async(req,res,next) => {
 })
 
 exports.deleteQuestion = catchAsync(async(req,res,next) => {
-    const question = await Question.findByIdAndDelete(req.params.qId);
+    let question = await Question.findById(req.params.qId).populate('user');
+
+    if(!question.user._id.equals(req.user._id)) {
+        res.status(403).json({
+            status : "forbidden",
+            message : "You aren't allowed to delete other peoples questions"
+        })
+        return (next);
+    }
+    // console.log(1);
+    question = await Question.findByIdAndDelete(req.params.qId);
     res.status(203).json({
         status : "success",
         message : "question deleted successfully"
