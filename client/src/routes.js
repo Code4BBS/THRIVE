@@ -18,7 +18,7 @@ import EditProject from "views/admin/Project/EditProject.js";
 import ProjectTable from "views/admin/Project/ProjectTable.js";
 import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
-
+import File from "views/admin/fileUpload";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -193,6 +193,15 @@ var routes = [
     component: CourseTable,
     layout: "/",
     show: false,
+  },
+  {
+    path: "file/upload",
+    name: "Upload",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: File,
+    layout: "/",
+    show: true,
   },
   // {
   //   path: "/login",

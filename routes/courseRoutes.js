@@ -2,6 +2,7 @@ const express = require("express");
 const authController = require("../controller/authController");
 const userController = require("../controller/userController");
 const courseController = require("../controller/courseController");
+const fileController = require("../controller/fileController");
 const router = express.Router();
 
 router.use(authController.verifyJwtToken, authController.loggedInUser);
@@ -23,4 +24,9 @@ router.post(
   // authController.restrictTo("Teacher"),
   courseController.enrollStudents
 );
+
+router.post("/file", fileController.uploadFile);
+
+router.get("/file/:filename", fileController.getFile);
+
 module.exports = router;
