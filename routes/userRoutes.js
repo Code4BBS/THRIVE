@@ -3,15 +3,19 @@ const authController = require("../controller/authController");
 const userController = require("../controller/userController");
 const router = express.Router();
 
-router.use(authController.verifyJwtToken);
+router.use(authController.verifyJwtToken, authController.loggedInUser);
 
 router.get("/", userController.getAllUsers);
-
+router.get(
+  "/teacher",
+  authController.restrictTo("admin"),
+  userController.getAllTeachers
+);
+// router.get("/teachers", userController.getAllUTeachers);
 //Own profile
 router.get(
   "/profile",
   authController.restrictTo("user", "admin", "superAdmin"),
-  authController.loggedInUser,
   userController.aboutMe
 );
 
@@ -25,7 +29,6 @@ router.get(
 router.patch(
   "/profile",
   authController.restrictTo("user", "admin", "superAdmin"),
-  authController.loggedInUser,
   userController.updateProfile
 );
 
@@ -38,13 +41,11 @@ router.get(
 router.patch(
   "/report/:id",
   authController.restrictTo("user", "admin", "superAdmin"),
-  authController.loggedInUser,
   userController.reportUser
 );
 router.get(
   "/notifications",
   authController.restrictTo("user", "admin", "superAdmin"),
-  authController.loggedInUser,
   userController.getNotifications
 );
 

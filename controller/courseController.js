@@ -5,6 +5,26 @@ const Course = require("./../model/courseModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 
+exports.getAllCoures = catchAsync(async (req, res, next) => {
+  const courses = await Course.find()
+    .sort("name")
+    .populate({
+      path: "teacher",
+      ref: "User",
+      select: "name email image",
+    })
+    .populate({
+      path: "students",
+      ref: "User",
+      select: "name email rollNumber ",
+    });
+
+  res.status(200).json({
+    status: "success",
+    data: courses,
+  });
+});
+
 exports.createCourse = catchAsync(async (req, res, next) => {
   //Required  : name , courseCode, teacher , year , branch
   const { name, coureseCode, teacher, year, branch } = req.body;

@@ -80,7 +80,26 @@ exports.updateProfile = catchAsync(async (req, res, next) => {
 });
 
 exports.getAllUsers = catchAsync(async (req, res, next) => {
-  const docs = await User.find()
+  let roles = ["user", "admin"];
+
+  const docs = await User.find({ role: { $in: roles } })
+    .select("name email image ")
+    .sort({ name: 1 })
+    .lean();
+
+  res.status(200).json({
+    status: "success",
+    results: docs.length,
+    data: {
+      docs,
+    },
+  });
+});
+
+exports.getAllTeachers = catchAsync(async (req, res, next) => {
+  let roles = ["Teacher"];
+
+  const docs = await User.find({ role: { $in: roles } })
     .select("name email image ")
     .sort({ name: 1 })
     .lean();

@@ -6,6 +6,9 @@ import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
+// import CollegeAdmin from "views/admin/CollegeAdmin/collegeAdmin";
+import CollegeMain from "views/admin/CollegeAdmin/collegeMain";
+import CourseTable from "views/admin/CollegeAdmin/Courses.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 // import Discover from "views/admin/Discover.js";
 import ProjectBoard from "views/admin/Project/ProjectBoard.js";
@@ -169,6 +172,25 @@ var routes = [
     icon: FormatListBulleted,
     iconColor: "Error",
     component: Tables,
+    layout: "/admin",
+    show: false,
+  },
+  //College Admin routes
+  {
+    path: "/collegeAdmin",
+    name: "College Admin",
+    icon: AccountCircle,
+    iconColor: "Error",
+    component: CollegeMain,
+    layout: "/admin",
+    show: true,
+  },
+  {
+    path: "/courses/all",
+    name: "All Courses",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: CourseTable,
     layout: "/admin",
     show: false,
   },

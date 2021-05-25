@@ -6,6 +6,12 @@ const router = express.Router();
 
 router.use(authController.verifyJwtToken, authController.loggedInUser);
 
+router.get(
+  "/",
+  authController.restrictTo("admin"),
+  courseController.getAllCoures
+);
+
 router.post(
   "/",
   authController.restrictTo("admin"),
