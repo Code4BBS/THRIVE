@@ -1,0 +1,129 @@
+import React, { useState, useEffect } from "react";
+// import ProjectTable from "./ProjectTable";
+
+import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
+import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import CardHeader from "@material-ui/core/CardHeader";
+import Container from "@material-ui/core/Container";
+import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
+
+import Header from "components/Headers/Header.js";
+import componentStyles from "assets/theme/views/admin/dashboard.js";
+
+import axios from "axios";
+import { Avatar } from "@material-ui/core";
+
+const useStyles = makeStyles(componentStyles);
+
+function Classroom({ user }) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const [isLoading, setLoading] = useState(false);
+
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("/api/v1/course")
+      .then((res) => {
+        setCourses(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  return (
+    <div>
+      <Header />
+      <Grid
+        container
+        spacing={3}
+        style={{
+          margin: "-6rem auto 0px auto",
+          justifyContent: "space-evenly",
+          width: "100%",
+        }}
+      >
+        {courses.map((course, index) => (
+          <Grid
+            item
+            style={{
+              width: "340px",
+              marginBottom: "20px",
+              cursor: "pointer",
+            }}
+            component={Box}
+            marginBottom="3rem!important"
+            key={course.courseCode}
+            onClick={() => {}}
+          >
+            <Card
+              classes={{
+                root: classes.cardRoot,
+              }}
+              style={{ height: "100%" }}
+            >
+              <CardHeader
+                style={{ minHeight: "140px" }}
+                subheader={
+                  <Box>
+                    <Box
+                      component={Typography}
+                      variant="h2"
+                      className={classes.textUppercase}
+                      marginBottom="1rem!important"
+                    >
+                      <Box
+                        component="span"
+                        //   color={theme.palette.white.main}
+                        style={{
+                          textAlign: "center",
+                        }}
+                      >
+                        {course.name}
+                      </Box>
+                    </Box>
+
+                    <Box
+                      component={Typography}
+                      variant="h5"
+                      letterSpacing=".0625rem"
+                      marginBottom=".25rem!important"
+                    >
+                      <Box component="span" color={theme.palette.gray[400]}>
+                        {course.courseCode}
+                      </Box>
+                    </Box>
+                  </Box>
+                }
+                classes={{ root: classes.cardHeaderRoot }}
+              ></CardHeader>
+              <CardContent classes={{ root: classes.cardHeaderRoot }}>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Avatar
+                    style={{
+                      width: "40px",
+                      height: "40px",
+                      marginRight: "10px",
+                    }}
+                    src={course.teacher.image}
+                  />
+                  <Typography>{course.teacher.name}</Typography>
+                </div>
+              </CardContent>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
+}
+
+export default Classroom;

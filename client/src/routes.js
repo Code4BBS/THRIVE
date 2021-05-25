@@ -19,6 +19,8 @@ import ProjectTable from "views/admin/Project/ProjectTable.js";
 import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
 import File from "views/admin/fileUpload";
+import Classroom from "./views/admin/Classroom";
+
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -34,6 +36,8 @@ import VpnKey from "@material-ui/icons/VpnKey";
 import ContactSupportTwoToneIcon from "@material-ui/icons/ContactSupportTwoTone";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 import CreateIcon from "@material-ui/icons/Create";
+
+import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 
 var routes = [
   // {
@@ -219,6 +223,23 @@ var routes = [
   //   component: Register,
   //   layout: "/auth",
   // },
+  {
+    divider: true,
+    show: true,
+  },
+  {
+    title: "Classroom",
+    show: true,
+  },
+  {
+    path: "classroom",
+    name: "Your Courses",
+    icon: LibraryBooksIcon,
+    iconColor: "Primary",
+    component: Classroom,
+    layout: "/",
+    show: true,
+  },
   {
     divider: true,
     show: true,
