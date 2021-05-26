@@ -16,7 +16,11 @@ import {
   Divider,
   FormControl,
   FilledInput,
+  Chip,
+  Avatar,
 } from "@material-ui/core";
+
+import EventIcon from "@material-ui/icons/Event";
 
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AssignmentIcon from "@material-ui/icons/Assignment";
@@ -29,7 +33,6 @@ const useStyles = makeStyles(componentStyles);
 const AssignmentView = ({ user }) => {
   const classes = useStyles();
   let id = window.location.pathname.split("/")[2];
-  console.log(id);
 
   const [assignment, setAssignment] = useState([]);
   const [filename, setFileName] = useState("");
@@ -46,6 +49,7 @@ const AssignmentView = ({ user }) => {
         setAssignment(res.data.data);
         setFileName(res.data.data.assignmentFileName);
         let assignment = res.data.data;
+        console.log(assignment);
         let index = assignment.students.findIndex((el) => el.user == user._id);
         if (index != -1) {
           setSubmittedFile(assignment.students[index]["fileName"]);
@@ -130,6 +134,7 @@ const AssignmentView = ({ user }) => {
           component={Box}
           marginTop="-6rem"
           classes={{ root: classes.containerRoot }}
+          style={{ display: "flex", justifyContent: "center" }}
         >
           <Grid
             container
@@ -169,39 +174,73 @@ const AssignmentView = ({ user }) => {
                     </div>
                   }
                   subheader={
-                    assignment ? (
-                      <div style={{ display: "flex" }}>
-                        <Typography>
-                          {assignment.teacher ? assignment.teacher.name : ""} |{" "}
-                          {assignment.due || "May 26 "}
+                    assignment.courseId ? (
+                      <div>
+                        <Typography
+                          style={{
+                            margin: "0px 0px 0px 12px",
+                            padding: 0,
+                            fontWeight: 600,
+                          }}
+                        >
+                          {assignment.courseId.name.toUpperCase()} -{" "}
+                          {assignment.courseId.courseCode}
                         </Typography>
-                        <Typography style={{ marginLeft: "30px" }}>
-                          Due date {assignment.due || "May 30"}
-                        </Typography>
+                        <div
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            marginLeft: "9px",
+                            flexWrap: "wrap",
+                          }}
+                        >
+                          {assignment.teacher ? (
+                            <Chip
+                              icon={
+                                <Avatar
+                                  src={assignment.teacher.image}
+                                  style={{ height: "24px", width: "24px" }}
+                                />
+                              }
+                              style={{ fontSize: "15px", margin: "10px 0px" }}
+                              variant="outlined"
+                              label={assignment.teacher.name}
+                            />
+                          ) : (
+                            ""
+                          )}{" "}
+                          | {assignment.due || "May 26 "}&emsp;&emsp;
+                          <EventIcon />
+                          <Typography>
+                            Due {assignment.due || "May 30"}
+                          </Typography>
+                        </div>
                       </div>
                     ) : null
                   }
                 ></CardHeader>
                 <CardContent>
-                  <Box component="span" m={1}>
-                    <Button
-                      style={{ display: "flex" }}
-                      onClick={() => {
-                        if (fileUrl == "") openFile();
-                        else window.open(fileUrl);
-                      }}
-                    >
-                      <DescriptionIcon fontSize="large" color="primary" />
-                      <Typography style={{ padding: "10px" }}>
-                        View Assignment
-                      </Typography>
-                    </Button>
-                  </Box>
-                  <Divider />
+                  <Button
+                    style={{ display: "flex" }}
+                    onClick={() => {
+                      if (fileUrl == "") openFile();
+                      else window.open(fileUrl);
+                    }}
+                  >
+                    <DescriptionIcon fontSize="large" color="primary" />
+                    <Typography style={{ padding: "0px" }}>
+                      &nbsp;View Assignment
+                    </Typography>
+                  </Button>
+                  <Divider style={{ marginTop: "20px" }} />
                   <Box component="span" m={1}>
                     {submitted ? (
                       <>
-                        <Typography>Submitted Assignment</Typography>
+                        <Typography
+                          style={{ marginBottom: "10px", fontSize: "14px" }}
+                        >
+                          YOUR SUBMISSION
+                        </Typography>
                         <Button
                           style={{ display: "flex" }}
                           onClick={() => {
@@ -210,8 +249,8 @@ const AssignmentView = ({ user }) => {
                           }}
                         >
                           <DescriptionIcon fontSize="large" color="primary" />
-                          <Typography style={{ padding: "10px" }}>
-                            View Submitted Assignment
+                          <Typography style={{ padding: "0px" }}>
+                            &nbsp;View Submission
                           </Typography>
                         </Button>
                       </>

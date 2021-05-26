@@ -133,7 +133,9 @@ const Assignments = ({ course }) => {
                           style={{ height: "32px", width: "32px" }}
                         />
                       </TimelineDot>
-                      <TimelineConnector />
+                      {index !== assignments.length - 1 ? (
+                        <TimelineConnector />
+                      ) : null}
                     </TimelineSeparator>
                     <TimelineContent>
                       <div

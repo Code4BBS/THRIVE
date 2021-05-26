@@ -10,7 +10,6 @@ import Tables from "views/admin/Tables.js";
 import CollegeMain from "views/admin/CollegeAdmin/collegeMain";
 import CourseTable from "views/admin/CollegeAdmin/Courses.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
-// import Discover from "views/admin/Discover.js";
 import ProjectBoard from "views/admin/Project/ProjectBoard.js";
 import AddProject from "views/admin/Project/AddProject.js";
 import Project from "views/admin/Project/Project.js";
@@ -20,11 +19,9 @@ import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
 import File from "views/admin/fileUpload";
 import Classroom from "./views/admin/Classroom/Classroom";
-// import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
 import Course from "./views/admin/Classroom/Course";
 import AssignmentView from "./views/admin/Classroom/AssignmentView";
 import AddAssignment from "./views/admin/Classroom/AddAssignment";
-// @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
 import FlashOn from "@material-ui/icons/FlashOn";
@@ -35,7 +32,6 @@ import Palette from "@material-ui/icons/Palette";
 import Person from "@material-ui/icons/Person";
 import Tv from "@material-ui/icons/Tv";
 import PeopleIcon from "@material-ui/icons/People";
-import VpnKey from "@material-ui/icons/VpnKey";
 import ContactSupportTwoToneIcon from "@material-ui/icons/ContactSupportTwoTone";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 import CreateIcon from "@material-ui/icons/Create";
@@ -201,15 +197,15 @@ var routes = [
     layout: "/",
     show: false,
   },
-  {
-    path: "file/upload",
-    name: "Upload",
-    icon: CreateIcon,
-    iconColor: "Primary",
-    component: File,
-    layout: "/",
-    show: true,
-  },
+  // {
+  //   path: "file/upload",
+  //   name: "Upload",
+  //   icon: CreateIcon,
+  //   iconColor: "Primary",
+  //   component: File,
+  //   layout: "/",
+  //   show: true,
+  // },
   {
     divider: true,
     show: true,

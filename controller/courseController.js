@@ -182,11 +182,17 @@ exports.getAssignment = catchAsync(async (req, res, next) => {
     return next(new AppError("Assignment Id is not mentioned", 404));
   }
 
-  const assignment = await Assignment.findById(assignmentId).populate({
-    path: "teacher",
-    ref: "User",
-    selecte: "name email",
-  });
+  const assignment = await Assignment.findById(assignmentId)
+    .populate({
+      path: "teacher",
+      ref: "User",
+      select: "name email image",
+    })
+    .populate({
+      path: "courseId",
+      ref: "Course",
+      select: "courseCode name",
+    });
 
   res.status(200).json({
     status: "success",
