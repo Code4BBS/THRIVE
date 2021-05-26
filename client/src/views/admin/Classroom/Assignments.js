@@ -20,7 +20,7 @@ import TimelineConnector from "@material-ui/lab/TimelineConnector";
 import TimelineContent from "@material-ui/lab/TimelineContent";
 import TimelineDot from "@material-ui/lab/TimelineDot";
 import TimelineOppositeContent from "@material-ui/lab/TimelineOppositeContent";
-
+import FormatDate from "./../Quora/formatDate";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 
@@ -52,7 +52,20 @@ const Assignments = ({ course }) => {
   useEffect(() => {
     getAllCourseAssignments();
   }, []);
-
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   return (
     <Grid
       item
@@ -106,7 +119,9 @@ const Assignments = ({ course }) => {
                         color="textSecondary"
                         style={{ width: "70px" }}
                       >
-                        {time}
+                        {months[new Date(assignment.createdAt).getMonth()] +
+                          " " +
+                          new Date(assignment.createdAt).getDay()}
                       </Typography>
                     </TimelineOppositeContent>
                     <TimelineSeparator>
