@@ -161,7 +161,11 @@ function Course({ user }) {
         </Button>
       </div>
       <div style={{ marginTop: "30px" }}>
-        {tab === "Classes" ? <Classes /> : <Assignments courseId={id} />}
+        {tab === "Classes" ? (
+          <Classes course={course} />
+        ) : (
+          <Assignments course={course} />
+        )}
       </div>
     </div>
   );

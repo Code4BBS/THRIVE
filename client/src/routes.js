@@ -20,9 +20,10 @@ import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
 import File from "views/admin/fileUpload";
 import Classroom from "./views/admin/Classroom/Classroom";
-import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
+// import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
 import Course from "./views/admin/Classroom/Course";
 import AssignmentView from "./views/admin/Classroom/AssignmentView";
+import AddAssignment from "./views/admin/Classroom/AddAssignment";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -227,13 +228,13 @@ var routes = [
     show: true,
   },
   {
-    path: "addAssignment",
+    path: "new-assignment/:id",
     name: "Add Assignment",
     icon: LibraryBooksIcon,
     iconColor: "Primary",
-    component: CreateAssignment,
+    component: AddAssignment,
     layout: "/",
-    show: true,
+    show: false,
   },
   {
     path: "courses/:code/:id",
@@ -246,7 +247,7 @@ var routes = [
     exact: true,
   },
   {
-    path: "courses/:code/assignment/:assignmentId",
+    path: "assignment/:id",
     name: "Assignments",
     icon: LibraryBooksIcon,
     iconColor: "Primary",
