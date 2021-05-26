@@ -9,10 +9,15 @@ import {
   Box,
   Typography,
   IconButton,
+  Container,
+  CardHeader,
+  CardContent,
+  Button,
 } from "@material-ui/core";
 
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AssignmentIcon from "@material-ui/icons/Assignment";
+import DescriptionIcon from "@material-ui/icons/Description";
 import axios from "axios";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 import Header from "components/Headers/Header";
@@ -20,89 +25,130 @@ const useStyles = makeStyles(componentStyles);
 
 const AssignmentView = () => {
   const classes = useStyles();
-  let id = window.location.pathname.split("/")[3];
+  let id = window.location.pathname.split("/")[2];
   console.log(id);
 
-  const [assignments, setAssignments] = useState([]);
+  const [assignment, setAssignment] = useState([]);
+  const [filename, setFileName] = useState("");
+  const [fileUrl, setFileUrl] = useState("");
 
-  const getAllCourseAssignments = () => {
+  const getAssignment = () => {
     axios
-      .get(`/api/v1/course/assignments/${id}`)
+      .get(`/api/v1/course/assignment/${id}`)
       .then((res) => {
-        setAssignments(res.data.data);
+        setAssignment(res.data.data);
+        setFileName(res.data.data.assignmentFileName);
         console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
+  const openFile = () => {
+    axios
+      .get(`/api/v1/course/assignment/open/${filename}`, {
+        withCredentials: true,
+        responseType: "arraybuffer",
+      })
+      .then((response) => {
+        console.log(response.data);
+        const file = new Blob([response.data], {
+          type: "application/pdf",
+        });
+        //Build a URL from the file
+        const fileURL = URL.createObjectURL(file);
+        //Open the URL on new Window
+        setFileUrl(fileURL);
+        window.open(fileURL);
+      });
+  };
   useEffect(() => {
-    // getAllCourseAssignments();
-    console.log("reached here");
+    getAssignment();
   }, []);
 
   return (
     <>
       <Header />
-      <Grid
-        item
-        style={{
-          width: "100%",
-        }}
-        component={Box}
-      >
-        {/* {assignments.length == 0 ? (
-          <Card
-            classes={{
-              root: classes.cardRoot,
+      {assignment != null ? (
+        <Container
+          maxWidth={false}
+          component={Box}
+          marginTop="-6rem"
+          classes={{ root: classes.containerRoot }}
+        >
+          <Grid
+            container
+            style={{
+              width: "100%",
             }}
-            style={{ textAlign: "center" }}
+            component={Box}
           >
-            <IconButton
-              style={{
-                width: "50px",
-                height: "50px",
-                fontSize: "40px",
-                margin: "10px",
-                position: "absolute",
-              }}
-            >
-              <AddRoundedIcon fontSize="large" />
-            </IconButton>
-            <Typography style={{ fontSize: "20px", padding: "20px 0px" }}>
-              No Assignments have been posted
-            </Typography>
-          </Card>
-        ) : (
-          assignments.map((assignment, index) => {
-            return (
+            <Grid item xs={12}>
               <Card
                 classes={{
                   root: classes.cardRoot,
                 }}
-                style={{ textAlign: "center", cursor: "pointer" }}
               >
-                <IconButton
-                  style={{
-                    width: "50px",
-                    height: "50px",
-                    fontSize: "40px",
-                    margin: "10px",
-                    position: "absolute",
-                  }}
-                >
-                  <AssignmentIcon fontSize="large" color="primary" />
-                </IconButton>
-                <Typography style={{ fontSize: "20px", padding: "20px 0px" }}>
-                  {assignment.teacher.name} posted an assignment{" "}
-                  {assignment.name}
-                </Typography>
+                <CardHeader
+                  title={
+                    <div style={{ display: "flex" }}>
+                      <IconButton
+                        style={{
+                          width: "50px",
+                          height: "50px",
+                          fontSize: "40px",
+                        }}
+                      >
+                        <AssignmentIcon fontSize="large" color="primary" />
+                      </IconButton>
+                      <Typography
+                        style={{
+                          fontSize: "20px",
+                          padding: "10px 0px",
+
+                          fontWeight: "bold",
+                        }}
+                      >
+                        {assignment.name}
+                      </Typography>
+                    </div>
+                  }
+                  subheader={
+                    assignment ? (
+                      <div style={{ display: "flex" }}>
+                        <Typography>
+                          {assignment.teacher ? assignment.teacher.name : ""} |{" "}
+                          {assignment.due || "May 26 "}
+                        </Typography>
+                        <Typography style={{ marginLeft: "30px" }}>
+                          Due date {assignment.due || "May 30"}
+                        </Typography>
+                      </div>
+                    ) : null
+                  }
+                ></CardHeader>
+                <CardContent>
+                  <Box component="span" m={1}>
+                    <Button
+                      style={{ display: "flex" }}
+                      onClick={() => {
+                        if (fileUrl == "") openFile();
+                        else window.open(fileUrl);
+                      }}
+                    >
+                      <DescriptionIcon fontSize="large" color="primary" />
+                      <Typography style={{ padding: "10px" }}>
+                        View Assignment
+                      </Typography>
+                    </Button>
+                  </Box>
+                </CardContent>
               </Card>
-            );
-          })
-        )} */}
-        <h1>Card hello</h1>
-      </Grid>
+            </Grid>
+          </Grid>
+        </Container>
+      ) : null}
     </>
   );
 };

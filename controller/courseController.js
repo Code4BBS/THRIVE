@@ -175,3 +175,21 @@ exports.getAllAssignmentsOfCourse = catchAsync(async (req, res, next) => {
     data: assignments,
   });
 });
+
+exports.getAssignment = catchAsync(async (req, res, next) => {
+  const assignmentId = req.params.id;
+  if (!assignmentId) {
+    return next(new AppError("Assignment Id is not mentioned", 404));
+  }
+
+  const assignment = await Assignment.findById(assignmentId).populate({
+    path: "teacher",
+    ref: "User",
+    selecte: "name email",
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: assignment,
+  });
+});
