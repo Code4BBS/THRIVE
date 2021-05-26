@@ -36,7 +36,7 @@ class File extends Component {
     // Request made to the backend api
     // Send formData object
     axios
-      .post("/api/v1/course/file", formData, {
+      .post("/api/v1/course/assignment", formData, {
         withCredentials: true,
       })
       .then((response) => {
@@ -88,7 +88,7 @@ class File extends Component {
 
   openFile = () => {
     axios
-      .get(`/api/v1/course/file/${this.state.fileName}`, {
+      .get(`/api/v1/course/assignment/${this.state.fileName}`, {
         withCredentials: true,
         responseType: "arraybuffer",
       })

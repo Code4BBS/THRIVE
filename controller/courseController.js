@@ -90,9 +90,9 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
 
   const course = await Course.findById(courseId);
 
-  if (req.user.id != course.teacher) {
-    return next(new AppError("You are not the teacher for this course", 404));
-  }
+  // if (req.user.id != course.teacher) {
+  //   return next(new AppError("You are not the teacher for this course", 404));
+  // }
 
   const studentsList = req.body.studentsList;
 
