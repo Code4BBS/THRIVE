@@ -20,7 +20,7 @@ import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
 import File from "views/admin/fileUpload";
 import Classroom from "./views/admin/Classroom/Classroom";
-import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
+import CreateAssignment from "./views/admin/Classroom/AddAssignment";
 import Course from "./views/admin/Classroom/Course";
 
 // @material-ui/icons components
@@ -227,13 +227,13 @@ var routes = [
     show: true,
   },
   {
-    path: "addAssignment",
+    path: "new-assignment/:id",
     name: "Add Assignment",
     icon: LibraryBooksIcon,
     iconColor: "Primary",
     component: CreateAssignment,
     layout: "/",
-    show: true,
+    show: false,
   },
   {
     path: "courses/:code/:id",
@@ -246,7 +246,7 @@ var routes = [
   },
   {
     divider: true,
-    show: true,
+    show: false,
   },
   // {
   //   path: "/login",

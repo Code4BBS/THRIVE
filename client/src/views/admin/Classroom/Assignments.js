@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import "./Button.css";
 
@@ -11,13 +11,20 @@ import {
   IconButton,
 } from "@material-ui/core";
 
+import { useHistory } from "react-router-dom";
+
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 const useStyles = makeStyles(componentStyles);
 
-const Assignments = () => {
+const Assignments = ({ course }) => {
   const classes = useStyles();
+  const history = useHistory();
+
+  useEffect(() => {
+    console.log(course);
+  }, [course]);
 
   return (
     <Grid
@@ -40,6 +47,9 @@ const Assignments = () => {
             fontSize: "40px",
             margin: "10px",
             position: "absolute",
+          }}
+          onClick={() => {
+            history.push(`/new-assignment/${course.id}`);
           }}
         >
           <AddRoundedIcon fontSize="large" />

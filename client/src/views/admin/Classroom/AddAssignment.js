@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import TagList from "./../Project/TagsList";
-import Results from "./../Project/ProjectCollaborators";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import { useTheme } from "@material-ui/core/styles";
+
+import "./Button.css";
+
+import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
@@ -14,41 +13,36 @@ import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-// @material-ui/icons components
-import LocationOn from "@material-ui/icons/LocationOn";
-import School from "@material-ui/icons/School";
 
-// core components
 import Header from "../../../components/Headers/Header.js";
-
 import componentStyles from "assets/theme/views/admin/profile.js";
-import boxShadows from "assets/theme/box-shadow.js";
 import Chip from "@material-ui/core/Chip";
+
 import axios from "axios";
 
 const useStyles = makeStyles(componentStyles);
 
-function CreateAssignment({ user, courseId }) {
+function CreateAssignment({ user }) {
   const classes = useStyles();
   const theme = useTheme();
   const history = useHistory();
-  // console.log(user);
 
   const [values, setValues] = useState({
     name: "",
     duration: "",
   });
 
+  const [course, setCourse] = useState({});
   const [selectedFile, setSelectedFile] = useState("");
+
+  useEffect(() => {
+    console.log(selectedFile);
+  }, [selectedFile]);
 
   const selectFile = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -75,6 +69,19 @@ function CreateAssignment({ user, courseId }) {
       .catch((err) => console.log(err));
   };
 
+  const id = window.location.pathname.split("/")[2];
+  useEffect(() => {
+    axios
+      .get(`/api/v1/course/${id}`)
+      .then((res) => {
+        setCourse(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
   const form = (
     <Container
       maxWidth={false}
@@ -82,7 +89,7 @@ function CreateAssignment({ user, courseId }) {
       marginTop="-6rem"
       classes={{ root: classes.containerRoot }}
     >
-      <Grid container>
+      <Grid container style={{ justifyContent: "center" }}>
         <Grid
           item
           xs={12}
@@ -112,7 +119,13 @@ function CreateAssignment({ user, courseId }) {
                     >
                       Add Assignment
                     </Box>
-                    <br />
+                    {course.name ? (
+                      <Typography
+                        style={{ color: "black", margin: "10px 0px" }}
+                      >
+                        {course.name.toUpperCase()} - {course.courseCode}
+                      </Typography>
+                    ) : null}
                     <Chip
                       variant="outlined"
                       label={user.name}
@@ -142,7 +155,7 @@ function CreateAssignment({ user, courseId }) {
                 <Grid container>
                   <Grid item xs={12} lg={12}>
                     <FormGroup>
-                      <FormLabel>Topic</FormLabel>
+                      <FormLabel>Name</FormLabel>
                       <FormControl
                         variant="filled"
                         width="100%"
@@ -194,31 +207,40 @@ function CreateAssignment({ user, courseId }) {
                     </FormGroup>
                   </Grid>
                 </Grid> */}
-                <Grid container>
-                  <Grid item xs={12} lg={6}>
-                    <FormGroup>
-                      <FormLabel>Upload File</FormLabel>
-                      <FormControl variant="filled" width="100%">
-                        <FilledInput
-                          style={{
-                            paddingLeft: "0.75rem",
-                            paddingRight: "0.75rem",
-                          }}
-                          type="file"
-                          name="file"
-                          onChange={selectFile}
-                        />
-                      </FormControl>
-                    </FormGroup>
-                  </Grid>
-                </Grid>
+                <FormControl variant="filled" width="100%">
+                  <FilledInput
+                    type="file"
+                    name="file"
+                    id="upload-file"
+                    onChange={selectFile}
+                    className="file-upload"
+                    style={{ display: "none" }}
+                  />
+                </FormControl>
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <label htmlFor="upload-file">
+                    <Button
+                      variant="outlined"
+                      component="span"
+                      className={classes.button}
+                      style={{ width: "130px" }}
+                    >
+                      Upload File
+                    </Button>
+                  </label>
+                  <Typography
+                    style={{ marginLeft: "10px", overflow: "hidden" }}
+                  >
+                    {selectedFile.name}
+                  </Typography>
+                </div>
               </div>
               <Box
                 component={Divider}
                 marginBottom="0.8rem!important"
                 marginTop="0.8rem!important"
               />
-              <Box
+              {/* <Box
                 component={Typography}
                 variant="h6"
                 color={theme.palette.gray[600] + "!important"}
@@ -230,7 +252,7 @@ function CreateAssignment({ user, courseId }) {
                 classes={{ root: classes.typographyRootH6 }}
               >
                 Submit Assignment
-              </Box>
+              </Box> */}
               <Box
                 sx={{
                   display: "center",
@@ -238,8 +260,6 @@ function CreateAssignment({ user, courseId }) {
                   p: 2,
                 }}
               >
-                {console.log(values.name)}
-                {console.log(selectedFile)}
                 <Button
                   color="primary"
                   style={{ marginLeft: "40%", marginRight: "40%" }}
@@ -251,7 +271,7 @@ function CreateAssignment({ user, courseId }) {
                     // window.alert("clicked");
                   }}
                 >
-                  Submit
+                  Create
                 </Button>
               </Box>
             </CardContent>
