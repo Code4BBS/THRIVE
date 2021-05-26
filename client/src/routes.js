@@ -22,7 +22,7 @@ import File from "views/admin/fileUpload";
 import Classroom from "./views/admin/Classroom/Classroom";
 import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
 import Course from "./views/admin/Classroom/Course";
-
+import AssignmentView from "./views/admin/Classroom/AssignmentView";
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import Dns from "@material-ui/icons/Dns";
@@ -241,6 +241,16 @@ var routes = [
     icon: LibraryBooksIcon,
     iconColor: "Primary",
     component: Course,
+    layout: "/",
+    show: false,
+    exact: true,
+  },
+  {
+    path: "courses/:code/assignment/:assignmentId",
+    name: "Assignments",
+    icon: LibraryBooksIcon,
+    iconColor: "Primary",
+    component: AssignmentView,
     layout: "/",
     show: false,
   },

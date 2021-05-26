@@ -42,7 +42,7 @@ router.post(
   fileController.uploadFile,
   courseController.createAssignment
 );
-
+router.get("/assignments/:id", courseController.getAllAssignmentsOfCourse);
 router.get("/assignment/:filename", fileController.getFile);
 
 module.exports = router;

@@ -32,8 +32,9 @@ function Course({ user }) {
   const [course, setCourse] = useState({});
   const [tab, setTab] = useState("Classes");
 
+  let id;
   useEffect(() => {
-    const id = window.location.pathname.split("/")[3];
+    id = window.location.pathname.split("/")[3];
 
     axios
       .get(`/api/v1/course/${id}`)
@@ -160,7 +161,7 @@ function Course({ user }) {
         </Button>
       </div>
       <div style={{ marginTop: "30px" }}>
-        {tab === "Classes" ? <Classes /> : <Assignments />}
+        {tab === "Classes" ? <Classes /> : <Assignments courseId={id} />}
       </div>
     </div>
   );
