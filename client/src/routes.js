@@ -19,9 +19,9 @@ import ProjectTable from "views/admin/Project/ProjectTable.js";
 import Quora from "views/admin/Quora/index.js";
 import Question from "views/admin/Quora/Question.js";
 import File from "views/admin/fileUpload";
-import Classroom from "./views/admin/Classroom";
+import Classroom from "./views/admin/Classroom/Classroom";
 import CreateAssignment from "./views/admin/CollegeAdmin/AddAssignment";
-import Course from "./views/admin/Course";
+import Course from "./views/admin/Classroom/Course";
 
 // @material-ui/icons components
 import AccountCircle from "@material-ui/icons/AccountCircle";
