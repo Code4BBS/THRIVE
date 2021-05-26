@@ -53,8 +53,9 @@ const AssignmentView = () => {
       })
       .then((response) => {
         console.log(response.data);
+        // console.log(response);
         const file = new Blob([response.data], {
-          type: "application/pdf",
+          type: response.headers["content-type"],
         });
         //Build a URL from the file
         const fileURL = URL.createObjectURL(file);

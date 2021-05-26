@@ -106,18 +106,21 @@ exports.getFile = (req, res) => {
         err: "No file exists",
       });
     }
-    if (file.contentType !== "image/jpeg" || file.contentType !== "image/png") {
-      // Read output to browser
-      const readstream = gfs.createReadStream(file.filename);
+    // if (file.contentType !== "image/jpeg" || file.contentType !== "image/png") {
+    // Read output to browser
+    // console.log(file);
+    res.setHeader("Content-Type", file.contentType);
+    const readstream = gfs.createReadStream(file.filename);
 
-      readstream.pipe(res);
-      // res.json(file);
-      console.log("here");
-    } else {
-      res.status(404).json({
-        err: "Not an image",
-      });
-    }
+    readstream.pipe(res);
+
+    // res.json(file);
+    console.log("here");
+    // } else {
+    //   res.status(404).json({
+    //     err: "Not an image",
+    //   });
+    // }
     // File exists
     // console.log(file);
     // return res.json(file);
