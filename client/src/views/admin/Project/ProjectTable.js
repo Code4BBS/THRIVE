@@ -49,7 +49,7 @@ const ProjectTable = ({ user }) => {
   const [addButton, showAddButton] = React.useState(false);
   const [anchorId, setAnchorId] = React.useState(null);
   const [currentAnchor, setCurrentAnchor] = React.useState(null);
-  const [limit, setLimit] = React.useState(10);
+  const [limit, setLimit] = React.useState(5);
   const [page, setPage] = React.useState(0);
   const [tagsPane, setShowTagsPane] = React.useState(false);
   const [tagsList, setTagsList] = React.useState([]);
@@ -119,7 +119,7 @@ const ProjectTable = ({ user }) => {
 
   const getProjects = () => {
     let url = window.location.pathname.split("/");
-    let route = url[3];
+    let route = url[2];
     let axiosRoute = "/api/v1/project";
     let noProjectsMessage = "Currently no projects available !";
     if (route === "myProjects") {

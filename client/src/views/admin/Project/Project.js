@@ -193,7 +193,7 @@ function Profile({ user }) {
 
   const getProject = () => {
     let url = window.location.pathname.split("/");
-    let projectId = url[3];
+    let projectId = url[2];
     axios
       .get(`/api/v1/project/${projectId}`)
       .then((response) => {
