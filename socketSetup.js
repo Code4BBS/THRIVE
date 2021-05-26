@@ -5,7 +5,7 @@ const { sendMessage } = require("./controller/courseController");
 const AppError = require("./utils/appError");
 const { JWT_SECRET } = require("./utils/config");
 
-module.exports.setupSocket = (server) => {
+module.exports.socketSetup = (server) => {
   const io = socketio(server);
 
   io.use((socket, next) => {
