@@ -10,7 +10,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 // @material-ui/icons components
 import Search from "@material-ui/icons/Search";
-
+import { useHistory } from "react-router-dom";
 // core components
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
 import AdminFooter from "components/Footers/AdminFooter.js";
@@ -26,6 +26,7 @@ const useStyles = makeStyles(componentStyles);
 const Admin = ({ user, cookies, getUserAgain }) => {
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
   React.useEffect(() => {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
@@ -39,7 +40,11 @@ const Admin = ({ user, cookies, getUserAgain }) => {
           <Route
             path={prop.layout + prop.path}
             render={() => (
-              <prop.component user={user} getUserAgain={getUserAgain} />
+              <prop.component
+                user={user}
+                getUserAgain={getUserAgain}
+                history={history}
+              />
             )}
             key={key}
           />
@@ -56,7 +61,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
         return routes[i].name;
       }
     }
-    return "Brand";
+    return "";
   };
 
   return (
@@ -97,6 +102,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
             user={user}
             cookies={cookies}
             brandText={getBrandText(location.pathname)}
+            history={history}
           />
           <Switch>
             {getRoutes(routes)}

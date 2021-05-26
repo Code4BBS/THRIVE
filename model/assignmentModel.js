@@ -9,6 +9,11 @@ const assignmentSchema = new mongoose.Schema(
       required: [true, "Assignemnt must have a name"],
       default: "Assignment",
     },
+    description: {
+      type: String,
+      default: "Assignment",
+    },
+
     courseId: {
       type: mongoose.Schema.ObjectId,
       ref: "Course",

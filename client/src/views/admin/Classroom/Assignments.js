@@ -29,11 +29,10 @@ import axios from "axios";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 const useStyles = makeStyles(componentStyles);
 
-const Assignments = ({ course }) => {
+const Assignments = ({ course, history }) => {
   const classes = useStyles();
   let id = window.location.pathname.split("/")[3];
   console.log(id);
-  const history = useHistory();
 
   const [assignments, setAssignments] = useState([]);
 

@@ -24,7 +24,7 @@ import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
-function Course({ user }) {
+function Course({ user, history }) {
   const classes = useStyles();
   const theme = useTheme();
   const [isLoading, setLoading] = useState(false);
@@ -164,7 +164,7 @@ function Course({ user }) {
         {tab === "Classes" ? (
           <Classes course={course} />
         ) : (
-          <Assignments course={course} />
+          <Assignments course={course} history={history} />
         )}
       </div>
     </div>

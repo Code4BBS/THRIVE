@@ -21,8 +21,8 @@ import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
-function Classroom({ user }) {
-  const history = useHistory();
+function Classroom({ user, history }) {
+  // const history = useHistory();
 
   const classes = useStyles();
   const theme = useTheme();

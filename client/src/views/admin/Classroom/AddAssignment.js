@@ -18,27 +18,40 @@ import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-
 import Header from "../../../components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import Chip from "@material-ui/core/Chip";
-
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+// import TextField from "@material-ui/core/TextField";
+// import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
+// import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
+// import DatePicker from "@material-ui/lab/DatePicker";
+// import MobileDatePicker from "@material-ui/lab/MobileDatePicker";
+// import DesktopDatePicker from "@material-ui/lab/DesktopDatePicker";
+// var DatePicker = require("react-bootstrap-date-picker");
 import axios from "axios";
 
 const useStyles = makeStyles(componentStyles);
 
-function CreateAssignment({ user }) {
+function CreateAssignment({ user, history }) {
   const classes = useStyles();
   const theme = useTheme();
-  const history = useHistory();
+  // const history = useHistory();
 
   const [values, setValues] = useState({
     name: "",
     duration: "",
+    description: "",
   });
 
   const [course, setCourse] = useState({});
   const [selectedFile, setSelectedFile] = useState("");
+  const [selectedDate, setSelectedDate] = React.useState("21/02/2010");
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   useEffect(() => {
     console.log(selectedFile);
@@ -58,7 +71,7 @@ function CreateAssignment({ user }) {
     event.preventDefault();
     const formData = new FormData();
     formData.append("file", selectedFile);
-    const query = `/api/v1/course/assignment?courseId=${course._id}&name=${values.name}`;
+    const query = `/api/v1/course/assignment?courseId=${course._id}&name=${values.name}&description=${values.description}`;
     axios
       .post(query, formData, { withCredentials: true })
       .then((response) => {
@@ -81,7 +94,7 @@ function CreateAssignment({ user }) {
         console.log(err);
       });
   }, []);
-
+  const [startDate, setStartDate] = useState(new Date());
   const form = (
     <Container
       maxWidth={false}
@@ -180,6 +193,33 @@ function CreateAssignment({ user }) {
                       </FormControl>
                     </FormGroup>
                   </Grid>
+                  <Grid item xs={12} lg={12}>
+                    <FormGroup>
+                      <FormLabel>Description</FormLabel>
+                      <FormControl
+                        variant="filled"
+                        width="100%"
+                        style={{
+                          marginBottom: "1rem!important",
+                        }}
+                        required
+                      >
+                        <FilledInput
+                          style={{
+                            paddingLeft: "0.75rem",
+                            paddingRight: "0.75rem",
+                          }}
+                          type="text"
+                          required
+                          label="description"
+                          name="description"
+                          onChange={handleChange}
+                          value={values.description}
+                          classes={{ input: classes.searchInput }}
+                        />
+                      </FormControl>
+                    </FormGroup>
+                  </Grid>
                 </Grid>
                 {/* <Grid container>
                   <Grid item xs={12} lg={6}>
@@ -207,6 +247,23 @@ function CreateAssignment({ user }) {
                     </FormGroup>
                   </Grid>
                 </Grid> */}
+                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                  <Grid container>
+                    <KeyboardDatePicker
+                      disableToolbar
+                      variant="inline"
+                      format="dd/MM/yyyy"
+                      margin="normal"
+                      id="date-picker-inline"
+                      label="Date picker inline"
+                      value={selectedDate}
+                      onChange={handleDateChange}
+                      KeyboardButtonProps={{
+                        "aria-label": "change date",
+                      }}
+                    />
+                  </Grid>
+                </MuiPickersUtilsProvider>
                 <FormControl variant="filled" width="100%">
                   <FilledInput
                     type="file"
@@ -216,7 +273,13 @@ function CreateAssignment({ user }) {
                     className="file-upload"
                     style={{ display: "none" }}
                   />
-                </FormControl>
+                </FormControl> */}
+                {/* <Grid container>
+                  <DatePicker
+                    value={startDate}
+                    onChange={(date) => setStartDate(date)}
+                  />
+                </Grid> */}
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <label htmlFor="upload-file">
                     <Button

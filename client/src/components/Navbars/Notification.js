@@ -70,8 +70,8 @@ const useStyles = makeStyles({
 //   },
 // }));
 
-function Notification({ user }) {
-  const history = useHistory();
+function Notification({ user, history }) {
+  // const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([
@@ -115,6 +115,7 @@ function Notification({ user }) {
   const redirectToProject = (projectId) => {
     let projectUrl = `/projects/${projectId}`;
     history.push(projectUrl);
+    // window.location.pathname = projectUrl;
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
@@ -237,7 +238,12 @@ function Notification({ user }) {
           return (
             <div
               className={classes.tile}
-              onClick={() => redirectToProject(notification.project._id)}
+              onClick={() => {
+                console.log(notification);
+                if (notification.project)
+                  redirectToProject(notification.project._id);
+                else redirectToProject(notification.projectId);
+              }}
               key={key}
             >
               <div
