@@ -1,7 +1,7 @@
 const socketio = require("socket.io");
 const jwt = require("jsonwebtoken");
 
-const { sendMessage } = require("./controller/chatMessageController");
+const { sendMessage } = require("./controller/courseController");
 const AppError = require("./utils/appError");
 const { JWT_SECRET } = require("./utils/config");
 
