@@ -7,3 +7,7 @@
 .file-upload::after {
   border: 0px !important;
 }
+
+.MuiTimelineOppositeContent-root {
+  flex: 0 !important;
+}

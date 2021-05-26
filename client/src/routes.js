@@ -257,7 +257,7 @@ var routes = [
   },
   {
     divider: true,
-    show: true,
+    show: false,
   },
   // {
   //   path: "/login",
