@@ -42,7 +42,7 @@ class QuoraCont extends Component {
   getQuestion = () => {
     this.setState({ isLoading: true });
     let url = window.location.pathname.split("/");
-    let qId = url[3];
+    let qId = url[2];
     axios.get(`/api/v1/quora/questions/${qId}`).then((res) => {
       console.log(res.data);
       this.setState({

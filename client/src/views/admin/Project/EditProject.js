@@ -65,7 +65,7 @@ function Profile({ user }) {
     let url = window.location.pathname.split("/");
 
     console.log(url);
-    let projectId = url[4];
+    let projectId = url[3];
     console.log(projectId);
     axios
       .get(`/api/v1/project/${projectId}`)
