@@ -43,6 +43,7 @@ function CreateAssignment({ user, history }) {
     name: "",
     duration: "",
     description: "",
+    deadline: "",
   });
 
   const [course, setCourse] = useState({});
@@ -71,7 +72,7 @@ function CreateAssignment({ user, history }) {
     event.preventDefault();
     const formData = new FormData();
     formData.append("file", selectedFile);
-    const query = `/api/v1/course/assignment?courseId=${course._id}&name=${values.name}&description=${values.description}`;
+    const query = `/api/v1/course/assignment?courseId=${course._id}&name=${values.name}&description=${values.description}&deadline=${values.deadline}`;
     axios
       .post(query, formData, { withCredentials: true })
       .then((response) => {
@@ -94,7 +95,6 @@ function CreateAssignment({ user, history }) {
         console.log(err);
       });
   }, []);
-  const [startDate, setStartDate] = useState(new Date());
   const form = (
     <Container
       maxWidth={false}
@@ -220,6 +220,33 @@ function CreateAssignment({ user, history }) {
                       </FormControl>
                     </FormGroup>
                   </Grid>
+                  <Grid item xs={6} lg={6}>
+                    <FormGroup>
+                      <FormLabel>Submission Deadline</FormLabel>
+                      <FormControl
+                        variant="filled"
+                        width="100%"
+                        style={{
+                          marginBottom: "1rem!important",
+                        }}
+                        required
+                      >
+                        <FilledInput
+                          style={{
+                            paddingLeft: "0.75rem",
+                            paddingRight: "0.75rem",
+                          }}
+                          type="date"
+                          required
+                          label="name"
+                          name="deadline"
+                          onChange={handleChange}
+                          value={values.deadline}
+                          classes={{ input: classes.searchInput }}
+                        />
+                      </FormControl>
+                    </FormGroup>
+                  </Grid>
                 </Grid>
                 {/* <Grid container>
                   <Grid item xs={12} lg={6}>
@@ -247,23 +274,7 @@ function CreateAssignment({ user, history }) {
                     </FormGroup>
                   </Grid>
                 </Grid> */}
-                {/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                  <Grid container>
-                    <KeyboardDatePicker
-                      disableToolbar
-                      variant="inline"
-                      format="dd/MM/yyyy"
-                      margin="normal"
-                      id="date-picker-inline"
-                      label="Date picker inline"
-                      value={selectedDate}
-                      onChange={handleDateChange}
-                      KeyboardButtonProps={{
-                        "aria-label": "change date",
-                      }}
-                    />
-                  </Grid>
-                </MuiPickersUtilsProvider>
+
                 <FormControl variant="filled" width="100%">
                   <FilledInput
                     type="file"
@@ -273,13 +284,8 @@ function CreateAssignment({ user, history }) {
                     className="file-upload"
                     style={{ display: "none" }}
                   />
-                </FormControl> */}
-                {/* <Grid container>
-                  <DatePicker
-                    value={startDate}
-                    onChange={(date) => setStartDate(date)}
-                  />
-                </Grid> */}
+                </FormControl>
+
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <label htmlFor="upload-file">
                     <Button
@@ -328,7 +334,12 @@ function CreateAssignment({ user, history }) {
                   style={{ marginLeft: "40%", marginRight: "40%" }}
                   classes={{ root: classes.buttonRootDark }}
                   variant="contained"
-                  disabled={!values.name && !selectedFile}
+                  disabled={
+                    !values.name &&
+                    !values.description &&
+                    !values.deadline &&
+                    selectedFile == ""
+                  }
                   onClick={(e) => {
                     postAssignment(e);
                     // window.alert("clicked");

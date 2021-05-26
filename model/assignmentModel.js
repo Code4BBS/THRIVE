@@ -13,7 +13,9 @@ const assignmentSchema = new mongoose.Schema(
       type: String,
       default: "Assignment",
     },
-
+    deadline: {
+      type: String,
+    },
     courseId: {
       type: mongoose.Schema.ObjectId,
       ref: "Course",

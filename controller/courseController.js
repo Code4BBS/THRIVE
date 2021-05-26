@@ -133,6 +133,7 @@ exports.createAssignment = catchAsync(async (req, res, next) => {
   const courseId = req.query.courseId;
   const name = req.query.name;
   const description = req.query.description;
+  const deadline = req.query.deadline;
   // if(req.user.role != "Teacher"){
   //   return next(new AppError('Only teachers are allowed to post assignment',404));
   // }
@@ -143,6 +144,7 @@ exports.createAssignment = catchAsync(async (req, res, next) => {
     teacher: teacher,
     courseId: courseId,
     description: description,
+    deadline: deadline,
   };
 
   if (req.file) {
