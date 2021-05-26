@@ -157,3 +157,17 @@ exports.createAssignment = catchAsync(async (req, res, next) => {
     data: newAssignment,
   });
 });
+
+exports.getAllAssignmentsOfCourse = catchAsync(async (req, res, next) => {
+  const courseId = req.params.id;
+  if (!courseId) {
+    return next(new AppError("Course Id is not mentioned", 404));
+  }
+
+  const assignments = await Assignment.find({ courseId: courseId });
+
+  res.status(200).json({
+    status: "success",
+    data: assignments,
+  });
+});
