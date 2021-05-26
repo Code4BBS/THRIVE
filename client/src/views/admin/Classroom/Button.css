@@ -1,0 +1,19 @@
+.customButton {
+  width: 160px !important;
+  height: 30px !important;
+  border-radius: 15px !important;
+  padding: 4px 20px !important;
+  box-shadow: none !important;
+  position: absolute !important;
+}
+
+.customButton:hover {
+  /* background-color: blue; */
+  transform: none !important;
+}
+
+.MuiSvgIcon-root {
+  font-size: 30px !important;
+  width: 30px !important;
+  height: 30px !important;
+}

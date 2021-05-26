@@ -13,6 +13,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 
+import Classes from "./Classes";
+import Assignments from "./Assignments";
+
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 
@@ -66,6 +69,7 @@ function Course({ user }) {
               height: "100%",
               flexDirection: "unset",
               justifyContent: "space-between",
+              flexWrap: "wrap",
             }}
           >
             <CardHeader
@@ -154,6 +158,9 @@ function Course({ user }) {
         >
           Assignments
         </Button>
+      </div>
+      <div style={{ marginTop: "30px" }}>
+        {tab === "Classes" ? <Classes /> : <Assignments />}
       </div>
     </div>
   );
