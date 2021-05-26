@@ -193,3 +193,26 @@ exports.getAssignment = catchAsync(async (req, res, next) => {
     data: assignment,
   });
 });
+
+exports.submitAssignment = catchAsync(async (req, res, next) => {
+  const studentId = req.user.id;
+  const studentData = [{ user: studentId }];
+
+  let fileName = "";
+  if (req.file) {
+    fileName = req.file.filename;
+  }
+  studentData[0].fileName = fileName;
+
+  const submitAssignment = await Assignment.findByIdAndUpdate(req.params.id, {
+    $push: { students: studentData },
+  });
+  if (!submitAssignment) {
+    return next(new AppError("Some internal problem", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: fileName,
+  });
+});

@@ -13,6 +13,9 @@ import {
   CardHeader,
   CardContent,
   Button,
+  Divider,
+  FormControl,
+  FilledInput,
 } from "@material-ui/core";
 
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
@@ -23,7 +26,7 @@ import componentStyles from "assets/theme/views/admin/dashboard.js";
 import Header from "components/Headers/Header";
 const useStyles = makeStyles(componentStyles);
 
-const AssignmentView = () => {
+const AssignmentView = ({ user }) => {
   const classes = useStyles();
   let id = window.location.pathname.split("/")[2];
   console.log(id);
@@ -31,6 +34,10 @@ const AssignmentView = () => {
   const [assignment, setAssignment] = useState([]);
   const [filename, setFileName] = useState("");
   const [fileUrl, setFileUrl] = useState("");
+  const [submittedFile, setSubmittedFile] = useState("");
+  const [selectedFile, setSelectedFile] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const [submittedFileUrl, setSubmittedFileUrl] = useState("");
 
   const getAssignment = () => {
     axios
@@ -38,7 +45,28 @@ const AssignmentView = () => {
       .then((res) => {
         setAssignment(res.data.data);
         setFileName(res.data.data.assignmentFileName);
-        console.log(res.data.data);
+        let assignment = res.data.data;
+        let index = assignment.students.findIndex((el) => el.user == user._id);
+        if (index != -1) {
+          setSubmittedFile(assignment.students[index]["fileName"]);
+          setSubmitted(true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const submitAssignment = (event) => {
+    event.preventDefault();
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+    axios
+      .post(`/api/v1/course/submit/assignment/${id}`, formData)
+      .then((res) => {
+        setSubmittedFile(res.data.data);
+        setSubmitted(true);
+        alert("Assignment submiited");
       })
       .catch((err) => {
         console.log(err);
@@ -64,6 +92,31 @@ const AssignmentView = () => {
         window.open(fileURL);
       });
   };
+
+  const openSubmittedFile = () => {
+    axios
+      .get(`/api/v1/course/assignment/open/${submittedFile}`, {
+        withCredentials: true,
+        responseType: "arraybuffer",
+      })
+      .then((response) => {
+        console.log(response.data);
+        // console.log(response);
+        const file = new Blob([response.data], {
+          type: response.headers["content-type"],
+        });
+        //Build a URL from the file
+        const fileURL = URL.createObjectURL(file);
+        //Open the URL on new Window
+        setSubmittedFileUrl(fileURL);
+        window.open(fileURL);
+      });
+  };
+
+  const selectFile = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   useEffect(() => {
     getAssignment();
   }, []);
@@ -143,6 +196,70 @@ const AssignmentView = () => {
                         View Assignment
                       </Typography>
                     </Button>
+                  </Box>
+                  <Divider />
+                  <Box component="span" m={1}>
+                    {submitted ? (
+                      <>
+                        <Typography>Submitted Assignment</Typography>
+                        <Button
+                          style={{ display: "flex" }}
+                          onClick={() => {
+                            if (submittedFileUrl == "") openSubmittedFile();
+                            else window.open(submittedFileUrl);
+                          }}
+                        >
+                          <DescriptionIcon fontSize="large" color="primary" />
+                          <Typography style={{ padding: "10px" }}>
+                            View Submitted Assignment
+                          </Typography>
+                        </Button>
+                      </>
+                    ) : (
+                      <>
+                        <Typography>Submit Assignment</Typography>
+                        <FormControl variant="filled" width="100%">
+                          <FilledInput
+                            type="file"
+                            name="file"
+                            id="upload-file"
+                            onChange={selectFile}
+                            className="file-upload"
+                            style={{ display: "none" }}
+                          />
+                        </FormControl>
+                        <div style={{ display: "flex", alignItems: "center" }}>
+                          <label htmlFor="upload-file">
+                            <Button
+                              variant="outlined"
+                              component="span"
+                              className={classes.button}
+                              style={{ width: "130px" }}
+                            >
+                              Upload File
+                            </Button>
+                          </label>
+                          <Typography
+                            style={{ marginLeft: "10px", overflow: "hidden" }}
+                          >
+                            {selectedFile.name}
+                          </Typography>
+                        </div>
+                        <Button
+                          color="primary"
+                          style={{ marginLeft: "40%", marginRight: "40%" }}
+                          classes={{ root: classes.buttonRootDark }}
+                          variant="contained"
+                          disabled={!selectedFile}
+                          onClick={(e) => {
+                            submitAssignment(e);
+                            // window.alert("clicked");
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </>
+                    )}
                   </Box>
                 </CardContent>
               </Card>

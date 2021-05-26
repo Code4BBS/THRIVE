@@ -42,6 +42,12 @@ router.post(
   fileController.uploadFile,
   courseController.createAssignment
 );
+router.post(
+  "/submit/assignment/:id",
+  fileController.uploadFile,
+  courseController.submitAssignment
+);
+
 router.get("/assignments/:id", courseController.getAllAssignmentsOfCourse);
 router.get("/assignment/:id", courseController.getAssignment);
 router.get("/assignment/open/:filename", fileController.getFile);
