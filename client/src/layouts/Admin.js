@@ -39,7 +39,11 @@ const Admin = ({ user, cookies, getUserAgain }) => {
           <Route
             path={prop.layout + prop.path}
             render={() => (
-              <prop.component user={user} getUserAgain={getUserAgain} />
+              <prop.component
+                user={user}
+                getUserAgain={getUserAgain}
+                cookies={cookies}
+              />
             )}
             key={key}
           />

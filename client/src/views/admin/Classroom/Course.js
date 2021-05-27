@@ -24,7 +24,7 @@ import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
-function Course({ user }) {
+function Course({ user, cookies }) {
   const classes = useStyles();
   const theme = useTheme();
   const [isLoading, setLoading] = useState(false);

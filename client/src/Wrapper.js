@@ -66,6 +66,10 @@ class Wrapper extends Component {
       path: "/",
       expires: new Date(response.data.expireAt),
     });
+    cookies.set("JWTClient", response.data.token, {
+      path: "/",
+      expires: new Date(response.data.expireAt),
+    });
   };
 
   render() {
