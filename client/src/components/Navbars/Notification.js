@@ -117,6 +117,12 @@ function Notification({ user, history }) {
     history.push(projectUrl);
     // window.location.pathname = projectUrl;
   };
+  const redirectToAssignment = (projectId) => {
+    let projectUrl = `/assignment/${projectId}`;
+    history.push(projectUrl);
+    // window.location.pathname = projectUrl;
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -215,6 +221,18 @@ function Notification({ user, history }) {
             </Typography>
           </div>
         );
+      case "assignment":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              {notification.message}
+            </Typography>
+          </div>
+        );
 
       default:
         return (
@@ -240,7 +258,9 @@ function Notification({ user, history }) {
               className={classes.tile}
               onClick={() => {
                 console.log(notification);
-                if (notification.project)
+                if (notification.type == "assignment") {
+                  redirectToAssignment(notification.project._id);
+                } else if (notification.project)
                   redirectToProject(notification.project._id);
                 else redirectToProject(notification.projectId);
               }}

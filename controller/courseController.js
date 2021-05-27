@@ -4,7 +4,7 @@ const User = require("./../model/userModel");
 const Assignment = require("./../model/AssignmentModel");
 const Course = require("./../model/courseModel");
 const ChatMessage = require("./../model/chatMessageModel");
-
+const mongoose = require("mongoose");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const { assign } = require("nodemailer/lib/shared");
@@ -101,11 +101,11 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
     return next(new AppError("The students list is empty", 404));
   }
 
-  let message = `You have been enrolled into ${course.name} course by ${req.user.name}`;
+  let message = `Enrolled into ${course.name} course by ${req.user.name}`;
   let notification = {
     message: message,
-    topic: "course",
-    projectId: "",
+    type: "enrollement",
+    project: { _id: courseId, title: "Enrollement" },
   };
   const students = await User.updateMany(
     {
@@ -157,6 +157,22 @@ exports.createAssignment = catchAsync(async (req, res, next) => {
   if (!newAssignment) {
     return next(new AppError("Some problem occured", 403));
   }
+  let message = `New Assignment ${name} is created`;
+
+  let notificationMessage = {
+    message: message,
+    type: "assignment",
+    project: { _id: newAssignment._id, title: "Assignment" },
+  };
+
+  const course = [courseId];
+
+  const users = await User.updateMany(
+    {
+      coursesEnrolled: courseId,
+    },
+    { $push: { notifications: notificationMessage }, notificationsSeen: false }
+  );
   res.status(200).json({
     status: "success",
     data: newAssignment,

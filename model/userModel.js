@@ -106,6 +106,8 @@ const userSchema = new mongoose.Schema(
             "joinRequest",
             "requestAccept",
             "requestReject",
+            "enrollement",
+            "assignment",
           ],
         },
         requester: { _id: String, name: String, image: String },
