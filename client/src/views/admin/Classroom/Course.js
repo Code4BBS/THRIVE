@@ -178,15 +178,15 @@ function Course({ user, cookies }) {
           Classroom Chat
         </Button>
       </div>
-      {/*<div style={{ marginTop: "30px" }}>
-         {tab === "Classes" ? (
+      <div style={{ marginTop: "30px" }}>
+        {tab === "Classes" ? (
           <Classes course={course} />
         ) : tab === "Assignments" ? (
           <Assignments course={course} />
         ) : (
           <ChatRoom user={user} cookies={cookies} />
         )}
-        </div>*/}
+      </div>
     </div>
   );
 }
