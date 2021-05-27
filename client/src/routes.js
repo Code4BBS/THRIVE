@@ -36,7 +36,7 @@ import PeopleIcon from "@material-ui/icons/People";
 import ContactSupportTwoToneIcon from "@material-ui/icons/ContactSupportTwoTone";
 import EmojiObjectsIcon from "@material-ui/icons/EmojiObjects";
 import CreateIcon from "@material-ui/icons/Create";
-
+import EventIcon from "@material-ui/icons/Event";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 
 var routes = [
@@ -227,7 +227,7 @@ var routes = [
   {
     path: "calendar",
     name: "Calendar",
-    icon: LibraryBooksIcon,
+    icon: EventIcon,
     iconColor: "Primary",
     component: CalendarView,
     layout: "/",

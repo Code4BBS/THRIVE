@@ -36,7 +36,12 @@ import { useTheme } from "@material-ui/core/styles";
 const useStyles = makeStyles(componentStyles);
 
 function CalendarView({ user, history }) {
-  const [date, setDate] = useState(new Date());
+  let currentDate = new Date().toLocaleDateString().split("/");
+  let dateFormatted =
+    currentDate[2] + "-" + currentDate[1] + "-" + currentDate[0];
+
+  const [date, setDate] = useState(dateFormatted);
+  console.log(date);
   const [assignments, setAssignments] = useState([]);
   const classes = useStyles();
   const theme = useTheme();
@@ -68,7 +73,7 @@ function CalendarView({ user, history }) {
   };
   const cardContent = assignments.map((assignment, ind) => {
     return (
-      <Paper className={classes.paper}>
+      <Paper className={classes.paper} key={ind}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
             <Avatar

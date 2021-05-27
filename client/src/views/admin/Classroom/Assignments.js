@@ -150,7 +150,8 @@ const Assignments = ({ course, history }) => {
                         }}
                       >
                         <p style={{ padding: 0, margin: 0 }}>
-                          &nbsp;posted&nbsp;<b>{assignment.name}</b>
+                          &nbsp;Posted a new assignment: &nbsp;
+                          <b>{assignment.name}</b>
                         </p>
                       </div>
                     </TimelineContent>
