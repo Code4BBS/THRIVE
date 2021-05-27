@@ -1,20 +1,6 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Divider, Avatar, Paper, Grid } from "@material-ui/core";
+import { Divider, Avatar, Grid } from "@material-ui/core";
 import FormatDate from "./../../../views/admin/Quora/formatDate";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "100%",
-    backgroundColor: theme.palette.background.paper,
-  },
-  fonts: {
-    fontWeight: "bold",
-  },
-  inline: {
-    display: "inline",
-  },
-}));
 
 const urlify = (text) => {
   var urlRegex =
@@ -25,9 +11,7 @@ const urlify = (text) => {
 };
 
 const Messages = ({ chatMessages }) => {
-  const classes = useStyles();
   return (
-    // <Paper style={{ padding: "2px 20px" }} classes={{ root: classes.root }}>
     <>
       {chatMessages.map((chatMessage, index) => {
         return (
@@ -59,7 +43,6 @@ const Messages = ({ chatMessages }) => {
         );
       })}
     </>
-    // </Paper>
   );
 };
 
