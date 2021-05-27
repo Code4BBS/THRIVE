@@ -15,6 +15,7 @@ import Typography from "@material-ui/core/Typography";
 
 import Classes from "./Classes";
 import Assignments from "./Assignments";
+import ChatRoom from "./ChatRoom";
 
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
@@ -159,12 +160,22 @@ function Course({ user, cookies }) {
         >
           Assignments
         </Button>
+        <Button
+          className={tab === "ChatRoom" ? "active" : "in-active"}
+          onClick={() => {
+            setTab("ChatRoom");
+          }}
+        >
+          Classroom Chat
+        </Button>
       </div>
       <div style={{ marginTop: "30px" }}>
         {tab === "Classes" ? (
           <Classes course={course} />
-        ) : (
+        ) : tab === "Assignments" ? (
           <Assignments course={course} />
+        ) : (
+          <ChatRoom user={user} cookies={cookies} />
         )}
       </div>
     </div>
