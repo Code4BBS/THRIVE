@@ -102,7 +102,7 @@ function CalendarView({ user, history }) {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", margin: "20px" }}>
+      <div style={{ display: "flex", margin: "20px", minHeight: "350px" }}>
         <CalendarComponent change={changeDate} value={date}></CalendarComponent>
         <Grid container style={{ marginLeft: "20px" }}>
           <Grid item xs={12}>
