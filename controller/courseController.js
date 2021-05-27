@@ -3,6 +3,7 @@ const Tag = require("./../model/tagModel");
 const User = require("./../model/userModel");
 const Assignment = require("./../model/AssignmentModel");
 const Course = require("./../model/courseModel");
+const ChatMessage = require("./../model/chatMessageModel");
 
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
@@ -226,3 +227,39 @@ exports.submitAssignment = catchAsync(async (req, res, next) => {
     data: fileName,
   });
 });
+exports.getAllChatMessagesByCourse = catchAsync(async (req, res, next) => {
+  const courseId = req.params.id;
+  if (!courseId) return next(new AppError("No Course ID provided!"));
+
+  if (!req.user.coursesEnrolled.includes(courseId)) {
+    return next(new AppError("You are not allowed to view this course!"));
+  }
+
+  const chatMessages = await ChatMessage.find({ course: courseId }).populate({
+    path: "user",
+    ref: "User",
+    select: "name email image ",
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: { results: chatMessages.length, chatMessages },
+  });
+});
+
+exports.sendMessage = async (chatMessage) => {
+  try {
+    // console.log("Send Message Triggered");
+    const { userId, courseId, message } = chatMessage;
+
+    if (!courseId) return new AppError("No Course ID provided!", 404);
+
+    const newMessage = await ChatMessage.create({
+      message: message,
+      user: userId,
+      course: courseId,
+    });
+  } catch (err) {
+    return err;
+  }
+};

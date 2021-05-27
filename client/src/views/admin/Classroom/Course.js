@@ -15,6 +15,8 @@ import Typography from "@material-ui/core/Typography";
 
 import Classes from "./Classes";
 import Assignments from "./Assignments";
+import ChatRoom from "./ChatRoom";
+import Chat from "./Chat";
 
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
@@ -24,7 +26,7 @@ import { Avatar } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
-function Course({ user, history }) {
+function Course({ user, cookies, history }) {
   const classes = useStyles();
   const theme = useTheme();
   const [isLoading, setLoading] = useState(false);
@@ -143,6 +145,14 @@ function Course({ user, history }) {
         </Grid>
       ) : null}
       <div style={{ textAlign: "center" }}>
+        {/* <Button
+          className={tab === "Chat" ? "active" : "in-active"}
+          onClick={() => {
+            setTab("Chat");
+          }}
+        >
+          Chat
+        </Button> */}
         <Button
           className={tab === "Classes" ? "active" : "in-active"}
           onClick={() => {
@@ -159,12 +169,22 @@ function Course({ user, history }) {
         >
           Assignments
         </Button>
+        <Button
+          className={tab === "ChatRoom" ? "active" : "in-active"}
+          onClick={() => {
+            setTab("ChatRoom");
+          }}
+        >
+          Classroom Chat
+        </Button>
       </div>
       <div style={{ marginTop: "30px" }}>
         {tab === "Classes" ? (
           <Classes course={course} />
-        ) : (
+        ) : tab === "Assignments" ? (
           <Assignments course={course} history={history} />
+        ) : (
+          <ChatRoom user={user} cookies={cookies} />
         )}
       </div>
     </div>
