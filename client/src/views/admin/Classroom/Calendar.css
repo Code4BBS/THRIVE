@@ -1,14 +1,24 @@
 @import url("https://cdn.syncfusion.com/ej2/material.css");
 
+* {
+  font-family: Open Sans;
+}
+
+.e-title {
+  font-weight: 600 !important;
+}
+
 .e-selected .e-day {
-  background-color: #3f51b5 !important;
+  background-color: #11a1ef !important;
+  box-shadow: 0px 0px 10px rgb(160, 160, 160);
 }
 
 .e-day {
-  border-color: #3f51b5 !important;
+  border-color: #11a1ef !important;
 }
 
-.e-today {
+.e-today,
+.e-today:hover {
   color: #3f51b5 !important;
 }
 
@@ -50,4 +60,26 @@
 .e-calendar,
 .e-bigger.e-small .e-calendar {
   min-width: 290px;
+}
+
+.e-calendar {
+  box-shadow: 0 0 2rem 0 rgba(136, 152, 170, 0.15) !important;
+  border: 0 !important;
+  border-radius: 0.375rem !important;
+  height: 340px !important;
+}
+
+.e-btn {
+  /* background-color: #11b0ef !important; */
+}
+.e-btn:hover {
+  background-color: #b3e1f3 !important;
+}
+.e-btn:focus {
+  background-color: white !important;
+}
+
+.e-btn.e-flat.e-primary:hover,
+.e-css.e-btn.e-flat.e-primary:hover {
+  background-color: #b3e1f3 !important;
 }
