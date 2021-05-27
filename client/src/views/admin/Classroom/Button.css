@@ -1,8 +1,8 @@
-.MuiSvgIcon-root {
-  font-size: 30px !important;
-  width: 30px !important;
-  height: 30px !important;
-}
+/* .MuiSvgIcon-root { */
+/* font-size: 30px !important; */
+/* width: 30px !important;
+  height: 30px !important; */
+/* } */
 
 .file-upload::after {
   border: 0px !important;

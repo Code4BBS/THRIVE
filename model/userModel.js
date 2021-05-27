@@ -106,14 +106,15 @@ const userSchema = new mongoose.Schema(
             "joinRequest",
             "requestAccept",
             "requestReject",
-            "enrollement",
-            "assignment",
+            "courseCreated",
+            "courseEnrolled",
           ],
         },
         requester: { _id: String, name: String, image: String },
         topic: {
           type: String,
         },
+        course: { _id: String, teacher: String, name: String, code: String },
       },
     ],
     notificationsSeen: {
