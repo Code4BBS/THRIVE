@@ -1,0 +1,53 @@
+@import url("https://cdn.syncfusion.com/ej2/material.css");
+
+.e-selected .e-day {
+  background-color: #3f51b5 !important;
+}
+
+.e-day {
+  border-color: #3f51b5 !important;
+}
+
+.e-today {
+  color: #3f51b5 !important;
+}
+
+.e-calendar .e-content td.e-today span.e-day,
+.e-calendar .e-content td.e-focused-date.e-today span.e-day,
+.e-bigger.e-small .e-calendar .e-content td.e-today span.e-day,
+.e-bigger.e-small .e-calendar .e-content td.e-focused-date.e-today span.e-day {
+  color: #3f51b5;
+}
+
+.e-calendar .e-content td.e-today span.e-day,
+.e-calendar .e-content td.e-focused-date.e-today span.e-day,
+.e-bigger.e-small .e-calendar .e-content td.e-today span.e-day,
+.e-bigger.e-small .e-calendar .e-content td.e-focused-date.e-today span.e-day {
+  border: 1px solid #3f51b5;
+}
+
+.e-calendar .e-content span.e-day,
+.e-bigger.e-small .e-calendar .e-content span.e-day {
+  font-size: 18px;
+}
+
+.e-calendar .e-content th,
+.e-calendar .e-content td,
+.e-bigger.e-small .e-calendar .e-content th,
+.e-bigger.e-small .e-calendar .e-content td {
+  font-size: 18px;
+}
+
+.e-title {
+  font-size: 20px !important;
+}
+
+.e-btn.e-flat.e-primary,
+.e-css.e-btn.e-flat.e-primary {
+  font-size: 18px;
+}
+
+.e-calendar,
+.e-bigger.e-small .e-calendar {
+  min-width: 290px;
+}

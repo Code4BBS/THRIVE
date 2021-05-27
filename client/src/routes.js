@@ -7,6 +7,7 @@ import Profile from "views/admin/Profile.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 // import CollegeAdmin from "views/admin/CollegeAdmin/collegeAdmin";
+import CalendarView from "views/admin/Classroom/Calendar";
 import CollegeMain from "views/admin/CollegeAdmin/collegeMain";
 import CourseTable from "views/admin/CollegeAdmin/Courses.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
@@ -223,6 +224,16 @@ var routes = [
     layout: "/",
     show: true,
   },
+  {
+    path: "calendat",
+    name: "Calendar",
+    icon: LibraryBooksIcon,
+    iconColor: "Primary",
+    component: CalendarView,
+    layout: "/",
+    show: true,
+  },
+
   {
     path: "new-assignment/:id",
     name: "Add Assignment",

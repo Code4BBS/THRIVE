@@ -226,3 +226,16 @@ exports.submitAssignment = catchAsync(async (req, res, next) => {
     data: fileName,
   });
 });
+
+exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
+  const deadline = req.query.deadline;
+
+  const assignments = await Assignment.find({
+    deadline: deadline,
+  });
+
+  res.status(200).json({
+    status: "success",
+    data: assignments,
+  });
+});
