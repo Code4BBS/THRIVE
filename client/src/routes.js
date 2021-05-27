@@ -225,7 +225,7 @@ var routes = [
     show: true,
   },
   {
-    path: "calendat",
+    path: "calendar",
     name: "Calendar",
     icon: LibraryBooksIcon,
     iconColor: "Primary",

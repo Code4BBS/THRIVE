@@ -17,6 +17,9 @@ const componentStyles = (theme) => ({
       paddingRight: "39px",
     },
   },
+  avatar: {
+    marginRight: theme.spacing(2),
+  },
   gridItemRoot: {
     [theme.breakpoints.up("xl")]: {
       marginBottom: "0!important",
@@ -109,6 +112,16 @@ const componentStyles = (theme) => ({
       color: theme.palette.dark[200],
       fontSize: "1rem",
     },
+  },
+  paperRoot: {
+    flexGrow: 1,
+    overflow: "hidden",
+    padding: theme.spacing(0, 3),
+  },
+  paper: {
+    width: "100%",
+    margin: `${theme.spacing(1)}px auto`,
+    padding: theme.spacing(2),
   },
 });
 

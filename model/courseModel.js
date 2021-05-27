@@ -37,9 +37,6 @@ const courseSchema = new mongoose.Schema(
       enum: ["CSE", "ECE", "EE", "ME", "MM"],
       required: [true, "Course must belong to a branch"],
     },
-    deadline: {
-      type: Date,
-    },
   },
   { toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );

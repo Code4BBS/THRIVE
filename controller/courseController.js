@@ -267,11 +267,17 @@ exports.sendMessage = async (chatMessage) => {
 
 exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
   const deadline = req.query.deadline;
-
+  const coursesEnrolled = req.user.coursesEnrolled;
+  console.log(deadline);
   const assignments = await Assignment.find({
+    courseId: { $in: coursesEnrolled },
     deadline: deadline,
+  }).populate({
+    path: "teacher",
+    ref: "User",
+    select: "name image",
   });
-
+  console.log(assignments);
   res.status(200).json({
     status: "success",
     data: assignments,
