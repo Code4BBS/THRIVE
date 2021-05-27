@@ -182,7 +182,7 @@ function Course({ user, cookies, history }) {
         {tab === "Classes" ? (
           <Classes course={course} />
         ) : tab === "Assignments" ? (
-          <Assignments course={course} history={history} />
+          <Assignments course={course} history={history} user={user} />
         ) : (
           <ChatRoom user={user} cookies={cookies} />
         )}

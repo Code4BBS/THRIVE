@@ -31,13 +31,20 @@ exports.getAllCourses = catchAsync(async (req, res, next) => {
 
 exports.getMyCourses = catchAsync(async (req, res, next) => {
   console.log(req.body);
-
-  const courses = await Course.find({ _id: { $in: req.body } }).populate({
-    path: "teacher",
-    model: "User",
-    select: "name email image",
-  });
-
+  let courses;
+  if (req.user.role !== "Teacher") {
+    courses = await Course.find({ _id: { $in: req.body } }).populate({
+      path: "teacher",
+      model: "User",
+      select: "name email image",
+    });
+  } else {
+    courses = await Course.find({ teacher: req.user._id }).populate({
+      path: "teacher",
+      model: "User",
+      select: "name email image",
+    });
+  }
   res.send(courses);
 });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { useLocation, Link } from "react-router-dom";
 // @material-ui/core components
@@ -23,11 +23,12 @@ import componentStyles from "assets/theme/components/sidebar.js";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function Sidebar({ routes, logo, dropdown, input }) {
+export default function Sidebar({ role, routes, logo, dropdown, input }) {
+  console.log(role);
   const classes = useStyles();
   const location = useLocation();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [userRole, setRole] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
   const handleMenuOpen = (event) => {
@@ -37,12 +38,15 @@ export default function Sidebar({ routes, logo, dropdown, input }) {
   const handleMenuClose = () => {
     setAnchorEl(null);
   };
-
+  useEffect(() => {
+    setRole(role);
+  }, []);
   const menuId = "responsive-menu-id";
   // creates the links that appear in the left menu / Sidebar
   const createLinks = (routes) => {
     return routes.map((prop, key) => {
       if (!prop.show) return null;
+      if (prop.role && !prop.role.includes(userRole)) return null;
       if (prop.divider) {
         return <Divider key={key} classes={{ root: classes.divider }} />;
       } else if (prop.title) {

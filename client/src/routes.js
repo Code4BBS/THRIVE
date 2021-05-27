@@ -40,12 +40,6 @@ import EventIcon from "@material-ui/icons/Event";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 
 var routes = [
-  // {
-  //   href: "#pablo",
-  //   name: "Upgrade to pro",
-  //   icon: FlashOn,
-  //   upgradeToPro: true,
-  // },
   {
     path: "index",
     name: "Dashboard",
@@ -54,6 +48,7 @@ var routes = [
     component: Dashboard,
     layout: "/",
     show: true,
+    role: ["user", "Teacher", "admin", "collegeAdmin"],
   },
 
   {
@@ -64,6 +59,7 @@ var routes = [
     component: Profile,
     layout: "/",
     show: true,
+    role: ["user", "Teacher", "admin", "collegeAdmin"],
   },
   {
     path: "discover",
@@ -73,6 +69,7 @@ var routes = [
     component: CustomerListView,
     layout: "/",
     show: true,
+    role: ["user", "admin"],
   },
 
   //All Project Routes
@@ -84,6 +81,7 @@ var routes = [
     component: ProjectTable,
     layout: "/",
     show: false,
+    role: ["user", "admin"],
   },
   {
     path: "projects/myProjects",
@@ -93,6 +91,7 @@ var routes = [
     component: ProjectTable,
     layout: "/",
     show: false,
+    role: ["user", "admin"],
   },
 
   {
@@ -103,6 +102,7 @@ var routes = [
     component: AddProject,
     layout: "/",
     show: false,
+    role: ["user", "admin"],
   },
 
   {
@@ -113,6 +113,7 @@ var routes = [
     component: EditProject,
     layout: "/",
     show: false,
+    role: ["user", "admin"],
   },
   {
     path: "projects/:id",
@@ -122,6 +123,7 @@ var routes = [
     component: Project,
     layout: "/",
     show: false,
+    role: ["user", "admin"],
   },
   {
     path: "projects",
@@ -131,6 +133,7 @@ var routes = [
     component: ProjectBoard,
     layout: "/",
     show: true,
+    role: ["user", "admin"],
   },
 
   // Quora Routes
@@ -142,6 +145,7 @@ var routes = [
     component: Question,
     layout: "/",
     show: false,
+    role: ["user", "admin"],
   },
   {
     path: "quora",
@@ -151,6 +155,7 @@ var routes = [
     component: Quora,
     layout: "/",
     show: true,
+    role: ["user", "admin"],
   },
   {
     path: "maps",
@@ -160,25 +165,9 @@ var routes = [
     component: Maps,
     layout: "/",
     show: true,
+    role: ["user", "admin", "collegeAdmin", "Teacher"],
   },
-  {
-    path: "icons",
-    name: "Icons",
-    icon: Grain,
-    iconColor: "Primary",
-    component: Icons,
-    layout: "/",
-    show: false,
-  },
-  {
-    path: "tables",
-    name: "Tables",
-    icon: FormatListBulleted,
-    iconColor: "Error",
-    component: Tables,
-    layout: "/",
-    show: false,
-  },
+
   //College Admin routes
   {
     path: "collegeAdmin",
@@ -188,6 +177,7 @@ var routes = [
     component: CollegeMain,
     layout: "/",
     show: true,
+    role: ["collegeAdmin"],
   },
   {
     path: "courses/all",
@@ -197,16 +187,8 @@ var routes = [
     component: CourseTable,
     layout: "/",
     show: false,
+    role: ["collegeAdmin"],
   },
-  // {
-  //   path: "file/upload",
-  //   name: "Upload",
-  //   icon: CreateIcon,
-  //   iconColor: "Primary",
-  //   component: File,
-  //   layout: "/",
-  //   show: true,
-  // },
   {
     divider: true,
     show: true,
@@ -223,6 +205,7 @@ var routes = [
     component: Classroom,
     layout: "/",
     show: true,
+    role: ["user", "admin", "Teacher"],
   },
   {
     path: "calendar",
@@ -232,6 +215,7 @@ var routes = [
     component: CalendarView,
     layout: "/",
     show: true,
+    role: ["user", "admin"],
   },
 
   {
@@ -242,6 +226,7 @@ var routes = [
     component: AddAssignment,
     layout: "/",
     show: false,
+    role: ["Teacher"],
   },
   {
     path: "courses/:code/:id",
@@ -252,6 +237,7 @@ var routes = [
     layout: "/",
     show: false,
     exact: true,
+    role: ["user", "admin", "Teacher"],
   },
   {
     path: "assignment/:id",
@@ -261,6 +247,7 @@ var routes = [
     component: AssignmentView,
     layout: "/",
     show: false,
+    role: ["user", "admin", "Teacher"],
   },
   {
     divider: true,

@@ -29,7 +29,7 @@ import axios from "axios";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 const useStyles = makeStyles(componentStyles);
 
-const Assignments = ({ course, history }) => {
+const Assignments = ({ course, history, user }) => {
   const classes = useStyles();
   let id = window.location.pathname.split("/")[3];
   console.log(id);
@@ -41,7 +41,7 @@ const Assignments = ({ course, history }) => {
       .get(`/api/v1/course/assignments/${id}`)
       .then((res) => {
         setAssignments(res.data.data);
-        console.log(res.data.data);
+        // console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -79,20 +79,22 @@ const Assignments = ({ course, history }) => {
         }}
         style={{ textAlign: "center" }}
       >
-        <IconButton
-          style={{
-            width: "50px",
-            height: "50px",
-            fontSize: "40px",
-            margin: "10px",
-            position: "absolute",
-          }}
-          onClick={() => {
-            history.push(`/new-assignment/${course.id}`);
-          }}
-        >
-          <AddRoundedIcon fontSize="large" />
-        </IconButton>
+        {user.role == "Teacher" ? (
+          <IconButton
+            style={{
+              width: "50px",
+              height: "50px",
+              fontSize: "40px",
+              margin: "10px",
+              position: "absolute",
+            }}
+            onClick={() => {
+              history.push(`/new-assignment/${course.id}`);
+            }}
+          >
+            <AddRoundedIcon fontSize="large" />
+          </IconButton>
+        ) : null}
         <Typography
           style={{ fontSize: "20px", padding: "20px 0px", height: "70px" }}
         >

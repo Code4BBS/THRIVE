@@ -35,7 +35,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
 
   const getRoutes = (routes) => {
     return routes.map((prop, key) => {
-      if (prop.layout === "/") {
+      if (prop.layout === "/" && prop.role.includes(user.role)) {
         return (
           <Route
             path={prop.layout + prop.path}
@@ -69,6 +69,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
     <>
       <>
         <Sidebar
+          role={user.role}
           routes={routes}
           logo={{
             innerLink: "/index",

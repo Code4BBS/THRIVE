@@ -14,11 +14,7 @@ router.get(
 );
 router.get("/deadline", courseController.getAssignmentsByDeadline);
 
-router.post(
-  "/my-courses",
-  authController.restrictTo("admin"),
-  courseController.getMyCourses
-);
+router.post("/my-courses", courseController.getMyCourses);
 
 router.get(
   "/:id",
