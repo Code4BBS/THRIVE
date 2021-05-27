@@ -145,14 +145,14 @@ function Course({ user, cookies }) {
         </Grid>
       ) : null}
       <div style={{ textAlign: "center" }}>
-        <Button
+        {/* <Button
           className={tab === "Chat" ? "active" : "in-active"}
           onClick={() => {
             setTab("Chat");
           }}
         >
           Chat
-        </Button>
+        </Button> */}
         <Button
           className={tab === "Classes" ? "active" : "in-active"}
           onClick={() => {
