@@ -43,6 +43,7 @@ const createSendToken = (user, statusCode, res) => {
       verification: true,
       user,
       expireAt,
+      token,
     });
   } catch (error) {
     throw new AppError(error.message, 500);

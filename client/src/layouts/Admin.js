@@ -44,6 +44,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
                 user={user}
                 getUserAgain={getUserAgain}
                 history={history}
+                cookies={cookies}
               />
             )}
             key={key}
