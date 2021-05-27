@@ -6,7 +6,12 @@ const AppError = require("./utils/appError");
 const { JWT_SECRET } = require("./utils/config");
 
 module.exports.socketSetup = (server) => {
-  const io = socketio(server);
+  const io = socketio(server, {
+    cors: {
+      origin: "http://localhost:3001",
+      credentials: true,
+    },
+  });
 
   io.use((socket, next) => {
     if (socket.handshake.query && socket.handshake.query.token) {

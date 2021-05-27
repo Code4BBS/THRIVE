@@ -217,13 +217,10 @@ exports.getAllChatMessagesByCourse = catchAsync(async (req, res, next) => {
 
 exports.sendMessage = async (chatMessage) => {
   try {
+    // console.log("Send Message Triggered");
     const { userId, courseId, message } = chatMessage;
 
-    if (!courseId) throw new AppError("No Course ID provided!", 404);
-
-    if (!req.user.coursesEnrolled.includes(courseId)) {
-      throw new AppError("You are not allowed to view this course!", 401);
-    }
+    if (!courseId) return new AppError("No Course ID provided!", 404);
 
     const newMessage = await ChatMessage.create({
       message: message,
