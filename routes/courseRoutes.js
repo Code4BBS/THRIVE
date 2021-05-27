@@ -9,7 +9,7 @@ router.use(authController.verifyJwtToken, authController.loggedInUser);
 
 router.get(
   "/",
-  authController.restrictTo("admin"),
+  authController.restrictTo("collegeAdmin"),
   courseController.getAllCourses
 );
 router.get("/deadline", courseController.getAssignmentsByDeadline);
@@ -24,7 +24,7 @@ router.get(
 
 router.post(
   "/",
-  authController.restrictTo("admin"),
+  authController.restrictTo("collegeAdmin"),
   courseController.createCourse
 );
 

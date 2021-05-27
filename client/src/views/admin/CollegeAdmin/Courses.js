@@ -39,7 +39,7 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const CourseTable = ({ user }) => {
+const CourseTable = ({ user, history }) => {
   const classes = useStyles();
   const theme = useTheme();
   const [courses, setCourses] = useState([]);
@@ -107,27 +107,13 @@ const CourseTable = ({ user }) => {
     getCourses();
   }, []);
 
-  //   const blacklistProject = (project, index) => {
-  //     axios.patch(`/api/v1/project/blacklist/${project._id}`).then((response) => {
-  //       // console.log(response);
-  //       if (response.status === 200) {
-  //         window.alert("Project blacklisted successfully");
-  //         const updatedProjects = [...projects];
-  //         updatedProjects.splice(index, 1);
-  //         setProjects(updatedProjects);
-  //       }
-  //     });
-  //   };
-
-  const reset = () => {
-    setSelectedTags([]);
+  const redirectToCourseCreation = () => {
+    history.push("/courses/new-course");
   };
 
   return (
     <>
       <Header />
-      {/* Page content */}
-
       <Container
         maxWidth={false}
         component={Box}
@@ -164,6 +150,17 @@ const CourseTable = ({ user }) => {
                     >
                       {isLoading ? "Loading Courses...." : cardTitle}
                     </Box>
+                  </Grid>
+                  <Grid item xs="auto">
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      size="small"
+                      onClick={() => redirectToCourseCreation()}
+                      style={{ marginTop: "0.25rem" }}
+                    >
+                      Create new Course
+                    </Button>
                   </Grid>
                   {/* <Grid item xs="auto">
                       <Box

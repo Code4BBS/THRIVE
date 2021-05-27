@@ -9,6 +9,7 @@ import Tables from "views/admin/Tables.js";
 // import CollegeAdmin from "views/admin/CollegeAdmin/collegeAdmin";
 import CalendarView from "views/admin/Classroom/Calendar";
 import CollegeMain from "views/admin/CollegeAdmin/collegeMain";
+import NewCourse from "views/admin/CollegeAdmin/NewCourse.js";
 import CourseTable from "views/admin/CollegeAdmin/Courses.js";
 import CustomerListView from "views/admin/customer/CustomerListView/index.js";
 import ProjectBoard from "views/admin/Project/ProjectBoard.js";
@@ -185,6 +186,16 @@ var routes = [
     icon: CreateIcon,
     iconColor: "Primary",
     component: CourseTable,
+    layout: "/",
+    show: false,
+    role: ["collegeAdmin"],
+  },
+  {
+    path: "courses/new-course",
+    name: "All Courses",
+    icon: CreateIcon,
+    iconColor: "Primary",
+    component: NewCourse,
     layout: "/",
     show: false,
     role: ["collegeAdmin"],

@@ -62,22 +62,35 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 
 exports.createCourse = catchAsync(async (req, res, next) => {
   //Required  : name , courseCode, teacher , year , branch
-  const { name, courseCode, teacher, year, branch } = req.body;
-
-  const Teacher = await User.findById(teacher).select(
-    "role notifications notificationsSeen"
-  );
+  const { name, courseCode, email, year, branch } = req.body;
+  console.log(typeof email);
+  const Teacher = await User.findOneAndUpdate(
+    { email: email },
+    { role: "Teacher" }
+  ).select("role notifications notificationsSeen");
   //   if (!Teacher || Teacher.role != "Teacher") {
   //     return next(new AppError("Sorry teacher id is wrond", 404));
   //   }
-  const newCourse = await Course.create(req.body);
+  const data = {
+    name: name,
+    courseCode: courseCode,
+    teacher: Teacher._id,
+    year: year,
+    branch: branch,
+  };
+  const newCourse = await Course.create(data);
 
   let message = `Admin has created a new course ${name} with you as teacher`;
 
   let notifications = {
     message: message,
     type: "courseCreated",
-    course: { _id: newCourse._id, code: course.code, name: name, teacher: "" },
+    course: {
+      _id: newCourse._id,
+      code: courseCode,
+      name: name,
+      teacher: Teacher.name,
+    },
   };
 
   Teacher.notifications.push(notifications);
