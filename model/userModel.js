@@ -108,6 +108,7 @@ const userSchema = new mongoose.Schema(
             "requestReject",
             "courseCreated",
             "courseEnrolled",
+            "assignment",
           ],
         },
         requester: { _id: String, name: String, image: String },

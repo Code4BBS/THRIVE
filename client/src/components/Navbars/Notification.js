@@ -123,247 +123,247 @@ function Notification({ user, history }) {
     let projectUrl = `/assignment/${projectId}`;
     history.push(projectUrl);
     // window.location.pathname = projectUrl;
-
-    const redirectToCourse = (course) => {
-      let courseUrl = `/courses/${course.code}/${course._id}`;
-      history.push(courseUrl);
-    };
-
-    const open = Boolean(anchorEl);
-    const id = open ? "simple-popover" : undefined;
-
-    const makeNotificationIcon = (notification) => {
-      switch (notification.type) {
-        case "profileMatch":
-          return <FileText color="darkblue" size={20} />;
-        // break;
-        case "collaboratorAdd":
-          return <Users color="blue" size={20} />;
-
-        case "joinRequest":
-          return (
-            <Avatar
-              src={notification.requester.image}
-              style={{ height: "30px", width: "30px" }}
-            />
-          );
-
-        case "requestAccept":
-          return <UserCheck color="green" size={20} />;
-
-        case "requestReject":
-          return <UserX color="#f54242" size={20} />;
-
-        case "courseCreated":
-          return <SupervisorAccountIcon size={20} />;
-
-        case "courseEnrolled":
-          return <SchoolIcon size={20} />;
-
-        default:
-          return <FileText size={20} />;
-      }
-    };
-
-    const makeNotificationMessage = (notification) => {
-      switch (notification.type) {
-        case "profileMatch":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.project.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                Matches your profile.
-              </Typography>
-            </div>
-          );
-        // break;
-        case "collaboratorAdd":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.project.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                You are added as a collaborator.
-              </Typography>
-            </div>
-          );
-
-        case "joinRequest":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.requester.name}
-              </Typography>
-              <Typography className={classes.desc}>
-                Requested to join your project
-                <br />
-                <b>{notification.project.title}</b>
-              </Typography>
-            </div>
-          );
-
-        case "requestAccept":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.project.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                Your request is accepted by the owner.
-              </Typography>
-            </div>
-          );
-
-        case "requestReject":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.project.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                Your request is rejected by the owner.
-              </Typography>
-            </div>
-          );
-        case "assignment":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.project.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                {notification.message}
-              </Typography>
-            </div>
-          );
-
-        case "courseCreated":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.course.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                Admin created course with you as teacher.
-              </Typography>
-            </div>
-          );
-
-        case "courseEnrolled":
-          return (
-            <div>
-              {" "}
-              <Typography className={classes.head}>
-                {notification.course.title}
-              </Typography>
-              <Typography className={classes.desc}>
-                You are enrolled in this course of {notification.course.teacher}
-              </Typography>
-            </div>
-          );
-
-        default:
-          return (
-            <div>
-              <Typography className={classes.head}>
-                {notification.message}
-              </Typography>
-            </div>
-          );
-      }
-    };
-
-    const cardContent = (
-      <Card className={classes.root}>
-        <CardHeader
-          title="NOTIFICATIONS"
-          style={{ padding: "10px 0px 0px 10px", margin: 0 }}
-        />
-        <CardContent style={{ padding: 0, margin: 0 }}>
-          {notifications.map((notification, key) => {
-            return (
-              <div
-                className={classes.tile}
-                onClick={() => {
-                  console.log(notification);
-                  if (notification.type == "assignment") {
-                    redirectToAssignment(notification.project._id);
-                  } else if (notification.project)
-                    redirectToProject(notification.project._id);
-                  else if (notification.course)
-                    redirectToCourse(notification.course);
-                  else redirectToProject(notification.projectId);
-                }}
-                key={key}
-              >
-                <div
-                  style={{
-                    alignItems: "center",
-                    display: "flex",
-                    margin: "0px 10px 0px 3px",
-                  }}
-                >
-                  {makeNotificationIcon(notification)}
-                </div>
-                {makeNotificationMessage(notification)}
-              </div>
-            );
-          })}
-        </CardContent>
-      </Card>
-    );
-
-    return (
-      <div>
-        <Badge
-          classes={{ dot: classes.dot }}
-          overlap="circle"
-          variant="dot"
-          invisible={status}
-        >
-          <SvgIcon
-            style={{
-              color: "white",
-              width: "25px",
-              height: "30px",
-
-              marginLeft: "10px",
-              cursor: "pointer",
-            }}
-            onClick={handleClick}
-          >
-            <NotificationsIcon />
-          </SvgIcon>
-        </Badge>
-        <Popover
-          id={id}
-          open={open}
-          anchorEl={anchorEl}
-          onClose={handleClose}
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          className={classes.popover}
-          transformOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-        >
-          {cardContent}
-        </Popover>
-      </div>
-    );
   };
+  const redirectToCourse = (course) => {
+    let courseUrl = `/courses/${course.code}/${course._id}`;
+    history.push(courseUrl);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+
+  const makeNotificationIcon = (notification) => {
+    switch (notification.type) {
+      case "profileMatch":
+        return <FileText color="darkblue" size={20} />;
+      // break;
+      case "collaboratorAdd":
+        return <Users color="blue" size={20} />;
+
+      case "joinRequest":
+        return (
+          <Avatar
+            src={notification.requester.image}
+            style={{ height: "30px", width: "30px" }}
+          />
+        );
+
+      case "requestAccept":
+        return <UserCheck color="green" size={20} />;
+
+      case "requestReject":
+        return <UserX color="#f54242" size={20} />;
+
+      case "courseCreated":
+        return <SupervisorAccountIcon size={20} />;
+
+      case "courseEnrolled":
+        return <SchoolIcon size={20} />;
+
+      default:
+        return <FileText size={20} />;
+    }
+  };
+
+  const makeNotificationMessage = (notification) => {
+    switch (notification.type) {
+      case "profileMatch":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Matches your profile.
+            </Typography>
+          </div>
+        );
+      // break;
+      case "collaboratorAdd":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              You are added as a collaborator.
+            </Typography>
+          </div>
+        );
+
+      case "joinRequest":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.requester.name}
+            </Typography>
+            <Typography className={classes.desc}>
+              Requested to join your project
+              <br />
+              <b>{notification.project.title}</b>
+            </Typography>
+          </div>
+        );
+
+      case "requestAccept":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Your request is accepted by the owner.
+            </Typography>
+          </div>
+        );
+
+      case "requestReject":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Your request is rejected by the owner.
+            </Typography>
+          </div>
+        );
+      case "assignment":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.project.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              {notification.message}
+            </Typography>
+          </div>
+        );
+
+      case "courseCreated":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.course.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Admin created course with you as teacher.
+            </Typography>
+          </div>
+        );
+
+      case "courseEnrolled":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.course.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              You are enrolled in this course of {notification.course.teacher}
+            </Typography>
+          </div>
+        );
+
+      default:
+        return (
+          <div>
+            <Typography className={classes.head}>
+              {notification.message}
+            </Typography>
+          </div>
+        );
+    }
+  };
+
+  const cardContent = (
+    <Card className={classes.root}>
+      <CardHeader
+        title="NOTIFICATIONS"
+        style={{ padding: "10px 0px 0px 10px", margin: 0 }}
+      />
+      <CardContent style={{ padding: 0, margin: 0 }}>
+        {notifications.map((notification, key) => {
+          return (
+            <div
+              className={classes.tile}
+              onClick={() => {
+                console.log(notification);
+                if (notification.type == "assignment") {
+                  redirectToAssignment(notification.project._id);
+                } else if (notification.project)
+                  redirectToProject(notification.project._id);
+                else if (notification.course)
+                  redirectToCourse(notification.course);
+                else redirectToProject(notification.projectId);
+              }}
+              key={key}
+            >
+              <div
+                style={{
+                  alignItems: "center",
+                  display: "flex",
+                  margin: "0px 10px 0px 3px",
+                }}
+              >
+                {makeNotificationIcon(notification)}
+              </div>
+              {makeNotificationMessage(notification)}
+            </div>
+          );
+        })}
+      </CardContent>
+    </Card>
+  );
+
+  return (
+    <div>
+      <Badge
+        classes={{ dot: classes.dot }}
+        overlap="circle"
+        variant="dot"
+        invisible={status}
+      >
+        <SvgIcon
+          style={{
+            color: "white",
+            width: "25px",
+            height: "30px",
+
+            marginLeft: "10px",
+            cursor: "pointer",
+          }}
+          onClick={handleClick}
+        >
+          <NotificationsIcon />
+        </SvgIcon>
+      </Badge>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        className={classes.popover}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        {cardContent}
+      </Popover>
+    </div>
+  );
 }
+
 export default Notification;
