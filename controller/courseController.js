@@ -55,7 +55,7 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 
 exports.createCourse = catchAsync(async (req, res, next) => {
   //Required  : name , courseCode, teacher , year , branch
-  const { name, coureseCode, teacher, year, branch } = req.body;
+  const { name, courseCode, teacher, year, branch } = req.body;
 
   const Teacher = await User.findById(teacher).select(
     "role notifications notificationsSeen"
@@ -69,8 +69,8 @@ exports.createCourse = catchAsync(async (req, res, next) => {
 
   let notifications = {
     message: message,
-    topic: "course",
-    projectId: newCourse._id,
+    type: "courseCreated",
+    course: { _id: newCourse._id, code: course.code, name: name, teacher: "" },
   };
 
   Teacher.notifications.push(notifications);
@@ -89,7 +89,11 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
     return next(new AppError("Course ID is not available", 404));
   }
 
-  const course = await Course.findById(courseId);
+  const course = await Course.findById(courseId).populate({
+    path: "teacher",
+    model: "User",
+    select: "name",
+  });
 
   // if (req.user.id != course.teacher) {
   //   return next(new AppError("You are not the teacher for this course", 404));
@@ -104,8 +108,13 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
   let message = `You have been enrolled into ${course.name} course by ${req.user.name}`;
   let notification = {
     message: message,
-    topic: "course",
-    projectId: "",
+    type: "courseEnrolled",
+    course: {
+      _id: course._id,
+      code: course.code,
+      name: course.name,
+      teacher: course.teacher.name,
+    },
   };
   const students = await User.updateMany(
     {

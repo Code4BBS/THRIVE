@@ -13,6 +13,8 @@ import axios from "axios";
 
 import SvgIcon from "@material-ui/core/SvgIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
+import SchoolIcon from "@material-ui/icons/School";
 import AssignmentIcon from "@material-ui/icons/Assignment";
 import { UserX, Users, UserCheck, FileText } from "react-feather";
 
@@ -117,6 +119,12 @@ function Notification({ user, history }) {
     history.push(projectUrl);
     // window.location.pathname = projectUrl;
   };
+
+  const redirectToCourse = (course) => {
+    let courseUrl = `/courses/${course.code}/${course._id}`;
+    history.push(courseUrl);
+  };
+
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
 
@@ -141,6 +149,12 @@ function Notification({ user, history }) {
 
       case "requestReject":
         return <UserX color="#f54242" size={20} />;
+
+      case "courseCreated":
+        return <SupervisorAccountIcon size={20} />;
+
+      case "courseEnrolled":
+        return <SchoolIcon size={20} />;
 
       default:
         return <FileText size={20} />;
@@ -216,6 +230,32 @@ function Notification({ user, history }) {
           </div>
         );
 
+      case "courseCreated":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.course.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              Admin created course with you as teacher.
+            </Typography>
+          </div>
+        );
+
+      case "courseEnrolled":
+        return (
+          <div>
+            {" "}
+            <Typography className={classes.head}>
+              {notification.course.title}
+            </Typography>
+            <Typography className={classes.desc}>
+              You are enrolled in this course of {notification.course.teacher}
+            </Typography>
+          </div>
+        );
+
       default:
         return (
           <div>
@@ -242,6 +282,8 @@ function Notification({ user, history }) {
                 console.log(notification);
                 if (notification.project)
                   redirectToProject(notification.project._id);
+                else if (notification.course)
+                  redirectToCourse(notification.course);
                 else redirectToProject(notification.projectId);
               }}
               key={key}
