@@ -4,6 +4,7 @@ import Icons from "views/admin/Icons.js";
 import Login from "views/auth/Login.js";
 import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
+import ProfilePage from "views/admin/ProfilePage.js";
 import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 // import CollegeAdmin from "views/admin/CollegeAdmin/collegeAdmin";
@@ -62,6 +63,18 @@ var routes = [
     show: true,
     role: ["user", "Teacher", "admin", "collegeAdmin"],
   },
+
+  {
+    path: "user/:id",
+    name: "User Profile",
+    icon: Person,
+    iconColor: "WarningLight",
+    component: ProfilePage,
+    layout: "/",
+    show: false,
+    role: ["user", "Teacher", "admin", "collegeAdmin"],
+  },
+
   {
     path: "discover",
     name: "Discover",
