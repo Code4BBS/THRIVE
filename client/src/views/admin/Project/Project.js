@@ -1,34 +1,40 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+import axios from "axios";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-import FilledInput from "@material-ui/core/FilledInput";
-import FormControl from "@material-ui/core/FormControl";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
-import IconButton from "@material-ui/core/IconButton";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableBody from "@material-ui/core/TableBody";
-import TableRow from "@material-ui/core/TableRow";
-import TableCell from "@material-ui/core/TableCell";
-import Table from "@material-ui/core/Table";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import Chip from "@material-ui/core/Chip";
 
-// @material-ui/icons components
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Chip,
+  Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  Divider,
+  FilledInput,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  Grid,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Typography,
+} from "@material-ui/core";
+
+// @material-ui/icons
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import CheckIcon from "@material-ui/icons/Check";
@@ -39,16 +45,13 @@ import Header from "../../../components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
 
+//util
 import formatDate from "../Quora/formatDate.js";
-import axios from "axios";
-
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
-function Profile({ user }) {
+const Project = ({ user }) => {
   const history = useHistory();
-
   const classes = useStyles();
   const theme = useTheme();
 
@@ -77,9 +80,13 @@ function Profile({ user }) {
           request: request,
         })
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
             window.alert("Request Sent Successfully");
+            const newRequests = [...project.requests];
+            newRequests.push({ requester: { _id: user._id } });
+            const newProjects = { ...project };
+            newProjects.requests = [...newRequests];
+            setProject(newProjects);
           }
         })
         .catch((error) => {
@@ -91,25 +98,17 @@ function Profile({ user }) {
     }
   };
 
-  const acceptRequest = (request, index) => {
+  const acceptRejectRequest = (request, index, isAccept) => {
     if (project) {
+      const action = isAccept ? "accept" : "reject";
       axios
         .patch(
-          `/api/v1/project/request/${project._id}/accept?id=${request.requester._id}`
+          `/api/v1/project/request/${project._id}/${action}?id=${request.requester._id}`
         )
         .then((response) => {
-          console.log(response);
           if (response.status === 200) {
-            // const updatedProject = project;
-            // const updatedRequests = [...updatedProject.requests];
-            // updatedRequests.splice(index, 1);
-            // const updatedCollaborators = [...updatedProject.collaborators];
-            // updatedCollaborators.push(request.requester);
-
-            // updatedProject.requests = updatedRequests;
-            // updatedProject.collaborators = updatedCollaborators;
             setProject(response.data.data.project);
-            window.alert("Request Accepted Successfully");
+            window.alert(`Request ${action}ed successfully`);
           }
         })
         .catch((err) => {
@@ -121,49 +120,14 @@ function Profile({ user }) {
     }
   };
 
-  const confirmAccept = (request, index) => {
-    let confirm = window.confirm(
-      `Are you sure you want to accept request of ${request.requester.name}?`
+  const confirmAcceptReject = (request, index, isAccept) => {
+    const action = isAccept ? "accept" : "reject";
+    const confirm = window.confirm(
+      `Are you sure you want to ${action} request of ${request.requester.name}?`
     );
 
     if (confirm) {
-      acceptRequest(request, index);
-    }
-  };
-
-  const rejectRequest = (request, index) => {
-    if (project) {
-      axios
-        .patch(
-          `/api/v1/project/request/${project._id}/reject?id=${request.requester._id}`
-        )
-        .then((response) => {
-          console.log(response);
-          if (response.status === 200) {
-            // const updatedProject = project;
-            // const updatedRequests = [...updatedProject.requests];
-            // updatedRequests.splice(index, 1);
-            // updatedProject.requests = updatedRequests;
-            setProject(response.data.data.project);
-            window.alert("Reject Successful");
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          window.alert("Something went wrong! Try again Later");
-        });
-    } else {
-      window.alert("Something went wrong ! Try again Later");
-    }
-  };
-
-  const confirmReject = (request, index) => {
-    let confirm = window.confirm(
-      `Are you sure you want to reject request of ${request.requester.name}?`
-    );
-
-    if (confirm) {
-      rejectRequest(request, index);
+      acceptRejectRequest(request, index, isAccept);
     }
   };
 
@@ -186,7 +150,7 @@ function Profile({ user }) {
   };
 
   const confirmDelete = () => {
-    let confirm = window.confirm(
+    const confirm = window.confirm(
       "Are you sure you want to delete this project?"
     );
 
@@ -196,14 +160,12 @@ function Profile({ user }) {
   };
 
   const getProject = () => {
-    let url = window.location.pathname.split("/");
-    let projectId = url[2];
+    const url = window.location.pathname.split("/");
+    const projectId = url[2];
     axios
       .get(`/api/v1/project/${projectId}`)
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
-          // console.log(response.data.data.project);
           setLoading(false);
           setProject(response.data.data.project);
         }
@@ -269,8 +231,6 @@ function Profile({ user }) {
       </DialogActions>
     </Dialog>
   );
-
-  //owner settings
 
   let form = null;
   let editButtons = null;
@@ -367,7 +327,9 @@ function Profile({ user }) {
                                   color="primary"
                                   variant="contained"
                                   component="span"
-                                  onClick={() => confirmAccept(request, id)}
+                                  onClick={() =>
+                                    confirmAcceptReject(request, id, true)
+                                  }
                                 >
                                   <CheckIcon />
                                 </IconButton>
@@ -375,7 +337,9 @@ function Profile({ user }) {
                                   color="primary"
                                   variant="contained"
                                   component="span"
-                                  onClick={() => confirmReject(request, id)}
+                                  onClick={() =>
+                                    confirmAcceptReject(request, id, false)
+                                  }
                                 >
                                   <ClearIcon />
                                 </IconButton>
@@ -432,7 +396,6 @@ function Profile({ user }) {
               size="small"
               variant="contained"
               component="span"
-              // disabled={button}
               classes={{ root: classes.buttonRootDark }}
               style={{ marginLeft: "auto", marginRight: "auto" }}
               onClick={() => {
@@ -698,7 +661,7 @@ function Profile({ user }) {
               </CardContent>
 
               <Divider />
-
+              <br />
               {joinRequestButton}
             </Card>
           </Grid>
@@ -710,11 +673,10 @@ function Profile({ user }) {
   return (
     <>
       <Header />
-
       {form}
       {modal}
     </>
   );
-}
+};
 
-export default Profile;
+export default Project;

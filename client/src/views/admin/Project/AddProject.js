@@ -76,7 +76,7 @@ const AddProject = ({ user }) => {
       .post("/api/v1/project", { ...values, tags, collaborators })
       .then((response) => {
         if (response.status === 201) {
-          let confirm = window.confirm("Project Added Successfully");
+          const confirm = window.confirm("Project Added Successfully");
           if (confirm) {
             history.push("/projects");
           }
@@ -146,6 +146,16 @@ const AddProject = ({ user }) => {
   const getSelectedCollaborators = (collaboratorSelected) => {
     setSelectedCollaborators(collaboratorSelected);
     setCollaboratorsPane(false);
+  };
+
+  const checkRequiredFields = () => {
+    return !(
+      values.title &&
+      values.description &&
+      values.communication &&
+      values.preRequisite &&
+      values.duration
+    );
   };
 
   const form = (
@@ -515,15 +525,7 @@ const AddProject = ({ user }) => {
                 style={{ marginLeft: "40%", marginRight: "40%" }}
                 classes={{ root: classes.buttonRootDark }}
                 variant="contained"
-                disabled={
-                  !(
-                    values.title &&
-                    values.description &&
-                    values.communication &&
-                    values.preRequisite &&
-                    values.duration
-                  )
-                }
+                disabled={checkRequiredFields()}
                 onClick={(e) => {
                   postProject(e);
                 }}

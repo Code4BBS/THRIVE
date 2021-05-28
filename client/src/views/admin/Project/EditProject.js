@@ -1,50 +1,47 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+
 import TagList from "./TagsList";
-import Results from "./ProjectCollaborators";
+import Collaborators from "./ProjectCollaborators";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
-import Divider from "@material-ui/core/Divider";
-import FilledInput from "@material-ui/core/FilledInput";
-import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import FormGroup from "@material-ui/core/FormGroup";
-import FormLabel from "@material-ui/core/FormLabel";
-import Grid from "@material-ui/core/Grid";
-import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-// @material-ui/icons components
-import LocationOn from "@material-ui/icons/LocationOn";
-import School from "@material-ui/icons/School";
+
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Checkbox,
+  Chip,
+  Container,
+  Divider,
+  FilledInput,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormGroup,
+  FormLabel,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 
 // core components
 import Header from "../../../components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
-// import boxShadows from "assets/theme/box-shadow.js";
-import Chip from "@material-ui/core/Chip";
-import axios from "axios";
-
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
-function Profile({ user }) {
+const EditProject = ({ user }) => {
   const history = useHistory();
 
   const classes = useStyles();
   const theme = useTheme();
-
-  // console.log(user);
 
   const [values, setValues] = useState({
     title: "",
@@ -54,7 +51,6 @@ function Profile({ user }) {
     preRequisite: "",
   });
 
-  const [isLoading, setLoading] = useState(true);
   const [project, setProject] = useState(null);
   const [preRequisite, setPreRequisite] = useState(false);
   const [duration, setDuration] = useState(false);
@@ -66,17 +62,13 @@ function Profile({ user }) {
   const [selectedCollaborators, setSelectedCollaborators] = useState([]);
 
   const getProject = () => {
-    let url = window.location.pathname.split("/");
+    const url = window.location.pathname.split("/");
+    const projectId = url[3];
 
-    console.log(url);
-    let projectId = url[3];
-    console.log(projectId);
     axios
       .get(`/api/v1/project/${projectId}`)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
-          //   setLoading(false);
           const project = response.data.data.project;
 
           if (project.owner._id === user._id) {
@@ -111,8 +103,6 @@ function Profile({ user }) {
               }
               setSelectedCollaborators(collaborators);
             }
-
-            //   setProject(response.data.data.project);
           } else {
             window.alert("You cannot edit this project");
             history.push(`/projects/${projectId}`);
@@ -140,21 +130,12 @@ function Profile({ user }) {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
-
         setCustomers(response.data.data.docs);
-        //   setLoading(false);
       })
       .catch((err) => {
         console.log(err);
         window.alert("Something went wrong ! Try again Later");
       });
-  };
-
-  const checkLoadedData = () => {
-    if (project && tagsList.length > 0 && customers.length > 0) {
-      setLoading(false);
-    }
   };
 
   useEffect(() => {
@@ -182,9 +163,8 @@ function Profile({ user }) {
         collaborators,
       })
       .then((response) => {
-        // console.log(response);
         if (response.status === 200) {
-          let confirm = window.confirm("Project Updated Successfully");
+          const confirm = window.confirm("Project Updated Successfully");
           if (confirm) {
             history.push(`/projects/${project._id}`);
           }
@@ -203,7 +183,6 @@ function Profile({ user }) {
   };
 
   const getSelectedTags = (tagsSelected) => {
-    console.log(tagsSelected);
     setSelectedTags(tagsSelected);
     setShowTagsPane(false);
   };
@@ -218,9 +197,18 @@ function Profile({ user }) {
   };
 
   const getSelectedCollaborators = (collaboratorSelected) => {
-    console.log(collaboratorSelected);
     setSelectedCollaborators(collaboratorSelected);
     setCollaboratorsPane(false);
+  };
+
+  const checkRequiredFields = () => {
+    return !(
+      values.title &&
+      values.description &&
+      values.communication &&
+      values.preRequisite &&
+      values.duration
+    );
   };
 
   let form = null;
@@ -271,21 +259,6 @@ function Profile({ user }) {
                         styles={{ color: "black!important" }}
                       />
                     </Grid>
-                    {/* <Grid item xs="auto">
-              <Box
-                justifyContent="flex-end"
-                display="flex"
-                flexWrap="wrap"
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                >
-                  Settings
-                </Button>
-              </Box>
-            </Grid> */}
                   </Grid>
                 }
                 classes={{ root: classes.cardHeaderRoot }}
@@ -498,7 +471,6 @@ function Profile({ user }) {
                                   >
                                     <Chip
                                       variant="default"
-                                      // size="small"
                                       label={tag.name}
                                       color="primary"
                                     />
@@ -524,8 +496,6 @@ function Profile({ user }) {
                       <div style={{ marginTop: "5%" }}>
                         {selectedCollaborators.length > 0
                           ? customers.map((collaborator, index) => {
-                              //selectedTags : id
-
                               if (
                                 selectedCollaborators.includes(collaborator._id)
                               ) {
@@ -536,20 +506,12 @@ function Profile({ user }) {
                                   >
                                     <Chip
                                       variant="outlined"
-                                      // color="primary"
                                       label={collaborator.name}
                                       avatar={
                                         <Avatar src={collaborator.image} />
                                       }
                                       style={{ color: "black!important" }}
                                     />
-
-                                    {/* <Chip
-                                    variant="default"
-                                    size="small"
-                                    label={collaborator.name}
-                                    color="primary"
-                                  /> */}
                                   </li>
                                 );
                               }
@@ -618,30 +580,21 @@ function Profile({ user }) {
               <Box
                 sx={{
                   display: "center",
-
                   p: 2,
                 }}
               >
+                <br />
                 <Button
                   color="primary"
                   style={{ marginLeft: "40%", marginRight: "40%" }}
                   classes={{ root: classes.buttonRootDark }}
                   variant="contained"
-                  disabled={
-                    !(
-                      values.title &&
-                      values.description &&
-                      values.communication &&
-                      values.preRequisite &&
-                      values.duration
-                    )
-                  }
+                  disabled={checkRequiredFields()}
                   onClick={(e) => {
                     updateProject(e);
-                    // window.alert("clicked");
                   }}
                 >
-                  Save
+                  Update
                 </Button>
               </Box>
             </Card>
@@ -653,7 +606,6 @@ function Profile({ user }) {
   return (
     <>
       <Header />
-      {/* Page content */}
 
       {!tagsPane && !collaboratorsPane ? (
         form
@@ -668,17 +620,17 @@ function Profile({ user }) {
         </Container>
       ) : !tagsPane && collaboratorsPane ? (
         <Container>
-          <Results
+          <Collaborators
             currentUser={user}
             customers={customers}
             hide={hideCollaboratorsPane}
             initialSelectedCollaborators={selectedCollaborators}
             getCollaboraters={getSelectedCollaborators}
-          ></Results>
+          />
         </Container>
       ) : null}
     </>
   );
-}
+};
 
-export default Profile;
+export default EditProject;
