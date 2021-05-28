@@ -53,7 +53,7 @@ const ChatRoom = ({ user, cookies }) => {
       })
       .catch((err) => {
         console.log(err);
-        window.alert("Something went wrong");
+        window.alert(err.response.data.message);
       });
   };
 
