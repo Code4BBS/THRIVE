@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import io from "socket.io-client";
+import { clone } from "ramda";
 
 import { makeStyles } from "@material-ui/core/styles";
 import {
@@ -24,8 +25,7 @@ const ChatRoom = ({ user, cookies }) => {
 
   const [chatMessages, setChatMessages] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [typingName, setTypingName] = useState("");
-  const [socket, setSocket] = useState(null);
+
   const courseId = window.location.pathname.split("/")[3];
 
   //Setting Up Socket
@@ -42,8 +42,11 @@ const ChatRoom = ({ user, cookies }) => {
       onMessageRecieved(newMessage);
     });
 
-    setSocket(socketSetup);
+    return socketSetup;
   };
+
+  const socket = setupSocket();
+
   const getPreviousMessages = () => {
     axios
       .get(`/api/v1/course/chat-room/${courseId}`)
@@ -62,13 +65,11 @@ const ChatRoom = ({ user, cookies }) => {
 
   useEffect(() => {
     getPreviousMessages();
-    setupSocket();
   }, []);
 
   const onMessageRecieved = (newMessage) => {
-    const newChatMessages = [...chatMessages];
+    const newChatMessages = clone(chatMessages);
     newChatMessages.push(newMessage);
-
     setChatMessages(newChatMessages);
   };
 
@@ -82,41 +83,11 @@ const ChatRoom = ({ user, cookies }) => {
         courseId: courseId,
         createdAt: new Date(),
       };
+      console.log(socket);
       if (socket) socket.emit("message", data);
       document.getElementById("message").value = "";
     }
   };
-
-  // const typingTimeout = () => {
-  //   typing = false;
-  //   socket.emit("typing", {
-  //     user: user,
-  //     typing: false,
-  //     courseId: courseId,
-  //   });
-  // };
-
-  // const keypress = (e, message) => {
-  //   timeout = setTimeout(typingTimeout, 100);
-  //   if (e.which != 13) {
-  //     typing = true;
-  //     socket.emit("typing", {
-  //       user: user,
-  //       typing: true,
-  //       courseId: courseId,
-  //     });
-  //     clearTimeout(timeout);
-  //   } else {
-  //     clearTimeout(timeout);
-  //     typingTimeout();
-  //     onPostMessage(e, message);
-  //   }
-  // };
-
-  // const onDisplay = (data) => {
-  //   if (data.typing === true) setTypingName(`${data.user.name} is typing...`);
-  //   else setTypingName(``);
-  // };
 
   let chats = null;
   if (isLoading) chats = <h5>Loading....</h5>;
@@ -169,9 +140,6 @@ const ChatRoom = ({ user, cookies }) => {
                         type="text"
                         required
                         classes={{ input: classes.searchInput }}
-                        // onKeyPress={(e) =>
-                        //   keypress(e, document.getElementById("message").value)
-                        // }
                         placeholder="Write Your Message"
                         id="message"
                       />

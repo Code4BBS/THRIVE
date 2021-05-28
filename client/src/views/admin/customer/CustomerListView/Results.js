@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import axios from "axios";
@@ -36,6 +37,8 @@ import componentStyles from "assets/theme/views/admin/tables.js";
 const useStyles = makeStyles(componentStyles);
 
 const Results = ({ className, customers, tags, ...rest }) => {
+  const history = useHistory();
+
   const classes = useStyles();
   const [selectedCustomerIds, setSelectedCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
@@ -140,7 +143,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
   };
 
   const getOtherProfile = (id) => {
-    let url = "/app/user/" + id;
+    history.push(`/user/${id}`);
     // navigate(url);
   };
 
