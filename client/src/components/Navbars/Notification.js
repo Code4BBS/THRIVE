@@ -16,7 +16,14 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
 import SchoolIcon from "@material-ui/icons/School";
 import AssignmentIcon from "@material-ui/icons/Assignment";
-import { UserX, Users, UserCheck, FileText } from "react-feather";
+import {
+  UserX,
+  Users,
+  UserCheck,
+  FileText,
+  Book,
+  Bookmark,
+} from "react-feather";
 
 const useStyles = makeStyles({
   root: {
@@ -155,11 +162,15 @@ function Notification({ user, history }) {
         return <UserX color="#f54242" size={20} />;
 
       case "courseCreated":
-        return <SupervisorAccountIcon size={20} />;
+        return (
+          <SupervisorAccountIcon style={{ height: "20px", width: "20px" }} />
+        );
 
       case "courseEnrolled":
-        return <SchoolIcon size={20} />;
+        return <Book size={20} />;
 
+      case "assignment":
+        return <Bookmark size={20} />;
       default:
         return <FileText size={20} />;
     }
