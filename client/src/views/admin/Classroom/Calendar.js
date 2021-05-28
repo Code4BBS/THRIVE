@@ -47,22 +47,25 @@ function CalendarView({ user, history }) {
   const theme = useTheme();
 
   const changeDate = (value, event) => {
-    const selectedDate = value.value.toLocaleString().split(",")[0];
-    let dateArr = selectedDate.split("/");
-    const formattedDate = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
-    console.log(formattedDate);
-    setDate(formattedDate);
+    const selectedDate = value.value;
+    // console.log(new Date(value.value).getFullYear());
+    // let dateArr = selectedDate.split("/");
+    // const formattedDate = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+    // console.log(formattedDate);
+    setDate(selectedDate);
   };
 
   const getAssignments = () => {
-    let curr = date;
+    let curr = new Date(date);
 
-    curr = curr.split("-");
-    if (curr[1].length === 1) curr[1] = `0${curr[1]}`;
-    if (curr[2].length === 1) curr[2] = `0${curr[2]}`;
+    let dt = curr.getDate();
+    if (dt < 10) dt = `0${dt}`;
 
-    let reqDate = curr[0] + "-" + curr[2] + "-" + curr[1];
-
+    let month = curr.getMonth() + 1;
+    if (month < 10) month = `0${month}`;
+    let Year = curr.getFullYear();
+    let reqDate = Year + "-" + month + "-" + dt;
+    console.log(reqDate);
     axios
       .get(`/api/v1/course/deadline?deadline=${reqDate}`)
       .then((res) => {
