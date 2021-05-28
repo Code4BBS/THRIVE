@@ -34,7 +34,7 @@ const Messages = ({ chatMessages }) => {
                   {/* {chatMessage.message} */}
                 </p>
                 <p style={{ textAlign: "right", color: "gray" }}>
-                  - {FormatDate(chatMessage.createdAt)}
+                  - {chatMessage.createdAt}
                 </p>
               </Grid>
             </Grid>

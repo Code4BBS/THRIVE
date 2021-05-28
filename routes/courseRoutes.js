@@ -18,7 +18,7 @@ router.post("/my-courses", courseController.getMyCourses);
 
 router.get(
   "/:id",
-  authController.restrictTo("user", "admin", "Teacher"),
+  authController.restrictTo("user", "Teacher", "admin"),
   courseController.getCourse
 );
 

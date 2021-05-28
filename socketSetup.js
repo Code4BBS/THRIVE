@@ -27,17 +27,20 @@ module.exports.socketSetup = (server) => {
     // Connection now authenticated to receive further events
     console.log("Socket connected!");
     socket.on("join", async (room) => {
+      console.log(`Joined Course ${room}`);
       socket.join(room);
       io.emit("roomJoined", room); //optional----can be used if required
     });
 
     socket.on("message", async (data) => {
       console.log("Message!");
-      const { user, message, courseId } = data;
+      const { user, message, courseId, createdAt } = data;
+      console.log(data);
       const chatMessage = {
         userId: user.id,
         message,
         courseId,
+        createdAt,
       };
       await sendMessage(chatMessage);
       io.in(courseId).emit("newMessage", data); //roomName=courseId

@@ -304,7 +304,7 @@ exports.getAllChatMessagesByCourse = catchAsync(async (req, res, next) => {
 exports.sendMessage = async (chatMessage) => {
   try {
     // console.log("Send Message Triggered");
-    const { userId, courseId, message } = chatMessage;
+    const { userId, courseId, message, createdAt } = chatMessage;
 
     if (!courseId) return new AppError("No Course ID provided!", 404);
 
@@ -312,6 +312,7 @@ exports.sendMessage = async (chatMessage) => {
       message: message,
       user: userId,
       course: courseId,
+      createdAt,
     });
   } catch (err) {
     return err;
@@ -321,6 +322,9 @@ exports.sendMessage = async (chatMessage) => {
 exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
   const deadline = req.query.deadline;
   const coursesEnrolled = req.user.coursesEnrolled;
+
+  console.log(coursesEnrolled);
+
   console.log(deadline);
   const assignments = await Assignment.find({
     courseId: { $in: coursesEnrolled },
@@ -330,7 +334,9 @@ exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
     ref: "User",
     select: "name image",
   });
-  // console.log(assignments);
+
+  console.log(assignments);
+
   res.status(200).json({
     status: "success",
     data: assignments,
