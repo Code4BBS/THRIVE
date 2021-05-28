@@ -108,7 +108,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
           />
           <Switch>
             {getRoutes(routes)}
-            <Redirect from="*" to="/index" />
+            <Redirect from="*" to="/user-profile" />
           </Switch>
           <Container
             maxWidth={false}
