@@ -321,6 +321,9 @@ exports.sendMessage = async (chatMessage) => {
 exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
   const deadline = req.query.deadline;
   const coursesEnrolled = req.user.coursesEnrolled;
+
+  console.log(coursesEnrolled);
+
   console.log(deadline);
   const assignments = await Assignment.find({
     courseId: { $in: coursesEnrolled },
@@ -330,7 +333,9 @@ exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
     ref: "User",
     select: "name image",
   });
+
   console.log(assignments);
+
   res.status(200).json({
     status: "success",
     data: assignments,

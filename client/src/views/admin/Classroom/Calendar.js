@@ -41,10 +41,11 @@ function CalendarView({ user, history }) {
     currentDate[2] + "-" + currentDate[1] + "-" + currentDate[0];
 
   const [date, setDate] = useState(dateFormatted);
-  console.log(date);
   const [assignments, setAssignments] = useState([]);
+
   const classes = useStyles();
   const theme = useTheme();
+
   const changeDate = (value, event) => {
     const selectedDate = value.value.toLocaleString().split(",")[0];
     let dateArr = selectedDate.split("/");
@@ -53,16 +54,25 @@ function CalendarView({ user, history }) {
   };
 
   const getAssignments = () => {
+    let curr = date;
+
+    curr = curr.split("-");
+    if (curr[1].length === 1) curr[1] = `0${curr[1]}`;
+    if (curr[2].length === 1) curr[2] = `0${curr[2]}`;
+
+    let reqDate = curr[0] + "-" + curr[2] + "-" + curr[1];
+
     axios
-      .get(`/api/v1/course/deadline?deadline=${date}`)
+      .get(`/api/v1/course/deadline?deadline=${reqDate}`)
       .then((res) => {
-        console.log(res.data.data);
+        // console.log(res.data.data);
         setAssignments(res.data.data);
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   useEffect(() => {
     getAssignments();
   }, [date]);
@@ -108,7 +118,10 @@ function CalendarView({ user, history }) {
     <div>
       <Header />
       <div style={{ display: "flex", margin: "20px", minHeight: "350px" }}>
-        <CalendarComponent change={changeDate} value={date}></CalendarComponent>
+        <CalendarComponent
+          onChange={changeDate}
+          value={date}
+        ></CalendarComponent>
         <Grid container style={{ marginLeft: "20px" }}>
           <Grid item xs={12}>
             {assignments.length == 0 ? (
