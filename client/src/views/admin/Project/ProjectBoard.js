@@ -1,76 +1,33 @@
-import React, { useState } from "react";
-import ProjectTable from "./ProjectTable";
+import React from "react";
+import { useHistory } from "react-router-dom";
+
+// @material-ui/icons components
 
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
 
-import Typography from "@material-ui/core/Typography";
-// @material-ui/icons components
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Container,
+  Grid,
+  Typography,
+} from "@material-ui/core";
 
 // core components
 import Header from "components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/dashboard.js";
-import axios from "axios";
-
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
-function Dashboard({ user }) {
+const ProjectBoard = ({ user }) => {
   const history = useHistory();
-
   const classes = useStyles();
   const theme = useTheme();
-
-  // const [showProjectTable, setShowProjectTable] = useState(false);
-  // const [projects, setProjects] = useState([]);
-  const [isLoading, setLoading] = useState(false);
-
-  // const getAllProjects = () => {
-  //   setLoading(true);
-  //   axios.get("/api/v1/project").then((response) => {
-  //     // console.log(response);
-  //     if (response.status === 200) {
-  //       setLoading(false);
-
-  //       if (response.data.data.res > 0) {
-  //         setProjects(response.data.data.projects);
-
-  //         setShowProjectTable(true);
-  //       } else {
-  //         window.alert("Currently no projects available !");
-  //       }
-  //     }
-  //   });
-  // };
-
-  // const getMyProjects = () => {
-  //   setLoading(true);
-  //   axios.get("/api/v1/project/myProjects").then((response) => {
-  //     // console.log(response);
-  //     if (response.status === 200) {
-  //       setLoading(false);
-  //       if (response.data.data.res > 0) {
-  //         setProjects(response.data.data.projects);
-  //         setShowProjectTable(true);
-  //       } else {
-  //         window.alert("Currently you are not associated with any project.");
-  //       }
-  //     }
-  //   });
-  // };
-
-  // const hideTable = () => {
-  //   setShowProjectTable(false);
-  // };
 
   const projectCards = (
     <Container
@@ -136,10 +93,9 @@ function Dashboard({ user }) {
                 color="primary"
                 onClick={() => {
                   history.push("/projects/all");
-                  // getAllProjects();
                 }}
               >
-                {!isLoading ? "Explore" : "Loading..."}
+                Explore
               </Button>
             </CardContent>
           </Card>
@@ -166,7 +122,7 @@ function Dashboard({ user }) {
                     component={Typography}
                     variant="h2"
                     className={classes.textUppercase}
-                    marginBottom="1.5rem!important"
+                    marginBottom="1rem!important"
                   >
                     <Box
                       component="span"
@@ -187,8 +143,9 @@ function Dashboard({ user }) {
                   >
                     <Box component="span" color={theme.palette.gray[400]}>
                       Projects you are participating in.
+                      <br />
+                      <br />
                     </Box>
-                    <br />
                   </Box>
                 </Box>
               }
@@ -200,11 +157,9 @@ function Dashboard({ user }) {
                 color="primary"
                 onClick={() => {
                   history.push("/projects/myProjects");
-
-                  // getMyProjects();
                 }}
               >
-                {!isLoading ? "Explore" : "Loading..."}
+                Explore
               </Button>
               <Button
                 size="small"
@@ -218,6 +173,7 @@ function Dashboard({ user }) {
             </CardContent>
           </Card>
         </Grid>
+
         <Grid item sm={12} md={2} xs={12} xl={2}></Grid>
       </Grid>
     </Container>
@@ -229,6 +185,6 @@ function Dashboard({ user }) {
       {projectCards}
     </>
   );
-}
+};
 
-export default Dashboard;
+export default ProjectBoard;

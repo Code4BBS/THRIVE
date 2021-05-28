@@ -1,43 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import axios from "axios";
+
+import TagList from "./TagsList";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-// import CardActions from "@material-ui/core/CardActions";
-import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
-// import LinearProgress from "@material-ui/core/LinearProgress";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TablePagination from "@material-ui/core/TablePagination";
-import Tooltip from "@material-ui/core/Tooltip";
-import { Grid, Typography } from "@material-ui/core";
+
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardHeader,
+  Container,
+  Grid,
+  Menu,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
+
 // @material-ui/lab components
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
-// import Pagination from "@material-ui/lab/Pagination";
+
 // @material-ui/icons components
 import MoreVert from "@material-ui/icons/MoreVert";
 
-import Modal from "components/Custom/Modals/Modal.js";
-
 // core components
 import Header from "../../../components/Headers/Header.js";
-import TagList from "./TagsList";
 
-import axios from "axios";
 import componentStyles from "assets/theme/views/admin/tables.js";
-
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -47,17 +49,17 @@ const ProjectTable = ({ user }) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [projects, setProjects] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(true);
-  const [cardTitle, setCardTitle] = React.useState("Projects");
-  const [addButton, showAddButton] = React.useState(false);
-  const [anchorId, setAnchorId] = React.useState(null);
-  const [currentAnchor, setCurrentAnchor] = React.useState(null);
-  const [limit, setLimit] = React.useState(5);
-  const [page, setPage] = React.useState(0);
-  const [tagsPane, setShowTagsPane] = React.useState(false);
-  const [tagsList, setTagsList] = React.useState([]);
-  const [selectedTags, setSelectedTags] = React.useState([]);
+  const [projects, setProjects] = useState([]);
+  const [isLoading, setLoading] = useState(true);
+  const [cardTitle, setCardTitle] = useState("Projects");
+  const [addButton, showAddButton] = useState(false);
+  const [anchorId, setAnchorId] = useState(null);
+  const [currentAnchor, setCurrentAnchor] = useState(null);
+  const [limit, setLimit] = useState(5);
+  const [page, setPage] = useState(0);
+  const [tagsPane, setShowTagsPane] = useState(false);
+  const [tagsList, setTagsList] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
   const handleMenuClick = (event, index) => {
     setCurrentAnchor(event.currentTarget);
@@ -81,7 +83,6 @@ const ProjectTable = ({ user }) => {
   };
 
   const getSelectedTags = (tagsSelected) => {
-    console.log(tagsSelected);
     setSelectedTags(tagsSelected);
     setShowTagsPane(false);
   };
@@ -91,7 +92,6 @@ const ProjectTable = ({ user }) => {
       .get("/api/v1/user/tag", { withCredentials: true })
       .then((response) => {
         let data = response.data.data.docs;
-        console.log("response");
         setTagsList(data);
         setShowTagsPane(true);
       })
@@ -106,9 +106,7 @@ const ProjectTable = ({ user }) => {
     axios
       .post("/api/v1/search/project/tags", data, { withCredentials: true })
       .then((response) => {
-        let data = response.data.data.projects;
-        console.log(data);
-        console.log("response");
+        const data = response.data.data.projects;
         if (data) setProjects(data);
         setPage(0);
       })
@@ -122,8 +120,8 @@ const ProjectTable = ({ user }) => {
   }
 
   const getProjects = () => {
-    let url = window.location.pathname.split("/");
-    let route = url[2];
+    const url = window.location.pathname.split("/");
+    const route = url[2];
     let axiosRoute = "/api/v1/project";
     let noProjectsMessage = "Currently no projects available !";
     if (route === "myProjects") {
@@ -134,7 +132,6 @@ const ProjectTable = ({ user }) => {
     }
 
     axios.get(axiosRoute).then((response) => {
-      // console.log(response);
       if (response.status === 200) {
         setLoading(false);
         if (response.data.data.res > 0) {
@@ -147,7 +144,7 @@ const ProjectTable = ({ user }) => {
     });
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedTags.length !== 0) {
       getAllProjectsByTags();
     } else {
@@ -157,7 +154,6 @@ const ProjectTable = ({ user }) => {
 
   const blacklistProject = (project, index) => {
     axios.patch(`/api/v1/project/blacklist/${project._id}`).then((response) => {
-      // console.log(response);
       if (response.status === 200) {
         window.alert("Project blacklisted successfully");
         const updatedProjects = [...projects];
@@ -174,7 +170,7 @@ const ProjectTable = ({ user }) => {
   return (
     <>
       <Header />
-      {/* Page content */}
+
       {!tagsPane ? (
         <Container
           maxWidth={false}

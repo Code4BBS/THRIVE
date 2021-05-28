@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import PerfectScrollbar from "react-perfect-scrollbar";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 
-// import { useNavigate } from 'react-router-dom';
 import {
   Avatar,
   Box,
@@ -23,9 +21,12 @@ import {
   makeStyles,
   InputBase,
 } from "@material-ui/core";
-import getInitials from "../customer/CustomerListView/getInitials";
+
 import { Search as SearchIcon } from "react-feather";
+
 import componentStyles from "assets/theme/views/admin/tables.js";
+
+import getInitials from "../customer/CustomerListView/getInitials";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -49,7 +50,6 @@ const Results = ({
     initialSelectedCollaborators
   );
 
-  // let navigate = useNavigate();
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
