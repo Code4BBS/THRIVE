@@ -251,7 +251,7 @@ function Notification({ user, history }) {
           <div>
             {" "}
             <Typography className={classes.head}>
-              {notification.course.title}
+              {notification.course.name}
             </Typography>
             <Typography className={classes.desc}>
               Admin created course with you as teacher.
@@ -264,7 +264,7 @@ function Notification({ user, history }) {
           <div>
             {" "}
             <Typography className={classes.head}>
-              {notification.course.title}
+              {notification.course.name}
             </Typography>
             <Typography className={classes.desc}>
               You are enrolled in this course of {notification.course.teacher}
