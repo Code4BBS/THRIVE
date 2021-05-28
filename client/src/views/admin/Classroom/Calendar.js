@@ -36,11 +36,7 @@ import { useTheme } from "@material-ui/core/styles";
 const useStyles = makeStyles(componentStyles);
 
 function CalendarView({ user, history }) {
-  let currentDate = new Date().toLocaleDateString().split("/");
-  let dateFormatted =
-    currentDate[2] + "-" + currentDate[1] + "-" + currentDate[0];
-
-  const [date, setDate] = useState(dateFormatted);
+  const [date, setDate] = useState(new Date());
   const [assignments, setAssignments] = useState([]);
 
   const classes = useStyles();
