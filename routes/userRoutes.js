@@ -45,7 +45,7 @@ router.patch(
 );
 router.get(
   "/notifications",
-  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.restrictTo("user", "admin", "Teacher"),
   userController.getNotifications
 );
 
