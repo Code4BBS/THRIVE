@@ -49,6 +49,7 @@ function CalendarView({ user, history }) {
     const selectedDate = value.value.toLocaleString().split(",")[0];
     let dateArr = selectedDate.split("/");
     const formattedDate = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
+    console.log(formattedDate);
     setDate(formattedDate);
   };
 

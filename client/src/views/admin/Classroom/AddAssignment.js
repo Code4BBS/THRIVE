@@ -73,6 +73,7 @@ function CreateAssignment({ user, history }) {
     const formData = new FormData();
     formData.append("file", selectedFile);
     const query = `/api/v1/course/assignment?courseId=${course._id}&name=${values.name}&description=${values.description}&deadline=${values.deadline}`;
+    console.log(query);
     axios
       .post(query, formData, { withCredentials: true })
       .then((response) => {

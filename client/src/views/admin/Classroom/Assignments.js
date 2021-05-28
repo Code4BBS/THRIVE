@@ -30,6 +30,7 @@ import componentStyles from "assets/theme/views/admin/dashboard.js";
 const useStyles = makeStyles(componentStyles);
 
 const Assignments = ({ course, history, user }) => {
+  console.log(course);
   const classes = useStyles();
   let id = window.location.pathname.split("/")[3];
   console.log(id);
@@ -89,7 +90,7 @@ const Assignments = ({ course, history, user }) => {
               position: "absolute",
             }}
             onClick={() => {
-              history.push(`/new-assignment/${course.id}`);
+              history.push(`/new-assignment/${course._id}`);
             }}
           >
             <AddRoundedIcon fontSize="large" />

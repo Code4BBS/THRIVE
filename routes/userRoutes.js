@@ -15,7 +15,7 @@ router.get(
 //Own profile
 router.get(
   "/profile",
-  authController.restrictTo("user", "admin", "superAdmin"),
+  authController.restrictTo("user", "admin", "collegeAdmin", "Teacher"),
   userController.aboutMe
 );
 
