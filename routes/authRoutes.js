@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get("/status", authController.getLoginStatus);
 router.post("/login", authController.googleLogin);
-
+router.post("/testLogin", authController.testLogin);
 router.post("/logout", authController.logout);
 
 module.exports = router;

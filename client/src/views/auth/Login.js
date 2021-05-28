@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { withRouter, useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
@@ -29,6 +29,17 @@ const Login = ({ sucessLogin }) => {
   const classes = useStyles();
   const theme = useTheme();
 
+  const [values, setValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleChange = (event) => {
+    setValues({
+      ...values,
+      [event.target.name]: event.target.value,
+    });
+  };
   const successResponseGoogle = (response) => {
     const emailUsed = response.profileObj.email;
     const index = emailUsed.indexOf("@");
@@ -58,6 +69,18 @@ const Login = ({ sucessLogin }) => {
     console.log("he2");
     alert("Use your IIT BBS email for login");
   };
+
+  const submitCredentials = (event) => {
+    event.preventDefault();
+    const data = { email: values.email };
+    axios
+      .post("/api/v1/auth/testLogin", data, { withCredentials: true })
+      .then((response) => {
+        console.log(response.data);
+        sucessLogin(response);
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <Grid item xs={12} lg={5} md={7}>
@@ -71,7 +94,7 @@ const Login = ({ sucessLogin }) => {
                 component="small"
                 color={theme.palette.gray[600]}
               >
-                Sign in with
+                Sign in with your college email
               </Box>
             }
             titleTypographyProps={{
@@ -119,6 +142,78 @@ const Login = ({ sucessLogin }) => {
               </Box>
             }
           ></CardHeader>
+          <CardContent classes={{ root: classes.cardContent }}>
+            <Box
+              color={theme.palette.gray[600]}
+              textAlign="center"
+              marginBottom="1rem"
+              marginTop=".5rem"
+              fontSize="1rem"
+            >
+              <Box fontSize="80%" fontWeight="400" component="small">
+                Or sign in with credentials
+              </Box>
+            </Box>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <FilledInput
+                autoComplete="off"
+                type="email"
+                placeholder="Email"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Email />
+                  </InputAdornment>
+                }
+                name="email"
+                value={values.email}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControl
+              variant="filled"
+              component={Box}
+              width="100%"
+              marginBottom="1rem!important"
+            >
+              <FilledInput
+                autoComplete="off"
+                type="password"
+                placeholder="Password"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Lock />
+                  </InputAdornment>
+                }
+                name="password"
+                value={values.password}
+                onChange={handleChange}
+              />
+            </FormControl>
+            <FormControlLabel
+              value="end"
+              control={<Checkbox color="primary" />}
+              label="Remeber me"
+              labelPlacement="end"
+              classes={{
+                root: classes.formControlLabelRoot,
+                label: classes.formControlLabelLabel,
+              }}
+            />
+            <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
+              <Button
+                color="primary"
+                variant="outlined"
+                onClick={(e) => submitCredentials(e)}
+              >
+                Sign in
+              </Button>
+            </Box>
+          </CardContent>
         </Card>
         {/* <Grid container component={Box} marginTop="1rem">
         <p>Extra</p>

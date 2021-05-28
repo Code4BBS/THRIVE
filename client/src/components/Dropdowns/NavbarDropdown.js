@@ -50,7 +50,7 @@ export default function NavbarDropdown({ user, cookies }) {
       .then((response) => {
         cookies.remove("isLoggedIn", { path: "/" });
         cookies.remove("userData", { path: "/" });
-        history.push("/");
+        window.location.reload(false);
       })
       .catch((err) => {
         console.log(err);

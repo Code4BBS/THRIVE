@@ -221,6 +221,20 @@ const getLoginStatus = catchAsync(async (req, res, next) => {
   }
 });
 
+const testLogin = catchAsync(async (req, res, next) => {
+  const { email } = req.body;
+  if (!email) {
+    return next(new AppError("No email Id is present", 404));
+  }
+
+  const user = await User.findOne({ email: email });
+
+  if (user == null) {
+    return next(new AppError("This email is not present", 404));
+  }
+  createSendToken(user, 200, res);
+});
+
 module.exports = {
   createToken,
   createSendToken,
@@ -231,4 +245,5 @@ module.exports = {
   logout,
   loginStatus,
   getLoginStatus,
+  testLogin,
 };
