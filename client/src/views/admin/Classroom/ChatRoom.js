@@ -25,22 +25,25 @@ const ChatRoom = ({ user, cookies }) => {
   const [chatMessages, setChatMessages] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [typingName, setTypingName] = useState("");
-
+  const [socket, setSocket] = useState(null);
   const courseId = window.location.pathname.split("/")[3];
 
   //Setting Up Socket
-  const token = cookies.cookies.JWTClient;
-  let socket = io.connect(`http://localhost:3000`, {
-    withCredentials: true,
-    query: { token },
-  });
-  socket.emit("join", courseId);
-  socket.on("display", (data) => onDisplay(data));
-  socket.on("newMessage", (newMessage) => onMessageRecieved(newMessage));
 
-  let typing = null;
-  let timeout = undefined;
+  const setupSocket = () => {
+    const token = cookies.cookies.JWTClient;
+    const socketSetup = io.connect(`http://localhost:3000/`, {
+      withCredentials: true,
+      query: { token },
+    });
+    socketSetup.emit("join", courseId);
+    socketSetup.on("newMessage", (newMessage) => {
+      console.log("Received new message");
+      onMessageRecieved(newMessage);
+    });
 
+    setSocket(socketSetup);
+  };
   const getPreviousMessages = () => {
     axios
       .get(`/api/v1/course/chat-room/${courseId}`)
@@ -59,6 +62,7 @@ const ChatRoom = ({ user, cookies }) => {
 
   useEffect(() => {
     getPreviousMessages();
+    setupSocket();
   }, []);
 
   const onMessageRecieved = (newMessage) => {
@@ -73,46 +77,46 @@ const ChatRoom = ({ user, cookies }) => {
     if (message === "") alert("Empty Message!");
     else {
       const data = {
-        user: user,
+        user: { id: user.id, name: user.name, image: user.image },
         message: message,
         courseId: courseId,
-        createdAt: Date.now(),
+        createdAt: new Date(),
       };
-      socket.emit("message", data);
+      if (socket) socket.emit("message", data);
       document.getElementById("message").value = "";
     }
   };
 
-  const typingTimeout = () => {
-    typing = false;
-    socket.emit("typing", {
-      user: user,
-      typing: false,
-      courseId: courseId,
-    });
-  };
+  // const typingTimeout = () => {
+  //   typing = false;
+  //   socket.emit("typing", {
+  //     user: user,
+  //     typing: false,
+  //     courseId: courseId,
+  //   });
+  // };
 
-  const keypress = (e, message) => {
-    timeout = setTimeout(typingTimeout, 100);
-    if (e.which != 13) {
-      typing = true;
-      socket.emit("typing", {
-        user: user,
-        typing: true,
-        courseId: courseId,
-      });
-      clearTimeout(timeout);
-    } else {
-      clearTimeout(timeout);
-      typingTimeout();
-      onPostMessage(e, message);
-    }
-  };
+  // const keypress = (e, message) => {
+  //   timeout = setTimeout(typingTimeout, 100);
+  //   if (e.which != 13) {
+  //     typing = true;
+  //     socket.emit("typing", {
+  //       user: user,
+  //       typing: true,
+  //       courseId: courseId,
+  //     });
+  //     clearTimeout(timeout);
+  //   } else {
+  //     clearTimeout(timeout);
+  //     typingTimeout();
+  //     onPostMessage(e, message);
+  //   }
+  // };
 
-  const onDisplay = (data) => {
-    if (data.typing === true) setTypingName(`${data.user.name} is typing...`);
-    else setTypingName(``);
-  };
+  // const onDisplay = (data) => {
+  //   if (data.typing === true) setTypingName(`${data.user.name} is typing...`);
+  //   else setTypingName(``);
+  // };
 
   let chats = null;
   if (isLoading) chats = <h5>Loading....</h5>;
@@ -165,9 +169,9 @@ const ChatRoom = ({ user, cookies }) => {
                         type="text"
                         required
                         classes={{ input: classes.searchInput }}
-                        onKeyPress={(e) =>
-                          keypress(e, document.getElementById("message").value)
-                        }
+                        // onKeyPress={(e) =>
+                        //   keypress(e, document.getElementById("message").value)
+                        // }
                         placeholder="Write Your Message"
                         id="message"
                       />

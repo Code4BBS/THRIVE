@@ -303,7 +303,7 @@ exports.getAllChatMessagesByCourse = catchAsync(async (req, res, next) => {
 exports.sendMessage = async (chatMessage) => {
   try {
     // console.log("Send Message Triggered");
-    const { userId, courseId, message } = chatMessage;
+    const { userId, courseId, message, createdAt } = chatMessage;
 
     if (!courseId) return new AppError("No Course ID provided!", 404);
 
@@ -311,6 +311,7 @@ exports.sendMessage = async (chatMessage) => {
       message: message,
       user: userId,
       course: courseId,
+      createdAt,
     });
   } catch (err) {
     return err;
