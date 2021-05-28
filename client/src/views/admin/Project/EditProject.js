@@ -34,9 +34,13 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 import Chip from "@material-ui/core/Chip";
 import axios from "axios";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles(componentStyles);
 
 function Profile({ user }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
 
@@ -111,7 +115,7 @@ function Profile({ user }) {
             //   setProject(response.data.data.project);
           } else {
             window.alert("You cannot edit this project");
-            window.location.href = `/projects/${projectId}`;
+            history.push(`/projects/${projectId}`);
           }
         }
       })
@@ -182,7 +186,7 @@ function Profile({ user }) {
         if (response.status === 200) {
           let confirm = window.confirm("Project Updated Successfully");
           if (confirm) {
-            window.location.href = `/projects/${project._id}`;
+            history.push(`/projects/${project._id}`);
           }
         } else {
           window.alert("Failed to Add Project! Try Again after some time");

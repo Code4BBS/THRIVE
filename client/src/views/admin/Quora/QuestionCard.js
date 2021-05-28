@@ -15,6 +15,8 @@ import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 
+import { useHistory } from "react-router-dom";
+
 import formatDate from "./formatDate.js";
 
 const useStyles = makeStyles({
@@ -31,12 +33,14 @@ const useStyles = makeStyles({
 // }
 
 const ImgMediaCard = (props) => {
+  const history = useHistory();
+
   const classes = useStyles();
 
   return (
     <Card
       className={classes.root}
-      onClick={() => (window.location.href = `/quora/${props.id}`)}
+      onClick={() => history.push(`/quora/${props.id}`)}
     >
       <CardActionArea>
         <CardContent>

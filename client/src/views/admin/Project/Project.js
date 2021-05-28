@@ -42,9 +42,13 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 import formatDate from "../Quora/formatDate.js";
 import axios from "axios";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles(componentStyles);
 
 function Profile({ user }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
 
@@ -170,7 +174,7 @@ function Profile({ user }) {
         .then((response) => {
           if (response.status === 204) {
             window.alert("Project deleted successfully");
-            window.location.href = `/projects`;
+            history.push(`/projects`);
           } else {
             window.alert("Something went wrong ! Try again Later");
           }
@@ -287,9 +291,9 @@ function Profile({ user }) {
               color="primary"
               variant="contained"
               component="span"
-              onClick={() =>
-                (window.location.href = `/projects/edit/${project._id}`)
-              }
+              onClick={() => {
+                history.push(`/projects/edit/${project._id}`);
+              }}
             >
               <EditIcon />
             </IconButton>

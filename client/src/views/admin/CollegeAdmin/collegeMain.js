@@ -12,9 +12,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 
 import Typography from "@material-ui/core/Typography";
-// @material-ui/icons components
 
-// core components
+import { useHistory } from "react-router-dom";
+
 import Header from "components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/dashboard.js";
@@ -23,6 +23,8 @@ import axios from "axios";
 const useStyles = makeStyles(componentStyles);
 
 function CollegeDashboard({ user }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
   console.log(user);
@@ -131,7 +133,7 @@ function CollegeDashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/courses/all";
+                  history.push("/courses/all");
                   // getAllProjects();
                 }}
               >
@@ -195,9 +197,7 @@ function CollegeDashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/projects/myProjects";
-
-                  // getMyProjects();
+                  history.push("/projects/myProjects");
                 }}
               >
                 {!isLoading ? "Explore" : "Loading..."}

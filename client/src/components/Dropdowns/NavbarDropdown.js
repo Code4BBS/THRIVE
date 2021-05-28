@@ -18,12 +18,16 @@ import Settings from "@material-ui/icons/Settings";
 import { GoogleLogout } from "react-google-login";
 import axios from "axios";
 
+import { useHistory } from "react-router-dom";
+
 // core components
 import componentStyles from "../../assets/theme/components/navbar-dropdown.js";
 
 const useStyles = makeStyles(componentStyles);
 
 export default function NavbarDropdown({ user, cookies }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -46,7 +50,7 @@ export default function NavbarDropdown({ user, cookies }) {
       .then((response) => {
         cookies.remove("isLoggedIn", { path: "/" });
         cookies.remove("userData", { path: "/" });
-        window.location.href = "/";
+        history.push("/");
       })
       .catch((err) => {
         console.log(err);

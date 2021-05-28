@@ -34,9 +34,13 @@ import boxShadows from "assets/theme/box-shadow.js";
 import Chip from "@material-ui/core/Chip";
 import axios from "axios";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles(componentStyles);
 
 function Profile({ user }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
 
@@ -78,7 +82,7 @@ function Profile({ user }) {
         if (response.status === 201) {
           let confirm = window.confirm("Project Added Successfully");
           if (confirm) {
-            window.location.href = "/projects";
+            history.push("/projects");
           }
         } else {
           window.alert("Failed to Add Project! Try Again after some time");

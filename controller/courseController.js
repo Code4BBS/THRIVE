@@ -277,10 +277,15 @@ exports.submitAssignment = catchAsync(async (req, res, next) => {
 
 exports.getAllChatMessagesByCourse = catchAsync(async (req, res, next) => {
   const courseId = req.params.id;
-  if (!courseId) return next(new AppError("No Course ID provided!"));
+  if (!courseId) return next(new AppError("No Course ID provided!", 400));
 
-  if (!req.user.coursesEnrolled.includes(courseId)) {
-    return next(new AppError("You are not allowed to view this course!"));
+  const course = await Course.findById(courseId);
+
+  if (
+    !req.user.coursesEnrolled.includes(courseId) &&
+    !req.user.id === course.teacher
+  ) {
+    return next(new AppError("You are not allowed to view this course!", 401));
   }
 
   const chatMessages = await ChatMessage.find({ course: courseId }).populate({

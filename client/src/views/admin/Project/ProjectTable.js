@@ -37,9 +37,13 @@ import TagList from "./TagsList";
 import axios from "axios";
 import componentStyles from "assets/theme/views/admin/tables.js";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles(componentStyles);
 
 const ProjectTable = ({ user }) => {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
 
@@ -137,7 +141,7 @@ const ProjectTable = ({ user }) => {
           setProjects(response.data.data.projects);
         } else {
           window.alert(noProjectsMessage);
-          window.location.href = "/projects";
+          history.push("/projects");
         }
       }
     });
@@ -240,9 +244,9 @@ const ProjectTable = ({ user }) => {
                             variant="outlined"
                             color="primary"
                             size="small"
-                            onClick={() =>
-                              (window.location.href = "/projects/add")
-                            }
+                            onClick={() => {
+                              history.push("/projects/add");
+                            }}
                             style={{
                               marginLeft: "0.25rem",
                               marginTop: "0.25rem",
@@ -396,7 +400,7 @@ const ProjectTable = ({ user }) => {
                                     size="small"
                                     style={{ marginRight: "0.5rem" }}
                                     onClick={() =>
-                                      (window.location.href = `/projects/${project._id}`)
+                                      history.push(`/projects/${project._id}`)
                                     }
                                   >
                                     Click Here
