@@ -20,9 +20,13 @@ import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 import axios from "axios";
 
+import { useHistory } from "react-router-dom";
+
 const useStyles = makeStyles(componentStyles);
 
 function Dashboard({ user }) {
+  const history = useHistory();
+
   const classes = useStyles();
   const theme = useTheme();
 
@@ -131,7 +135,7 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/projects/all";
+                  history.push("/projects/all");
                   // getAllProjects();
                 }}
               >
@@ -195,7 +199,7 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/projects/myProjects";
+                  history.push("/projects/myProjects");
 
                   // getMyProjects();
                 }}
@@ -206,7 +210,7 @@ function Dashboard({ user }) {
                 size="small"
                 color="primary"
                 onClick={() => {
-                  window.location.href = "/projects/add";
+                  history.push("/projects/add");
                 }}
               >
                 Add New Project
