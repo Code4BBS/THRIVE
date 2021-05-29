@@ -98,7 +98,7 @@ class QuoraCont extends Component {
     axios
       .delete(`/api/v1/quora/questions/${this.state.question._id}`)
       .then((res) => {
-        window.location.href = `/quora`;
+        window.location.href = `/discussion`;
       });
   };
   render() {

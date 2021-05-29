@@ -32,7 +32,7 @@ const QuestionCard = (props) => {
   return (
     <Card
       className={classes.root}
-      onClick={() => history.push(`/quora/${props.id}`)}
+      onClick={() => history.push(`/discussion/${props.id}`)}
     >
       <CardActionArea>
         <CardContent>

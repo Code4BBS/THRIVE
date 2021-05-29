@@ -54,7 +54,7 @@ class Quora extends Component {
       questionBody: this.state.newQuestion,
     };
     axios.post(`/api/v1/quora/questions`, question).then((res) => {
-      window.location.href = `/quora/${res.data.data._id}`;
+      window.location.href = `/discussion/${res.data.data._id}`;
     });
   };
   render() {

@@ -152,7 +152,7 @@ var routes = [
 
   // Quora Routes
   {
-    path: "quora/:qId",
+    path: "discussion/:qId",
     name: "View Question",
     icon: ContactSupportTwoToneIcon,
     iconColor: "Primary",
@@ -162,8 +162,8 @@ var routes = [
     role: ["user", "admin"],
   },
   {
-    path: "quora",
-    name: "Quora",
+    path: "discussion",
+    name: "Discussion",
     icon: ContactSupportTwoToneIcon,
     iconColor: "Warning",
     component: Quora,
