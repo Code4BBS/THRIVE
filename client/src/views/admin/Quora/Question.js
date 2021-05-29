@@ -108,8 +108,8 @@ class QuoraCont extends Component {
     let deleteButton;
     if (
       this.state.question != null &&
-      this.state.question.isAnonymous == false &&
-      this.state.question.user._id == this.props.user._id
+      this.state.question.isAnonymous === false &&
+      this.state.question.user._id === this.props.user._id
     ) {
       deleteButton = (
         <IconButton
@@ -187,24 +187,6 @@ class QuoraCont extends Component {
                     }}
                   >
                     <CardHeader
-                      subheader={
-                        <Grid
-                          container
-                          component={Box}
-                          alignItems="center"
-                          justifyContent="space-between"
-                        >
-                          <Grid item xs="auto">
-                            <Box
-                              component={Typography}
-                              variant="h3"
-                              marginBottom="0!important"
-                            >
-                              Viewing A Question
-                            </Box>
-                          </Grid>
-                        </Grid>
-                      }
                       action={deleteButton}
                       classes={{ root: classes.cardHeaderRoot }}
                     ></CardHeader>
@@ -307,6 +289,7 @@ class QuoraCont extends Component {
                             variant="contained"
                             color="primary"
                             onClick={() => this.addAnswer()}
+                            size="small"
                           >
                             Add Answer
                           </Button>
