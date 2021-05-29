@@ -38,12 +38,16 @@ const Classes = () => {
           style={{
             width: "50px",
             height: "50px",
-            fontSize: "40px",
             margin: "10px",
             position: "absolute",
           }}
         >
-          <AddRoundedIcon fontSize="large" />
+          <AddRoundedIcon
+            style={{
+              width: "24px",
+              height: "24px",
+            }}
+          />
         </IconButton>
         <Typography style={{ fontSize: "20px", padding: "20px 0px" }}>
           No Classes seem to have occurred

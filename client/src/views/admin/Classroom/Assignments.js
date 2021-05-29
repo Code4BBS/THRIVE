@@ -93,7 +93,12 @@ const Assignments = ({ course, history, user }) => {
               history.push(`/new-assignment/${course._id}`);
             }}
           >
-            <AddRoundedIcon fontSize="large" />
+            <AddRoundedIcon
+              style={{
+                width: "24px",
+                height: "24px",
+              }}
+            />
           </IconButton>
         ) : null}
         <Typography
