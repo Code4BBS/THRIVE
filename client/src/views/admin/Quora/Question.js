@@ -1,5 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
+import {
+  FacebookShareButton,
+  InstapaperShareButton,
+  WhatsappShareButton,
+} from "react-share";
 
 import {
   Box,
@@ -24,6 +29,8 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import WhatsAppIcon from "@material-ui/icons/WhatsApp";
 
 import Header from "components/Headers/Header.js";
 
@@ -112,12 +119,22 @@ class QuoraCont extends Component {
       this.state.question.user._id === this.props.user._id
     ) {
       deleteButton = (
+        // <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
         <IconButton
-          size="large"
+          // size="large"
           onClick={() => this.setState({ deleteClicked: true })}
+          style={{ padding: "0!important" }}
         >
-          <DeleteIcon fontSize={"large"} />
+          <DeleteIcon
+            style={{
+              height: "18px",
+              width: "18px",
+              marginRight: "0.2rem",
+              padding: "0 !important",
+            }}
+          />
         </IconButton>
+        // </Box>
       );
     } else {
       deleteButton = null;
@@ -186,26 +203,57 @@ class QuoraCont extends Component {
                       root: classes.cardRoot + " " + classes.cardRootSecondary,
                     }}
                   >
-                    <CardHeader
-                      action={deleteButton}
-                      classes={{ root: classes.cardHeaderRoot }}
-                    ></CardHeader>
                     <CardContent>
-                      <Box
-                        component={Typography}
-                        variant="h6"
-                        paddingTop=".25rem"
-                        paddingBottom=".25rem"
-                        fontSize=".75rem!important"
-                        letterSpacing=".04em"
-                        marginBottom="1.5rem!important"
-                        classes={{ root: classes.typographyRootH6 }}
+                      <Grid
+                        container
+                        component={Box}
+                        alignItems="center"
+                        justifyContent="space-between"
                       >
-                        Asked by{" "}
-                        {this.state.askedBy == ""
-                          ? "An Anonymous User"
-                          : this.state.question.user.name}
-                      </Box>
+                        <Grid item xs="auto">
+                          <Box
+                            component={Typography}
+                            variant="h6"
+                            paddingTop=".35rem"
+                            paddingBottom=".25rem"
+                            fontSize=".75rem!important"
+                            letterSpacing=".04em"
+                            classes={{ root: classes.typographyRootH6 }}
+                          >
+                            {this.state.askedBy == ""
+                              ? "An Anonymous User"
+                              : this.state.question.user.name}{" "}
+                            asked
+                          </Box>
+                        </Grid>
+                        <Grid item xs="auto">
+                          <Box
+                            justifyContent="flex-end"
+                            display="flex"
+                            flexWrap="wrap"
+                          >
+                            {deleteButton}
+                            <FacebookShareButton url={window.location.href}>
+                              <FacebookIcon
+                                style={{
+                                  height: "18px",
+                                  width: "18px",
+                                  marginLeft: "0.2rem",
+                                }}
+                              />
+                            </FacebookShareButton>
+                            <WhatsappShareButton url={window.location.href}>
+                              <WhatsAppIcon
+                                style={{
+                                  height: "18px",
+                                  width: "18px",
+                                  marginLeft: "0.2rem",
+                                }}
+                              />
+                            </WhatsappShareButton>
+                          </Box>
+                        </Grid>
+                      </Grid>
                       <Box>
                         <Grid container>
                           <Grid item xs={12} lg={12}>
