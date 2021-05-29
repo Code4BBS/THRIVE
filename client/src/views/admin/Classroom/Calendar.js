@@ -117,7 +117,14 @@ function CalendarView({ user, history }) {
   return (
     <div>
       <Header />
-      <div style={{ display: "flex", margin: "20px", minHeight: "350px" }}>
+      <div
+        style={{
+          display: "flex",
+          flexWrap: "wrap",
+          margin: "20px",
+          minHeight: "350px",
+        }}
+      >
         <CalendarComponent
           onChange={changeDate}
           value={date}
