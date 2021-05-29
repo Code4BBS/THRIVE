@@ -16,7 +16,6 @@ import Typography from "@material-ui/core/Typography";
 import Classes from "./Classes";
 import Assignments from "./Assignments";
 import ChatRoom from "./ChatRoom";
-import Chat from "./Chat";
 import Enrolled from "./EnrolledStudents";
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
