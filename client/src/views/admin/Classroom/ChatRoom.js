@@ -155,9 +155,15 @@ const ChatRoom = ({ user, cookies }) => {
                         document.getElementById("message").value
                       );
                     }}
-                    style={{ border: "0", marginLeft: "-15px" }}
+                    style={{
+                      border: "0",
+                      marginLeft: "-15px",
+                      padding: "7px",
+                    }}
                   >
-                    <SendIcon style={{ padding: "0", fontSize: "1.8em" }} />
+                    <SendIcon
+                      style={{ padding: "0", width: "23px", height: "23px" }}
+                    />
                   </Button>
                 </Grid>
               </Grid>
