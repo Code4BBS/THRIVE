@@ -115,7 +115,7 @@ const ChatRoom = ({ user, cookies }) => {
           classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
         >
           <Paper
-            style={{ padding: "2px 20px" }}
+            style={{ padding: "2px 10px 2px 20px" }}
             classes={{ root: classes.root }}
           >
             {chats}
@@ -149,9 +149,12 @@ const ChatRoom = ({ user, cookies }) => {
 
                 <Grid item xs={2} lg={2}>
                   <Button
-                    onClick={(e) =>
-                      onPostMessage(e, document.getElementById("message").value)
-                    }
+                    onClick={(e) => {
+                      onPostMessage(
+                        e,
+                        document.getElementById("message").value
+                      );
+                    }}
                     style={{ border: "0", marginLeft: "-15px" }}
                   >
                     <SendIcon style={{ padding: "0", fontSize: "1.8em" }} />
