@@ -1,25 +1,30 @@
 import React, { Component } from "react";
-
-import Box from "@material-ui/core/Box";
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import CardHeader from "@material-ui/core/CardHeader";
-import Grid from "@material-ui/core/Grid";
-import IconButton from "@material-ui/core/IconButton";
-
-// import Box from "@material-ui/core/Box";
-import componentStyles from "assets/theme/views/admin/icons.js";
-import CreateIcon from "@material-ui/icons/Create";
-import QuestionCard from "./QuestionCard";
-import { withStyles, Button, Typography, Switch } from "@material-ui/core";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "axios";
 
+import QuestionCard from "./QuestionCard";
+
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Grid,
+  IconButton,
+  Switch,
+  TextField,
+  Typography,
+  withStyles,
+} from "@material-ui/core";
+
+import CreateIcon from "@material-ui/icons/Create";
+
+import componentStyles from "assets/theme/views/admin/icons.js";
 class Quora extends Component {
   state = {
     creating: false,
@@ -35,15 +40,14 @@ class Quora extends Component {
   inputChange = (e) => {
     e.preventDefault();
     this.setState({ newQuestion: e.target.value });
-    console.log(e.target.value);
   };
   toggleChanged = (e) => {
     e.preventDefault();
     this.setState((prevState) => ({
       isAnonymous: !prevState.isAnonymous,
     }));
-    console.log(this.state);
   };
+
   AddQuestion = () => {
     let question = {
       isAnonymous: this.state.isAnonymous,

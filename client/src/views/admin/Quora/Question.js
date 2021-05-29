@@ -1,32 +1,33 @@
-//Rectify the username value  (Currently Hard Coded)
 import React, { Component } from "react";
 import axios from "axios";
-import IconButton from "@material-ui/core/IconButton";
-import Header from "components/Headers/Header.js";
-import componentStyles from "assets/theme/views/admin/tables.js";
-import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
-import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
-import DeleteIcon from "@material-ui/icons/Delete";
-import Divider from "@material-ui/core/Divider";
-import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
+
 import {
-  Grid,
   Box,
+  Button,
   Container,
-  withStyles,
   CardHeader,
   Card,
-  Typography,
   CardContent,
-  TextField,
-  Button,
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  Divider,
+  Grid,
+  IconButton,
   Switch,
+  TextField,
+  Typography,
+  withStyles,
 } from "@material-ui/core";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
+
+import DeleteIcon from "@material-ui/icons/Delete";
+import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
+import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
+
+import Header from "components/Headers/Header.js";
+
+import componentStyles from "assets/theme/views/admin/tables.js";
 
 class QuoraCont extends Component {
   state = {
@@ -41,10 +42,9 @@ class QuoraCont extends Component {
   };
   getQuestion = () => {
     this.setState({ isLoading: true });
-    let url = window.location.pathname.split("/");
-    let qId = url[2];
+    const url = window.location.pathname.split("/");
+    const qId = url[2];
     axios.get(`/api/v1/quora/questions/${qId}`).then((res) => {
-      console.log(res.data);
       this.setState({
         isLoading: false,
         question: res.data.question,
@@ -54,8 +54,6 @@ class QuoraCont extends Component {
       if (!res.data.question.isAnonymous) {
         this.setState({ askedBy: res.data.question.user.name });
       }
-
-      console.log(this.state.question.user);
     });
   };
   addAnswer = () => {
@@ -67,7 +65,6 @@ class QuoraCont extends Component {
       .post(`/api/v1/quora/answers/${this.state.question._id}`, answer)
       .then((res) => {
         this.getQuestion();
-        // this.setState({question : res.data.finalQuestion})
       });
   };
   componentDidMount = () => {
@@ -76,21 +73,18 @@ class QuoraCont extends Component {
   InputChanged = (e) => {
     e.preventDefault();
     this.setState({ newAnswer: e.target.value });
-    // console.log(e.target.value);
   };
   toggleChanged = (e) => {
     e.preventDefault();
     this.setState((prevState) => ({
       isAnonymous: !prevState.isAnonymous,
     }));
-    // console.log(this.state)
   };
   upVoteClicked = () => {
     axios
       .post(`/api/v1/quora/questions/upvote/${this.state.question._id}`, {})
       .then((res) => {
         this.setState({ question: res.data.newQuestion });
-        // console.log(res);
       });
   };
   downVoteClicked = () => {
@@ -98,7 +92,6 @@ class QuoraCont extends Component {
       .post(`/api/v1/quora/questions/downvote/${this.state.question._id}`, {})
       .then((res) => {
         this.setState({ question: res.data.newQuestion });
-        // console.log(res);
       });
   };
   deleteConfirmed = () => {
@@ -109,11 +102,9 @@ class QuoraCont extends Component {
       });
   };
   render() {
-    console.log(this.props);
     const { classes } = this.props;
     let upvoteColor = "";
     let downvoteColor = "";
-    console.log(this.state.question);
     let deleteButton;
     if (
       this.state.question != null &&
@@ -232,8 +223,6 @@ class QuoraCont extends Component {
                         {this.state.askedBy == ""
                           ? "An Anonymous User"
                           : this.state.question.user.name}
-                        {/* Asked by Navaneeth */}
-                        {/* {console.log(typeof this.state.question.user)} */}
                       </Box>
                       <Box>
                         <Grid container>
@@ -328,9 +317,6 @@ class QuoraCont extends Component {
                       <Grid item xs={12}>
                         <Card>
                           {this.state.answers.map((el, id) => {
-                            {
-                              console.log(el);
-                            }
                             return (
                               <CardContent key={id}>
                                 <Typography variant="h5">
