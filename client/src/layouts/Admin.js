@@ -73,7 +73,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
           routes={routes}
           logo={{
             innerLink: "/index",
-            imgSrc: require("../assets/img/brand/argon-react.png").default,
+            imgSrc: require("../assets/img/brand/thrive-blue.png").default,
             imgAlt: "...",
           }}
           user={user}
