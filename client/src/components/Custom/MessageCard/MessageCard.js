@@ -38,7 +38,6 @@ const Messages = ({ chatMessages }) => {
                 </p>
               </Grid>
             </Grid>
-            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
           </React.Fragment>
         );
       })}
