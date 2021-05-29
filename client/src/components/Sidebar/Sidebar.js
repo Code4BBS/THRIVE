@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import Notification from "./../Navbars/Notification";
+
 import { useLocation, Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,7 +25,15 @@ import componentStyles from "assets/theme/components/sidebar.js";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function Sidebar({ role, routes, logo, dropdown, input }) {
+export default function Sidebar({
+  role,
+  routes,
+  logo,
+  dropdown,
+  input,
+  user,
+  history,
+}) {
   console.log(role);
   const classes = useStyles();
   const location = useLocation();
@@ -177,6 +187,7 @@ export default function Sidebar({ role, routes, logo, dropdown, input }) {
               {logoObject}
               {dropdown}
             </Container>
+            <Notification user={user} history={history} color="black" />
           </Toolbar>
         </AppBar>
         <Menu

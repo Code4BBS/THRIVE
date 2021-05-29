@@ -50,7 +50,7 @@ export default function NavbarDropdown({ user, cookies }) {
       .then((response) => {
         cookies.remove("isLoggedIn", { path: "/" });
         cookies.remove("userData", { path: "/" });
-        window.location.reload(false);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -79,7 +79,10 @@ export default function NavbarDropdown({ user, cookies }) {
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
-        onClick={handleMenuClose}
+        onClick={() => {
+          handleMenuClose();
+          history.push("/user-profile");
+        }}
       >
         <Box
           component={Person}
@@ -89,48 +92,7 @@ export default function NavbarDropdown({ user, cookies }) {
         />
         <span>My profile</span>
       </Box>
-      <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-        onClick={handleMenuClose}
-      >
-        <Box
-          component={Settings}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        />
-        <span>Settings</span>
-      </Box>
-      <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-        onClick={handleMenuClose}
-      >
-        <Box
-          component={EventNote}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        />
-        <span>Activity</span>
-      </Box>
-      <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-        onClick={handleMenuClose}
-      >
-        <Box
-          component={LiveHelp}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        />
-        <span>Support</span>
-      </Box>
+
       <Divider component="div" classes={{ root: classes.dividerRoot }} />
       <Box
         display="flex!important"
@@ -185,12 +147,12 @@ export default function NavbarDropdown({ user, cookies }) {
       >
         <Avatar
           alt="..."
-          src={user ? user.image : " "}
+          src={user ? user.image : null}
           classes={{
             root: classes.avatarRoot,
           }}
         />
-        <Hidden smDown>{user ? user.name : " "}</Hidden>
+        <Hidden smDown>{user ? user.name : null}</Hidden>
       </Button>
       {renderMenu}
     </>
