@@ -214,9 +214,9 @@ export default function Sidebar({ role, routes, logo, dropdown, input }) {
             marginLeft="1.25rem!important"
             marginRight="1.25rem!important"
           />
-          <Box paddingLeft="1.25rem" paddingRight="1.25rem">
+          {/* <Box paddingLeft="1.25rem" paddingRight="1.25rem">
             {input}
-          </Box>
+          </Box> */}
           <List classes={{ root: classes.listRoot }}>
             {createLinks(routes)}
           </List>

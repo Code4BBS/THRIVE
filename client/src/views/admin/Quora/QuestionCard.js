@@ -1,21 +1,17 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Card from "@material-ui/core/Card";
-import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
-import CardContent from "@material-ui/core/CardContent";
-import CardMedia from "@material-ui/core/CardMedia";
-import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
-import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
-import Divider from "@material-ui/core/Divider";
-import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
-import VisibilityOutlinedIcon from "@material-ui/icons/VisibilityOutlined";
-import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
-
 import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@material-ui/core";
+
+import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
+import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
+import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
 
 import formatDate from "./formatDate.js";
 
@@ -28,11 +24,7 @@ const useStyles = makeStyles({
   },
 });
 
-// const Clicked = () => {
-//   window.location.href = (`/quora/${}`)
-// }
-
-const ImgMediaCard = (props) => {
+const QuestionCard = (props) => {
   const history = useHistory();
 
   const classes = useStyles();
@@ -67,4 +59,4 @@ const ImgMediaCard = (props) => {
     </Card>
   );
 };
-export default ImgMediaCard;
+export default QuestionCard;

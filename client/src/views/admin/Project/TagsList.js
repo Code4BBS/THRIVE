@@ -4,44 +4,32 @@ import { clone } from "ramda";
 import TagGroup from "../customer/CustomerListView/TagGroup";
 
 import {
-  Avatar,
   Box,
   Card,
   CardContent,
   Table,
   Button,
-  Input,
   Grid,
   TableBody,
   TableCell,
-  TableHead,
-  TablePagination,
   TableRow,
   TableContainer,
-  Typography,
   makeStyles,
-  InputAdornment,
-  SvgIcon,
-  Container,
-  InputBase,
 } from "@material-ui/core";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import { Search as SearchIcon } from "react-feather";
 
 const useStyles = makeStyles(componentStyles);
 
 const TagList = ({ tags, hide, getTags, tagsSelected }) => {
   const classes = useStyles();
   const [selectedTags, setSelectedTags] = useState(tagsSelected);
-  const [search, setSearch] = useState("");
   const [filterVisibility, setFilterVisibility] = useState(false);
   const [sortedTags, setSortedTags] = useState([]);
   const [processedTags, setProcessTags] = useState(false);
-  // let navigate = useNavigate();
+
   console.log(selectedTags);
   const displayFilterPane = () => {
-    // setSelectedTags([]);
     if (!processedTags) {
       let tagMap = {};
       for (let tag of tags) {
