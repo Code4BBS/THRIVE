@@ -179,6 +179,123 @@ function Profile({ user, getUserAgain }) {
       });
   };
 
+  let studentInfo = null;
+  let studentInfoCard = null;
+  if (user && (user.role === "user" || user.role === "studentAdmin")) {
+    studentInfo = (
+      <div className={classes.plLg4}>
+        <Grid container>
+          <Grid item xs={12} lg={4}>
+            <FormGroup>
+              <FormLabel style={error.rollNumber ? { color: "red" } : {}}>
+                Roll Number
+              </FormLabel>
+              <FormControl
+                variant="filled"
+                component={Box}
+                width="100%"
+                marginBottom="1rem!important"
+                disabled={!editMode}
+              >
+                <Box
+                  paddingLeft="0.75rem"
+                  paddingRight="0.75rem"
+                  component={FilledInput}
+                  autoComplete="off"
+                  type="text"
+                  onChange={(event) => {
+                    let curr = { ...updatedData };
+                    curr.rollNumber = event.target.value;
+                    setUpdatedData(curr);
+                    if (event.target.value === "") {
+                      let err = { ...error };
+                      err.rollNumber = true;
+                      setError(err);
+                      setErrorCount(errorCount + 1);
+                    } else if (error.rollNumber) {
+                      let err = { ...error };
+                      err.rollNumber = false;
+                      setError(err);
+                      setErrorCount(errorCount - 1);
+                    }
+                  }}
+                  defaultValue={updatedData.rollNumber}
+                />
+              </FormControl>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <FormGroup>
+              <FormLabel>Branch</FormLabel>
+              <FormControl
+                disabled
+                variant="filled"
+                component={Box}
+                width="100%"
+                marginBottom="1rem!important"
+              >
+                <Box
+                  paddingLeft="0.75rem"
+                  paddingRight="0.75rem"
+                  component={FilledInput}
+                  autoComplete="off"
+                  type="text"
+                  defaultValue={user.branch}
+                />
+              </FormControl>
+            </FormGroup>
+          </Grid>
+          <Grid item xs={12} lg={4}>
+            <FormGroup>
+              <FormLabel>Program</FormLabel>
+              <FormControl
+                disabled
+                variant="filled"
+                component={Box}
+                width="100%"
+                marginBottom="1rem!important"
+              >
+                <Box
+                  paddingLeft="0.75rem"
+                  paddingRight="0.75rem"
+                  component={FilledInput}
+                  autoComplete="off"
+                  type="text"
+                  defaultValue={user.program}
+                />
+              </FormControl>
+            </FormGroup>
+          </Grid>
+        </Grid>
+      </div>
+    );
+
+    studentInfoCard = (
+      <React.Fragment>
+        <Box
+          component={Typography}
+          variant="h5"
+          fontWeight="300!important"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          {user.branch + " " + user.program}
+        </Box>
+        <Box
+          component={Typography}
+          variant="h4"
+          fontWeight="300!important"
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          {user.rollNumber}
+        </Box>
+      </React.Fragment>
+    );
+  }
+
   return (
     <>
       <UserHeader user={user} />
@@ -307,93 +424,7 @@ function Profile({ user, getUserAgain }) {
                     </Grid>
                   </Grid>
                 </div>
-                <div className={classes.plLg4}>
-                  <Grid container>
-                    <Grid item xs={12} lg={4}>
-                      <FormGroup>
-                        <FormLabel
-                          style={error.rollNumber ? { color: "red" } : {}}
-                        >
-                          Roll Number
-                        </FormLabel>
-                        <FormControl
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                          disabled={!editMode}
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            onChange={(event) => {
-                              let curr = { ...updatedData };
-                              curr.rollNumber = event.target.value;
-                              setUpdatedData(curr);
-                              if (event.target.value === "") {
-                                let err = { ...error };
-                                err.rollNumber = true;
-                                setError(err);
-                                setErrorCount(errorCount + 1);
-                              } else if (error.rollNumber) {
-                                let err = { ...error };
-                                err.rollNumber = false;
-                                setError(err);
-                                setErrorCount(errorCount - 1);
-                              }
-                            }}
-                            defaultValue={updatedData.rollNumber}
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                    <Grid item xs={12} lg={4}>
-                      <FormGroup>
-                        <FormLabel>Branch</FormLabel>
-                        <FormControl
-                          disabled
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            defaultValue={user.branch}
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                    <Grid item xs={12} lg={4}>
-                      <FormGroup>
-                        <FormLabel>Program</FormLabel>
-                        <FormControl
-                          disabled
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            defaultValue={user.program}
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                  </Grid>
-                </div>
+                {studentInfo}
                 <Box
                   component={Divider}
                   marginBottom="1.5rem!important"
@@ -557,6 +588,7 @@ function Profile({ user, getUserAgain }) {
                                 </TableBody>
                               </Table>
                             </TableContainer>
+                            <br />
                             {editMode ? (
                               <Button
                                 style={{
@@ -674,181 +706,15 @@ function Profile({ user, getUserAgain }) {
                   </Box>
                 </Grid>
               </Box>
-              {/* <Box
-                component={CardHeader}
-                border="0!important"
-                textAlign="center"
-                paddingBottom="0!important"
-                paddingTop="8rem!important"
-                classes={{ root: classes.cardHeaderRootProfile }}
-                subheader={
-                  <Box display="flex" justifyContent="space-between">
-                    <Button
-                      variant="contained"
-                      size="small"
-                      classes={{ root: classes.buttonRootInfo }}
-                    >
-                      Connect
-                    </Button>
-                    <Button
-                      variant="contained"
-                      size="small"
-                      classes={{ root: classes.buttonRootDark }}
-                    >
-                      Message
-                    </Button>
-                  </Box>
-                }
-              ></Box> */}
+
               <Box
                 component={CardContent}
                 classes={{ root: classes.ptMd4 }}
                 paddingTop="0!important"
               >
-                {/* <Grid container>
-                  <Grid item xs={12}>
-                    <Box
-                      padding="1rem 0"
-                      justifyContent="center"
-                      display="flex"
-                      className={classes.mtMd5}
-                    >
-                      <Box
-                        textAlign="center"
-                        marginRight="1rem"
-                        padding=".875rem"
-                      >
-                        <Box
-                          component="span"
-                          fontSize="1.1rem"
-                          fontWeight="700"
-                          display="block"
-                          letterSpacing=".025em"
-                          className={classes.typographyRootH6}
-                        >
-                          22
-                        </Box>
-                        <Box
-                          component="span"
-                          fontSize=".875rem"
-                          color={theme.palette.gray[500]}
-                        >
-                          Friends
-                        </Box>
-                      </Box>
-                      <Box
-                        textAlign="center"
-                        marginRight="1rem"
-                        padding=".875rem"
-                      >
-                        <Box
-                          component="span"
-                          fontSize="1.1rem"
-                          fontWeight="700"
-                          display="block"
-                          letterSpacing=".025em"
-                          className={classes.typographyRootH6}
-                        >
-                          10
-                        </Box>
-                        <Box
-                          component="span"
-                          fontSize=".875rem"
-                          color={theme.palette.gray[500]}
-                        >
-                          Photos
-                        </Box>
-                      </Box>
-                      <Box textAlign="center" padding=".875rem">
-                        <Box
-                          component="span"
-                          fontSize="1.1rem"
-                          fontWeight="700"
-                          display="block"
-                          letterSpacing=".025em"
-                          className={classes.typographyRootH6}
-                        >
-                          89
-                        </Box>
-                        <Box
-                          component="span"
-                          fontSize=".875rem"
-                          color={theme.palette.gray[500]}
-                        >
-                          Comments
-                        </Box>
-                      </Box>
-                    </Box>
-                  </Grid>
-                </Grid> */}
                 <Box textAlign="center" style={{ marginTop: "75px" }}>
                   <Typography variant="h3">{user.name}</Typography>
-                  <Box
-                    component={Typography}
-                    variant="h5"
-                    fontWeight="300!important"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {user.branch + " " + user.program}
-                  </Box>
-                  <Box
-                    component={Typography}
-                    variant="h4"
-                    fontWeight="300!important"
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                  >
-                    {user.rollNumber}
-                  </Box>
-                  {/* <Box
-                    component={Typography}
-                    variant="h5"
-                    marginTop="3rem!important"
-                  >
-                    Solution Manager - Creative Tim Officer
-                  </Box>
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    justifyContent="center"
-                    fontSize="1rem"
-                  >
-                    <Box
-                      component={School}
-                      width="1.25rem!important"
-                      height="1.25rem!important"
-                      marginRight=".5rem"
-                    ></Box>
-                    University of Computer Science
-                  </Box> */}
-                  {user.description
-                    ? [
-                        <Box
-                          component={Divider}
-                          marginTop="1.5rem!important"
-                          marginBottom="1.5rem!important"
-                        ></Box>,
-                        <Box
-                          component="p"
-                          fontWeight="300"
-                          lineHeight="1.7"
-                          marginBottom="1rem"
-                          fontSize="1rem"
-                        >
-                          {user.description}
-                        </Box>,
-                      ]
-                    : null}
-                  {/* <a
-                    href="#mui"
-                    className={classes.cardProfileLink}
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    Show More
-                  </a> */}
+                  {studentInfoCard}
                 </Box>
               </Box>
             </Card>
