@@ -115,15 +115,11 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
     select: "name",
   });
 
-  // if (req.user.id != course.teacher) {
-  //   return next(new AppError("You are not the teacher for this course", 404));
-  // }
-
-  const studentsList = req.body.studentsList;
-
-  if (studentsList.length == 0) {
-    return next(new AppError("The students list is empty", 404));
+  if (req.user.id != course.teacher.id) {
+    return next(new AppError("You are not the teacher for this course", 404));
   }
+
+  const { studentEmail } = req.body;
 
   let message = `Enrolled into ${course.name} course by ${req.user.name}`;
   let notification = {
@@ -136,22 +132,45 @@ exports.enrollStudents = catchAsync(async (req, res, next) => {
       teacher: course.teacher.name,
     },
   };
-  const students = await User.updateMany(
+  const student = await User.findOneAndUpdate(
     {
-      _id: { $in: studentsList },
+      email: studentEmail,
     },
     {
       $push: { notifications: notification, coursesEnrolled: course._id },
       notificationsSeen: false,
     }
-  );
+  ).select("name email rollNumber image branch");
 
-  course.students.push(studentsList);
+  if (!student) {
+    return next(new AppError("This student is not present", 403));
+  }
+  course.students.push(student._id);
   await course.save();
 
   res.status(200).json({
     status: "success",
     updatedCourse: course,
+    student: student,
+  });
+});
+
+exports.getStudentsOfCourse = catchAsync(async (req, res, next) => {
+  const courseId = req.params.id;
+  if (!courseId) {
+    return next(new AppError("Course Id is not mentioned", 404));
+  }
+
+  const roles = ["user", "admin"];
+
+  const students = await User.find({
+    coursesEnrolled: { $in: [courseId] },
+    role: roles,
+  }).select("name branch rollNumber image email");
+
+  res.status(200).json({
+    status: "success",
+    data: students,
   });
 });
 

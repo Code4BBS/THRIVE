@@ -21,6 +21,7 @@ router.get(
   authController.restrictTo("user", "Teacher", "admin"),
   courseController.getCourse
 );
+router.get("/students/:id", courseController.getStudentsOfCourse);
 
 router.post(
   "/",
@@ -30,17 +31,19 @@ router.post(
 
 router.post(
   "/enroll/:id",
-  // authController.restrictTo("Teacher"),
+  authController.restrictTo("Teacher"),
   courseController.enrollStudents
 );
 
 router.post(
   "/assignment",
+  authController.restrictTo("Teacher"),
   fileController.uploadFile,
   courseController.createAssignment
 );
 router.post(
   "/submit/assignment/:id",
+  authController.restrictTo("user", "admin"),
   fileController.uploadFile,
   courseController.submitAssignment
 );

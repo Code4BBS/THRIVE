@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Chip } from "@material-ui/core";
 
 const CustomChip = (props) => {
-  const [variant, setVariant] = useState(
-    props.tagsSelected.includes(props.tag._id) ? "default" : "outlined"
-  );
+  const [variant, setVariant] = useState("outlined");
+
+  useEffect(() => {
+    if (props.tagsSelected && props.tagsSelected.includes(props.tag._id)) {
+      setVariant("default");
+    }
+  }, []);
+
   let toggle = () => {
     if (variant === "outlined") {
       setVariant("default");

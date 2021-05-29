@@ -17,7 +17,7 @@ import Classes from "./Classes";
 import Assignments from "./Assignments";
 import ChatRoom from "./ChatRoom";
 import Chat from "./Chat";
-
+import Enrolled from "./EnrolledStudents";
 import Header from "components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/dashboard.js";
 
@@ -170,21 +170,33 @@ function Course({ user, cookies, history }) {
           Assignments
         </Button>
         <Button
-          className={tab === "ChatRoom" ? "active" : "in-active"}
+          className={tab === "chatRoom" ? "active" : "in-active"}
           onClick={() => {
-            setTab("ChatRoom");
+            setTab("chatRoom");
           }}
         >
           Classroom Chat
         </Button>
+        {user.role == "Teacher" ? (
+          <Button
+            className={tab === "Enrolled" ? "active" : "in-active"}
+            onClick={() => {
+              setTab("Enrolled");
+            }}
+          >
+            Enrolled students
+          </Button>
+        ) : null}
       </div>
       <div style={{ marginTop: "30px" }}>
         {tab === "Classes" ? (
           <Classes course={course} />
         ) : tab === "Assignments" ? (
           <Assignments course={course} history={history} user={user} />
-        ) : (
+        ) : tab == "chatRoom" ? (
           <ChatRoom user={user} cookies={cookies} />
+        ) : (
+          <Enrolled user={user} cookies={cookies} course={course} />
         )}
       </div>
     </div>
