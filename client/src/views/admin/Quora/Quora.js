@@ -111,7 +111,8 @@ class Quora extends Component {
             item
             xs={12}
             sm={6}
-            md={4}
+            md={6}
+            lg={4}
             component={Box}
             paddingLeft="15px"
             paddingRight="15px"

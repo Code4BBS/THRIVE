@@ -306,48 +306,6 @@ function Profile({ user, getUserAgain }) {
                       </FormGroup>
                     </Grid>
                   </Grid>
-                  {/* <Grid container>
-                    <Grid item xs={12} lg={6}>
-                      <FormGroup>
-                        <FormLabel>First name</FormLabel>
-                        <FormControl
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            defaultValue="Lucky"
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                    <Grid item xs={12} lg={6}>
-                      <FormGroup>
-                        <FormLabel>Last Name</FormLabel>
-                        <FormControl
-                          variant="filled"
-                          component={Box}
-                          width="100%"
-                          marginBottom="1rem!important"
-                        >
-                          <Box
-                            paddingLeft="0.75rem"
-                            paddingRight="0.75rem"
-                            component={FilledInput}
-                            autoComplete="off"
-                            type="text"
-                            defaultValue="Jesse"
-                          />
-                        </FormControl>
-                      </FormGroup>
-                    </Grid>
-                  </Grid> */}
                 </div>
                 <div className={classes.plLg4}>
                   <Grid container>

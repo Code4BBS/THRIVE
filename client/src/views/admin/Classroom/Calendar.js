@@ -83,7 +83,7 @@ function CalendarView({ user, history }) {
   };
   const cardContent = assignments.map((assignment, ind) => {
     return (
-      <Paper className={classes.paper} key={ind}>
+      <Paper className={classes.paper} key={ind} style={{ maxWidth: "500px" }}>
         <Grid container wrap="nowrap" spacing={2}>
           <Grid item>
             <Avatar
@@ -121,6 +121,7 @@ function CalendarView({ user, history }) {
         style={{
           display: "flex",
           flexWrap: "wrap",
+          justifyContent: "space-evenly",
           margin: "20px",
           minHeight: "350px",
         }}
@@ -128,9 +129,13 @@ function CalendarView({ user, history }) {
         <CalendarComponent
           onChange={changeDate}
           value={date}
+          style={{ margin: "0px 20px 20px 20px" }}
         ></CalendarComponent>
-        <Grid container style={{ marginLeft: "20px" }}>
-          <Grid item xs={12}>
+        <Grid
+          container
+          style={{ flex: 1, padding: 0, margin: 0, maxWidth: "100%" }}
+        >
+          <Grid item xs={12} style={{ padding: 0, margin: 0 }}>
             {assignments.length == 0 ? (
               <Card
                 classes={{
@@ -143,7 +148,7 @@ function CalendarView({ user, history }) {
                 </CardContent>
               </Card>
             ) : (
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{ padding: 0, margin: 0 }}>
                 <Card
                   classes={{
                     root: classes.cardRoot + " " + classes.cardRootSecondary,
@@ -151,7 +156,12 @@ function CalendarView({ user, history }) {
                 >
                   <CardHeader title="Assignments"></CardHeader>
                   <CardContent>
-                    <div className={classes.paperRoot}>{cardContent}</div>
+                    <div
+                      className={classes.paperRoot}
+                      style={{ padding: 0, margin: 0 }}
+                    >
+                      {cardContent}
+                    </div>
                   </CardContent>
                 </Card>
               </Grid>

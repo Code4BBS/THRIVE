@@ -74,7 +74,9 @@ function Classroom({ user, history }) {
               classes={{
                 root: classes.cardRoot,
               }}
-              style={{ height: "100%" }}
+              style={{
+                height: "100%",
+              }}
             >
               <CardHeader
                 style={{ minHeight: "140px" }}
