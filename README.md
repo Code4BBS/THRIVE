@@ -83,7 +83,21 @@ Admin has option to blacklist the project to prevent unnecessary spamming.
 <br/><br/>
 
 
-**Discussion**: A forum where students can ask questions to each other and their seniors. The forum also allows anonymous questions and answers to allow free expression of views.
+**Discussion**: 
+A forum where students can ask questions to each other and their seniors. The forum also allows anonymous questions and answers to allow free expression of views.
+
+![image](https://user-images.githubusercontent.com/64681029/120108211-d1d0dc00-c181-11eb-93e7-3dd26e88a6c8.png)
+<br/><br/>
+
+**Post Question**
+![image](https://user-images.githubusercontent.com/64681029/120108273-1197c380-c182-11eb-9f16-63e0d538b010.png)
+
+**View A Question and Answer it**
+![image](https://user-images.githubusercontent.com/64681029/120108298-31c78280-c182-11eb-958a-6ecfe4102582.png)
+
+**Classroom Management**
+
+![image](https://user-images.githubusercontent.com/64681029/120108665-dd250700-c183-11eb-8636-6cda373b044a.png)
 
 The admins have the authority to blacklist projects and questions to prevent unnecessary spamming.
 
