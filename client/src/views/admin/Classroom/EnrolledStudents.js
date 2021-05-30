@@ -1,70 +1,57 @@
 import React, { useState, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
+import axios from "axios";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
-import Avatar from "@material-ui/core/Avatar";
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Card from "@material-ui/core/Card";
-// import CardActions from "@material-ui/core/CardActions";
-import CardHeader from "@material-ui/core/CardHeader";
-import Container from "@material-ui/core/Container";
-// import LinearProgress from "@material-ui/core/LinearProgress";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import Table from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableContainer from "@material-ui/core/TableContainer";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
-import TablePagination from "@material-ui/core/TablePagination";
-import Tooltip from "@material-ui/core/Tooltip";
-import { Grid, Typography } from "@material-ui/core";
-// @material-ui/lab components
-import AvatarGroup from "@material-ui/lab/AvatarGroup";
-// import Pagination from "@material-ui/lab/Pagination";
-// @material-ui/icons components
-import MoreVert from "@material-ui/icons/MoreVert";
 
-import Modal from "components/Custom/Modals/Modal.js";
-import getInitials from "./../customer/CustomerListView/getInitials";
-// core components
-import Header from "../../../components/Headers/Header.js";
-// import TagList from "./TagsList";
-
-import axios from "axios";
-import componentStyles from "assets/theme/views/admin/tables.js";
-import Accordion from "@material-ui/core/Accordion";
-import AccordionDetails from "@material-ui/core/AccordionDetails";
-import AccordionSummary from "@material-ui/core/AccordionSummary";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import {
+  Avatar,
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Box,
+  Button,
+  Card,
+  CardHeader,
   FormGroup,
   FormControl,
   FormLabel,
-  FilledInput,
-  InputAdornment,
+  Grid,
   IconButton,
+  Input,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TablePagination,
+  Typography,
 } from "@material-ui/core";
+
+// @material-ui/icons
+
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import MoreVert from "@material-ui/icons/MoreVert";
+
+import componentStyles from "assets/theme/views/admin/tables.js";
+
+import getInitials from "./../customer/CustomerListView/getInitials";
+
 const useStyles = makeStyles(componentStyles);
 
 const Enrolled = ({ user, history, course }) => {
   const classes = useStyles();
   const theme = useTheme();
-  const [courses, setCourses] = useState([]);
-  const [isLoading, setLoading] = React.useState(true);
-  const [cardTitle, setCardTitle] = React.useState("Enrolled Students");
-  const [addButton, showAddButton] = React.useState(false);
+  const [isLoading, setLoading] = useState(true);
   const [anchorId, setAnchorId] = React.useState(null);
   const [currentAnchor, setCurrentAnchor] = React.useState(null);
   const [limit, setLimit] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  const [tagsPane, setShowTagsPane] = React.useState(false);
-  const [tagsList, setTagsList] = React.useState([]);
-  const [selectedTags, setSelectedTags] = React.useState([]);
   const [students, setStudents] = React.useState([]);
   const [email, setStudentEmail] = React.useState("");
   const handleMenuClick = (event, index) => {
@@ -101,7 +88,6 @@ const Enrolled = ({ user, history, course }) => {
 
   const getStudentsOfCourse = () => {
     axios.get(`/api/v1/course/students/${course._id}`).then((response) => {
-      console.log(response.data);
       const students = response.data.data;
       setStudents(students);
       setLoading(false);
@@ -112,9 +98,7 @@ const Enrolled = ({ user, history, course }) => {
     axios
       .post(`/api/v1/course/enroll/${course._id}`, { studentEmail: email })
       .then((response) => {
-        console.log(response);
         const student = response.data.student;
-        console.log(students.length);
         students.push(student);
         setStudents(() => students);
 
@@ -122,16 +106,12 @@ const Enrolled = ({ user, history, course }) => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Something went wrong");
+        alert("Something went wrong, unable to enroll student");
       });
   };
-  React.useEffect(() => {
+  useEffect(() => {
     getStudentsOfCourse();
   }, []);
-
-  const redirectToCourseCreation = () => {
-    history.push("/courses/new-course");
-  };
 
   return (
     <>
@@ -163,116 +143,81 @@ const Enrolled = ({ user, history, course }) => {
                     variant="h3"
                     marginBottom="0!important"
                   >
-                    {isLoading ? "Loading Courses...." : cardTitle}
+                    {isLoading ? "Loading Students...." : "Enrolled Students"}
                   </Box>
                 </Grid>
                 <Grid item xs="auto">
-                  <Accordion
-                    expanded={expanded === "panel1"}
-                    onChange={handleChange("panel1")}
-                    style={{ boxShadow: "none" }}
-                  >
-                    <AccordionSummary
-                      //   expandIcon={<ExpandMoreIcon />}
-                      aria-controls="panel1bh-content"
-                      id="panel1bh-header"
+                  <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
+                    <Accordion
+                      expanded={expanded === "panel1"}
+                      onChange={handleChange("panel1")}
+                      style={{ boxShadow: "none" }}
                     >
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        size="small"
-                        style={{ marginTop: "0.25rem" }}
+                      <AccordionSummary
+                        //   expandIcon={<ExpandMoreIcon />}
+                        aria-controls="panel1bh-content"
+                        id="panel1bh-header"
                       >
-                        Enroll students to course
-                      </Button>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Grid item xs="auto">
-                        <FormGroup>
-                          <FormLabel>Student email</FormLabel>
-                          <FormControl
-                            variant="filled"
-                            width="50%"
-                            style={{
-                              marginBottom: "1rem!important",
-                            }}
-                            required
-                          >
-                            <FilledInput
+                        <Button
+                          variant="outlined"
+                          color="primary"
+                          size="small"
+                          style={{ marginTop: "0.25rem" }}
+                        >
+                          Enroll students to course
+                        </Button>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <Grid item xs="auto" style={{ marginLeft: "-0.5rem" }}>
+                          <FormGroup>
+                            <FormLabel>Student email</FormLabel>
+                            <FormControl
+                              variant="filled"
+                              width="50%"
                               style={{
-                                paddingLeft: "0.75rem",
-                                paddingRight: "0.75rem",
+                                marginBottom: "1rem!important",
                               }}
-                              type="text"
                               required
-                              label="Course Name"
-                              name="name"
-                              onChange={handleInputChange}
-                              value={email}
-                              classes={{ input: classes.searchInput }}
-                              endAdornment={
-                                <InputAdornment position="end">
-                                  <IconButton onClick={enrollStudent}>
-                                    <CheckCircleIcon />
-                                  </IconButton>
-                                </InputAdornment>
-                              }
-                            />
-                          </FormControl>
-                        </FormGroup>
-                      </Grid>
-                    </AccordionDetails>
-                  </Accordion>
+                            >
+                              <Input
+                                style={{
+                                  paddingLeft: "0.75rem",
+                                  paddingRight: "0.75rem",
+                                  width: "75%",
+                                }}
+                                type="email"
+                                required
+                                label="Course Name"
+                                name="name"
+                                onChange={handleInputChange}
+                                value={email}
+                                classes={{ input: classes.searchInput }}
+                                endAdornment={
+                                  <InputAdornment position="end">
+                                    <IconButton
+                                      onClick={enrollStudent}
+                                      disabled={!email}
+                                    >
+                                      <CheckCircleIcon
+                                        style={{
+                                          width: "20px",
+                                          height: "20px",
+                                        }}
+                                      />
+                                    </IconButton>
+                                  </InputAdornment>
+                                }
+                              />
+                            </FormControl>
+                          </FormGroup>
+                        </Grid>
+                      </AccordionDetails>
+                    </Accordion>
+                  </Box>
                 </Grid>
-                {/* <Grid item xs="auto">
-                      <Box
-                        justifyContent="flex-end"
-                        display="flex"
-                        flexWrap="wrap"
-                      >
-                        {selectedTags.length === 0 ? (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            onClick={() => getAllTags()}
-                            style={{ marginTop: "0.25rem" }}
-                          >
-                            Search by Tags
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            onClick={() => reset()}
-                          >
-                            Reset
-                          </Button>
-                        )}
-                        {addButton ? (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            onClick={() =>
-                              (window.location.href = "/projects/add")
-                            }
-                            style={{
-                              marginLeft: "0.25rem",
-                              marginTop: "0.25rem",
-                            }}
-                          >
-                            Add New Project
-                          </Button>
-                        ) : null}
-                      </Box>
-                    </Grid> */}
               </Grid>
             }
-          >
-            {""}
-          </CardHeader>
+          ></CardHeader>
           {students && students.length > 0 ? (
             <>
               <TableContainer>
@@ -443,7 +388,7 @@ const Enrolled = ({ user, history, course }) => {
 
               <TablePagination
                 component="div"
-                count={courses.length}
+                count={students.length}
                 onChangePage={handlePageChange}
                 onChangeRowsPerPage={handleLimitChange}
                 page={page}
