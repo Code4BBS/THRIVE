@@ -66,6 +66,22 @@ Projects are equipped with tags to enhance filtering and sending notifications t
 Admin has option to blacklist the project to prevent unnecessary spamming. 
 </p>
 
+**All Projects**
+![image](https://user-images.githubusercontent.com/64681029/120107755-d5636380-c17f-11eb-9bf3-b0b3fdeca121.png)
+<br/><br/>
+**Post Project**
+![image](https://user-images.githubusercontent.com/64681029/120107818-19566880-c180-11eb-9cd3-2eadda7e8978.png)
+<br/><br/>
+**View Project**
+![image](https://user-images.githubusercontent.com/64681029/120107835-3428dd00-c180-11eb-845c-b35754bb97dc.png)
+<br/><br/>
+**Request to Join**
+![image](https://user-images.githubusercontent.com/64681029/120107985-caf59980-c180-11eb-9869-e5e2afa822bb.png)
+<br/><br/>
+**Project Owner Options**:&nbsp; &nbsp;This includes option to edit, delete and accept/reject collab requests.
+![image](https://user-images.githubusercontent.com/64681029/120108018-f24c6680-c180-11eb-9fed-a8b76450d56f.png)
+<br/><br/>
+
 
 **Discussion**: A forum where students can ask questions to each other and their seniors. The forum also allows anonymous questions and answers to allow free expression of views.
 
