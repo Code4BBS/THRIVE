@@ -185,7 +185,6 @@ export default function Sidebar({
               />
               {logoObject}
               {dropdown}
-              <Notification user={user} history={history} />
             </Container>
             <Notification user={user} history={history} color="black" />
           </Toolbar>

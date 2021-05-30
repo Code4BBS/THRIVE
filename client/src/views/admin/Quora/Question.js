@@ -162,7 +162,6 @@ class QuoraCont extends Component {
               </Grid>
               <Grid item>
                 <Button
-                  onClick={this.AddQuestion}
                   variant="contained"
                   onClick={() => this.setState({ deleteClicked: false })}
                   style={{ color: "white", backgroundColor: "green" }}

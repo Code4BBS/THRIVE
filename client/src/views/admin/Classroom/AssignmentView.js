@@ -166,9 +166,15 @@ const AssignmentView = ({ user }) => {
 
   const teacherView = (
     <Box component="span" m={1}>
-      <Typography style={{ textAlign: "center", fontWeight: "bold" }}>
+      <Typography
+        style={{
+          textAlign: "center",
+          fontWeight: "bold",
+        }}
+      >
         Submissions
       </Typography>
+      <br />
       {submittedAssignments.length > 0 ? (
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -245,7 +251,11 @@ const AssignmentView = ({ user }) => {
                           fontSize: "40px",
                         }}
                       >
-                        <AssignmentIcon fontSize="large" color="primary" />
+                        <AssignmentIcon
+                          fontSize="large"
+                          color="primary"
+                          style={{ height: "22px", width: "22px" }}
+                        />
                       </IconButton>
                       <Typography
                         style={{
@@ -295,10 +305,13 @@ const AssignmentView = ({ user }) => {
                           ) : (
                             ""
                           )}{" "}
-                          | {assignment.due || "May 26 "}&emsp;&emsp;
-                          <EventIcon />
+                          &nbsp;| &nbsp;{assignment.due || "May 26 "}
+                          &emsp;&emsp;
+                          <EventIcon
+                            style={{ height: "20px", width: "20px" }}
+                          />
                           <Typography>
-                            Due {assignment.deadline || "May 30"}
+                            &nbsp;&nbsp;Due {assignment.deadline || "May 30"}
                           </Typography>
                         </div>
                       </div>
@@ -313,7 +326,11 @@ const AssignmentView = ({ user }) => {
                       else window.open(fileUrl);
                     }}
                   >
-                    <DescriptionIcon fontSize="large" color="primary" />
+                    <DescriptionIcon
+                      fontSize="large"
+                      color="primary"
+                      style={{ height: "22px", width: "22px" }}
+                    />
                     <Typography style={{ padding: "0px" }}>
                       &nbsp;View Assignment
                     </Typography>
