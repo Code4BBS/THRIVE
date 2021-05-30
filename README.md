@@ -1,5 +1,7 @@
 # THRIVE
 
+<img src="https://user-images.githubusercontent.com/64681029/120106489-b7dfcb00-c17a-11eb-8d87-25a244de72a4.png" width="300px" height="170px"/>
+
 ***One stop solution for students for college activities***
 
 Since the second wave of Covid-19 is resurfacing, we need to think twice before interacting with someone. The colleges have been shut down and the student interactions with their peers and seniors have been hampereed. This has also posted a problem effective study material and assignment managements.
@@ -9,21 +11,16 @@ Since the second wave of Covid-19 is resurfacing, we need to think twice before 
 The portal enables students to discover the students in the college who share common interests, post projects open for collaboration and ask questions about college. 
 It also has a classroom management system where teachers and students activities can be managed, teachers can post, study materials and assignments,which the students can submit before given deadlines. Classroom also has the facility to chat in realtime.
 
-## Tech Stack
+## Technologies used
 
+- **NodeJs** - evented I/O for the backend
+- **Express** - fast node.js network app framework
+- **Socket.io** - Package used to create realtime chats.
+- **MongoDB** - NoSQL Database
+- **React.js** - Javascript llibrary to build user frameworks.
+- **GoogleOAuth** - Open Authorization from Google
+- **MaterialUI** - React components based on Material Design.
 
-MERN Stack 
-
-- [NodeJs] - HTML enhanced for web apps!
-- [Ace Editor] - awesome web-based text editor
-- [markdown-it] - Markdown parser done right. Fast and easy to extend.
-- [Twitter Bootstrap] - great UI boilerplate for modern web apps
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app framework [@tjholowaychuk]
-- [Gulp] - the streaming build system
-- [Breakdance](https://breakdance.github.io/breakdance/) - HTML
-to Markdown converter
-- [jQuery] - duh
 
 # Features
 
