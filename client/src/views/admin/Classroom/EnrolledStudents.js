@@ -100,8 +100,9 @@ const Enrolled = ({ user, history, course }) => {
       .post(`/api/v1/course/enroll/${course._id}`, { studentEmail: email })
       .then((response) => {
         const student = response.data.student;
-        students.push(student);
-        setStudents(() => students);
+        const newStudents = [...students];
+        newStudents.push(student);
+        setStudents(newStudents);
 
         alert("Student enrolled");
       })
