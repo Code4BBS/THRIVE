@@ -83,7 +83,7 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   let roles = ["user", "admin"];
 
   const docs = await User.find({ role: { $in: roles } })
-    .select("name email image ")
+    .select("name email image rollNumber")
     .sort({ name: 1 })
     .lean();
 

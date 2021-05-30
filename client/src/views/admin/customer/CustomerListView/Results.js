@@ -79,6 +79,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
       })
       .catch((err) => console.log(err));
   };
+
   const searchUser = (event) => {
     if (event.target.value === "") {
       resetSearch();
@@ -147,7 +148,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
     // navigate(url);
   };
 
-  const headings = ["Name", "Email", "Role"];
+  const headings = ["Name", "Email", "RolL Number"];
 
   return (
     <div>
@@ -267,21 +268,6 @@ const Results = ({ className, customers, tags, ...rest }) => {
                       <TableRow>
                         <TableCell>
                           <Grid item md={7} xs={12}>
-                            {/* <Input
-                              fullWidth
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <SvgIcon fontSize="small" color="action">
-                                      <SearchIcon />
-                                    </SvgIcon>
-                                  </InputAdornment>
-                                ),
-                              }}
-                              onChange={searchUser}
-                              placeholder="Search student by name or email"
-                              variant="outlined"
-                            /> */}
                             <Box
                               display="flex"
                               alignItems="center"
@@ -321,6 +307,13 @@ const Results = ({ className, customers, tags, ...rest }) => {
                                 " " +
                                 classes.tableCellRootHead,
                             }}
+                            align={
+                              index === 0
+                                ? "left"
+                                : index === 1
+                                ? "left"
+                                : "center"
+                            }
                           >
                             {heading}
                           </TableCell>
@@ -379,8 +372,8 @@ const Results = ({ className, customers, tags, ...rest }) => {
                           </TableCell> */}
 
                             <TableCell>{customer.email}</TableCell>
-                            <TableCell>
-                              {customer.rollNumber || "19CSX002"}
+                            <TableCell align="center">
+                              {customer.rollNumber || "-"}
                             </TableCell>
                             {/* <TableCell>{customer.room || "A-12X"}</TableCell> */}
                           </TableRow>

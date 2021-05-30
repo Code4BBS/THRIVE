@@ -173,6 +173,7 @@ const AddProject = ({ user }) => {
           component={Box}
           marginBottom="3rem"
           classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
+          style={{ marginLeft: "auto", marginRight: "auto" }}
         >
           <Card
             classes={{
@@ -297,6 +298,7 @@ const AddProject = ({ user }) => {
                           style={{
                             paddingLeft: "0.75rem",
                             paddingRight: "0.75rem",
+                            width: "200px",
                           }}
                           classes={{ input: classes.searchInput }}
                           type="text"
@@ -305,7 +307,7 @@ const AddProject = ({ user }) => {
                           name="preRequisite"
                           onChange={handleChange}
                           disabled={preRequisite}
-                          placeholder="E.g. Python is required skill."
+                          placeholder="E.g. Python is required"
                         />
                       </FormControl>
 
@@ -351,6 +353,7 @@ const AddProject = ({ user }) => {
                           style={{
                             paddingLeft: "0.75rem",
                             paddingRight: "0.75rem",
+                            width: "200px",
                           }}
                           classes={{ input: classes.searchInput }}
                           type="text"

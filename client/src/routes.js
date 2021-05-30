@@ -203,10 +203,12 @@ var routes = [
   {
     divider: true,
     show: true,
+    role: ["user", "admin", "Teacher"],
   },
   {
     title: "Classroom",
     show: true,
+    role: ["user", "admin", "Teacher"],
   },
   {
     path: "classroom",
