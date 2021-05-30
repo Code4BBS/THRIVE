@@ -97,7 +97,43 @@ A forum where students can ask questions to each other and their seniors. The fo
 
 **Classroom Management**
 
+**Courses**
 ![image](https://user-images.githubusercontent.com/64681029/120108665-dd250700-c183-11eb-8636-6cda373b044a.png)
+
+**Assignment Timeline of Course**
+![image](https://user-images.githubusercontent.com/64681029/120108892-bddaa980-c184-11eb-9761-2faed6f0bad3.png)
+
+**Classroom Chat**
+![image](https://user-images.githubusercontent.com/64681029/120109061-6ee14400-c185-11eb-96b7-18c499404a02.png)
+
+**Deadline Calender for Students**
+![image](https://user-images.githubusercontent.com/64681029/120108938-f4182900-c184-11eb-8d4e-befd03e02df3.png)
+
+
+<br/><br/>
+**Faculty Options**
+<br/>
+Enroll Students
+![image](https://user-images.githubusercontent.com/64681029/120109116-b1a31c00-c185-11eb-9461-d47c4c83b8dc.png)
+
+<br/>
+Post Assignments
+![image](https://user-images.githubusercontent.com/64681029/120109149-dac3ac80-c185-11eb-91f4-c3751aa9aa54.png)
+
+<br/>
+View Submissions
+![image](https://user-images.githubusercontent.com/64681029/120109165-eadb8c00-c185-11eb-9816-00f874931985.png)
+
+<br/><br/>
+**Admin Actions**
+
+**College Admin**
+Add New Courses with a teacher
+
+
+
+
+
 
 The admins have the authority to blacklist projects and questions to prevent unnecessary spamming.
 
