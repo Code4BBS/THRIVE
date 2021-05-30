@@ -116,6 +116,7 @@ class Quora extends Component {
             component={Box}
             paddingLeft="15px"
             paddingRight="15px"
+            key={idx}
           >
             <QuestionCard
               name={user}
@@ -125,7 +126,7 @@ class Quora extends Component {
               question={el.questionBody}
               answers={el.answers}
               time={el.createdAt}
-              key={idx}
+              // key={idx}
               id={el._id}
             />
           </Grid>
