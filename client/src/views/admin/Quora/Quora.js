@@ -127,6 +127,7 @@ class Quora extends Component {
               answers={el.answers}
               time={el.createdAt}
               id={el._id}
+              blacklisted = {el.blacklisted}
             />
           </Grid>
         );
@@ -172,6 +173,3 @@ class Quora extends Component {
 }
 
 export default withStyles(componentStyles)(Quora);
-
-//Deleting Questions
-//Delete Comment
