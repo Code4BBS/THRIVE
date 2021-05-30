@@ -103,7 +103,7 @@ class Wrapper extends Component {
                       />
                     )}
                   />
-                  <Redirect from="/" to="/index" />
+                  <Redirect from="/" to="/user-profile" />
                 </Switch>
               </Router>
             ) : (

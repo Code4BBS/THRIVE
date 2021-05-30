@@ -74,12 +74,10 @@ const Admin = ({ user, cookies, getUserAgain, logOut }) => {
           role={user.role}
           routes={routes}
           logo={{
-            innerLink: "/index",
+            innerLink: "/",
             imgSrc: require("../assets/img/Logo/thrive-blue.png").default,
             imgAlt: "...",
           }}
-          user={user}
-          history={history}
           dropdown={<NavbarDropdown user={user} logOut={logOut} />}
           input={
             <FormControl variant="outlined" fullWidth>
@@ -113,7 +111,7 @@ const Admin = ({ user, cookies, getUserAgain, logOut }) => {
           />
           <Switch>
             {getRoutes(routes)}
-            <Redirect from="*" to="/index" />
+            <Redirect from="*" to="/user-profile" />
           </Switch>
           <Container
             maxWidth={false}
