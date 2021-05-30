@@ -1,5 +1,4 @@
 // core components
-import Dashboard from "views/admin/Dashboard.js";
 import Icons from "views/admin/Icons.js";
 import Login from "views/auth/Login.js";
 import Maps from "views/admin/Maps.js";
@@ -40,17 +39,6 @@ import EventIcon from "@material-ui/icons/Event";
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks";
 
 var routes = [
-  {
-    path: "index",
-    name: "Dashboard",
-    icon: Tv,
-    iconColor: "Primary",
-    component: Dashboard,
-    layout: "/",
-    show: true,
-    role: ["user", "Teacher", "admin", "collegeAdmin"],
-  },
-
   {
     path: "user-profile",
     name: "User Profile",

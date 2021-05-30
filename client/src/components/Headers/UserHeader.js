@@ -49,7 +49,7 @@ const UserHeader = ({ user }) => {
                 variant="h1"
                 classes={{ root: classes.typographyRootH1 }}
               >
-                <b style={{ fontWeight: 300 }}>Hello</b> {user.name}
+                <b style={{ fontWeight: 300 }}>Hi,</b> {user.name} 👋
               </Typography>
               <Box
                 component="p"
