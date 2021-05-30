@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import axios from "axios";
 import {
   FacebookShareButton,
-  InstapaperShareButton,
   WhatsappShareButton,
 } from "react-share";
 
@@ -31,6 +30,7 @@ import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
+import BlockIcon from '@material-ui/icons/Block';
 
 import Header from "components/Headers/Header.js";
 
@@ -46,7 +46,10 @@ class QuoraCont extends Component {
     isAnonymous: false,
     askedBy: "",
     deleteClicked: false,
+    blacklistClicked : false,
+    askedById : null
   };
+
   getQuestion = () => {
     this.setState({ isLoading: true });
     const url = window.location.pathname.split("/");
@@ -59,10 +62,11 @@ class QuoraCont extends Component {
         answers: res.data.question.answers,
       });
       if (!res.data.question.isAnonymous) {
-        this.setState({ askedBy: res.data.question.user.name });
+        this.setState({ askedBy: res.data.question.user.name, askedById: res.data.question.user._id });
       }
     });
   };
+
   addAnswer = () => {
     let answer = {
       answer: this.state.newAnswer,
@@ -108,20 +112,24 @@ class QuoraCont extends Component {
         window.location.href = `/discussion`;
       });
   };
+  blacklistQuestion = () => {
+    axios.patch(`/api/v1/quora/questions/blacklist/${this.state.question._id}`).then(res => {
+      window.location.href = `/discussion`;
+    })
+  }
   render() {
     const { classes } = this.props;
     let upvoteColor = "";
     let downvoteColor = "";
     let deleteButton;
+    let blacklistButton;
     if (
       this.state.question != null &&
       this.state.question.isAnonymous === false &&
-      this.state.question.user._id === this.props.user._id
+      this.state.askedById == this.props.user._id
     ) {
       deleteButton = (
-        // <Box justifyContent="flex-end" display="flex" flexWrap="wrap">
         <IconButton
-          // size="large"
           onClick={() => this.setState({ deleteClicked: true })}
           style={{ padding: "0!important" }}
         >
@@ -134,7 +142,29 @@ class QuoraCont extends Component {
             }}
           />
         </IconButton>
-        // </Box>
+      );
+      
+    } else {
+      deleteButton = null;
+    }
+    if (
+      this.state.question != null &&
+      this.props.user.role == "admin"
+    ) {
+      blacklistButton = (
+        <IconButton
+          onClick={() => this.setState({blacklistClicked : true})}
+          style={{ padding: "0!important" }}
+        >
+          <BlockIcon
+            style={{
+              height: "18px",
+              width: "18px",
+              marginRight: "0.2rem",
+              padding: "0 !important",
+            }}
+          />
+        </IconButton>
       );
     } else {
       deleteButton = null;
@@ -174,6 +204,41 @@ class QuoraCont extends Component {
         </Dialog>
       </div>
     );
+    const blacklistModal = (
+      <div>
+        <Dialog
+          open={this.state.blacklistClicked}
+          onClose={() => {
+            this.setState({ blacklistClicked: false });
+          }}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Are you willing to blacklist this question?</DialogTitle>
+          <DialogContent>
+            <Grid container>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  style={{ color: "white", backgroundColor: "red" }}
+                  onClick={() => this.blacklistQuestion()}
+                >
+                  Confirm
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  variant="contained"
+                  onClick={() => this.setState({ blacklistClicked: false })}
+                  style={{ color: "white", backgroundColor: "green" }}
+                >
+                  Cancel
+                </Button>
+              </Grid>
+            </Grid>
+          </DialogContent>
+        </Dialog>
+      </div>
+    );
     return (
       <div>
         {!this.state.isLoading ? (
@@ -197,6 +262,7 @@ class QuoraCont extends Component {
                   }}
                 >
                   {deleteModal}
+                  {blacklistModal}
                   <Card
                     classes={{
                       root: classes.cardRoot + " " + classes.cardRootSecondary,
@@ -232,6 +298,7 @@ class QuoraCont extends Component {
                             flexWrap="wrap"
                           >
                             {deleteButton}
+                            {blacklistButton}
                             <FacebookShareButton url={window.location.href}>
                               <FacebookIcon
                                 style={{
@@ -313,9 +380,6 @@ class QuoraCont extends Component {
                             onChange={(e) => this.InputChanged(e)}
                           />
                         </Grid>
-                        {/* <Grid item xs = {4}>
-                                        <Button variant="contained" color="primary" onClick = {() => this.addAnswer()}>Add Answer</Button>
-                                    </Grid> */}
                       </Grid>
                       <br />
                       <Grid container>

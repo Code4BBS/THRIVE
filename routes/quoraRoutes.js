@@ -7,6 +7,7 @@ router.use(authController.verifyJwtToken,authController.loggedInUser);
 
 
 router.delete('/questions/:qId', quoraController.deleteQuestion);
+router.patch('/questions/blacklist/:qId', quoraController.blacklistQuestion);
 router.post('/questions/upvote/:qId', quoraController.upVote);
 router.post('/questions/downvote/:qId', quoraController.downVote);
 router.get('/questions/:id', quoraController.getAQuestion);

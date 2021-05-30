@@ -27,7 +27,6 @@ const questionSchema = new mongoose.Schema({
         default : 0
     },
     downvotedBy : [{type : mongoose.Schema.ObjectId, ref : "User"}],
-    // answers : [{type : mongoose.Schema.ObjectId, ref : "Answer"}]
     answers : [{
         answer : {
             type : String,
@@ -41,7 +40,11 @@ const questionSchema = new mongoose.Schema({
             type : mongoose.Schema.ObjectId,
             ref : "User"
         }
-    }]
+    }],
+    blacklisted : {
+        type : Boolean,
+        default : false
+    }
 })
 
 const Question = mongoose.model("Question", questionSchema);
