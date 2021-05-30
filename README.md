@@ -8,8 +8,13 @@ Since the second wave of Covid-19 is resurfacing, we need to think twice before 
 
 ***This portal servers as a solution to the problems***
 
-The portal enables students to discover the students in the college who share common interests, post projects open for collaboration and ask questions about college. 
-It also has a classroom management system where teachers and students activities can be managed, teachers can post, study materials and assignments,which the students can submit before given deadlines. Classroom also has the facility to chat in realtime.
+<!-- The portal enables students to discover the students in the college who share common interests, post projects open for collaboration and ask questions about college. 
+It also has a classroom management system where teachers and students activities can be managed, teachers can post, study materials and assignments,which the students can submit before given deadlines. Classroom also has the facility to chat in realtime. -->
+
+**THRIVE**  is a one stop solution for having eve efficient online education to quality student life. We provide solutions to classroom management, improving student interactions, project collaborations, college activities and many more. The portal allows both students and faculty to manage their activities.
+
+The main aim of the portal is to provide an easy-to-use all-in-one solution for dealing all activities associated with any educational institution online without any limitations.
+
 
 ## Technologies used
 
@@ -22,13 +27,34 @@ It also has a classroom management system where teachers and students activities
 - **MaterialUI** - React components based on Material Design.
 
 
-# Features
+# Pages
+
+**Login Page**
+
+![image](https://user-images.githubusercontent.com/64681029/120107303-368a3780-c17e-11eb-9f35-10adaee818ff.png)
+ 
+<br/>
 
 **User Profile**: Show and edit the information of the user. Students can view profiles of their peers.
 
-![Screenshot (170)](https://user-images.githubusercontent.com/64681029/120097619-1c853080-c14f-11eb-9c6d-91ed8a867289.png)
+<img src="https://user-images.githubusercontent.com/64681029/120107112-53723b00-c17d-11eb-97cf-2e8c8beaa54f.png"/>
 
-**Discover Feature**: A directory of students in college which supports search based on name, email, skills, positions of responsibilities, student activities and, of course, branch and year.
+**Editing Profile**:
+
+![image](https://user-images.githubusercontent.com/64681029/120107422-9680de00-c17e-11eb-9a1e-b7b8b16aabd8.png)
+
+<br/>
+
+**Discover Feature**: 
+<br/>
+A directory of students in college which supports search based on name, email, skills, positions of responsibilities, student activities and, of course, branch and year.
+
+![image](https://user-images.githubusercontent.com/64681029/120107490-ce882100-c17e-11eb-8095-51c187bc2142.png)
+
+Search by tags: 
+
+![image](https://user-images.githubusercontent.com/64681029/120107573-20c94200-c17f-11eb-89a5-93e214c8a889.png)
+
 
 **Projects Panel**: 
 The panel is a platform for students to post their projects and ask for collaborators. 
