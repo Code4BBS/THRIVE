@@ -33,7 +33,16 @@ to Markdown converter
 
 **Discover Feature**: A directory of students in college which supports search based on name, email, skills, positions of responsibilities, student activities and, of course, branch and year.
 
-**Projects Panel**: A platform for students to post projects and ask for collaborators. It enables students to know about projects available in campus. Students can request to join a project to the owner and owner can accept and reject the requests.
+**Projects Panel**: 
+The panel is a platform for students to post their projects and ask for collaborators. 
+<p>
+Project details include basic details like title, description along tags and present collaborators.<br/>
+Thus it provides a list of projects avialable in the college, to which students can request to join. Owners can approve or reject the requests. 
+Projects are equipped with tags to enhance filtering and sending notifications to students with the tags.
+<br/>
+Admin has option to blacklist the project to prevent unnecessary spamming. 
+</p>
+
 
 **Discussion**: A forum where students can ask questions to each other and their seniors. The forum also allows anonymous questions and answers to allow free expression of views.
 
