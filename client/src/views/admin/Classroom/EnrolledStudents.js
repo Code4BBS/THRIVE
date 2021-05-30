@@ -103,6 +103,7 @@ const Enrolled = ({ user, history, course }) => {
         const newStudents = [...students];
         newStudents.push(student);
         setStudents(newStudents);
+        setStudentEmail("");
 
         alert("Student enrolled");
       })
