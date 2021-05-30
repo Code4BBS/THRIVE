@@ -58,7 +58,7 @@ const Auth = ({ sucessLogin, load }) => {
         <Container
           component={Box}
           maxWidth="xl"
-          marginTop="-8rem"
+          marginTop="-10rem"
           paddingBottom="3rem"
           position="relative"
           zIndex="101"

@@ -119,7 +119,7 @@ export default function AuthNavbar() {
             maxWidth="xl"
           >
             <Box color="text.primary" height="30px" className={classes.header}>
-              <div style={{ fontSize: "22px" }}>College Management Portal</div>
+              <div style={{ fontSize: "22px" }}></div>
             </Box>
           </Container>
         </Toolbar>
