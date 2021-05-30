@@ -49,6 +49,7 @@ class QuoraCont extends Component {
     blacklistClicked : false,
     askedById : null
   };
+
   getQuestion = () => {
     this.setState({ isLoading: true });
     const url = window.location.pathname.split("/");
@@ -65,6 +66,7 @@ class QuoraCont extends Component {
       }
     });
   };
+
   addAnswer = () => {
     let answer = {
       answer: this.state.newAnswer,

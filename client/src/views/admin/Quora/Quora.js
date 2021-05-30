@@ -156,7 +156,7 @@ class Quora extends Component {
                     }}
                     className={classes.margin}
                   >
-                    <CreateIcon fontSize="large" />
+                    <CreateIcon style={{ width: "20px", height: "20px" }} />
                   </IconButton>
                 }
               ></CardHeader>

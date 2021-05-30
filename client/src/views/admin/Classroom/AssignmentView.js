@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 
 import "./Button.css";
 
+import { useHistory } from "react-router-dom";
+
 import {
   Card,
   makeStyles,
   Grid,
   Box,
   Typography,
-  IconButton,
+  CircularProgress,
   Container,
   CardHeader,
   CardContent,
@@ -39,7 +41,11 @@ const useStyles = makeStyles(componentStyles);
 
 const AssignmentView = ({ user }) => {
   const classes = useStyles();
+  const history = useHistory();
+
   let id = window.location.pathname.split("/")[2];
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [assignment, setAssignment] = useState([]);
   const [filename, setFileName] = useState("");
@@ -49,6 +55,7 @@ const AssignmentView = ({ user }) => {
   const [submitted, setSubmitted] = useState(false);
   const [submittedFileUrl, setSubmittedFileUrl] = useState("");
   const [submittedAssignments, setSubmittedAssignments] = useState([]);
+
   const getAssignment = () => {
     axios
       .get(`/api/v1/course/assignment/${id}`)
@@ -70,9 +77,12 @@ const AssignmentView = ({ user }) => {
           setSubmittedFile(assignment.students[index]["fileName"]);
           setSubmitted(true);
         }
+
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        history.push("/");
       });
   };
 
@@ -220,7 +230,7 @@ const AssignmentView = ({ user }) => {
   return (
     <>
       <Header />
-      {assignment != null ? (
+      {assignment != null && !isLoading ? (
         <Container
           maxWidth={false}
           component={Box}
@@ -244,19 +254,15 @@ const AssignmentView = ({ user }) => {
                 <CardHeader
                   title={
                     <div style={{ display: "flex" }}>
-                      <IconButton
+                      <AssignmentIcon
+                        fontSize="large"
+                        color="primary"
                         style={{
-                          width: "50px",
-                          height: "50px",
-                          fontSize: "40px",
+                          height: "28px",
+                          width: "28px",
+                          margin: "10px",
                         }}
-                      >
-                        <AssignmentIcon
-                          fontSize="large"
-                          color="primary"
-                          style={{ height: "22px", width: "22px" }}
-                        />
-                      </IconButton>
+                      />
                       <Typography
                         style={{
                           fontSize: "20px",
@@ -422,6 +428,16 @@ const AssignmentView = ({ user }) => {
             </Grid>
           </Grid>
         </Container>
+      ) : isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            margin: "40px 0px",
+          }}
+        >
+          <CircularProgress />
+        </div>
       ) : null}
     </>
   );
