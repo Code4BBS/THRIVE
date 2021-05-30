@@ -19,7 +19,6 @@ import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import Clear from "@material-ui/icons/Clear";
 import MenuIcon from "@material-ui/icons/Menu";
-import Notification from "./../Navbars/Notification";
 // core components
 import componentStyles from "assets/theme/components/sidebar.js";
 
