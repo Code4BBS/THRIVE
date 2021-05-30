@@ -32,7 +32,9 @@ const AuthHeader = () => {
               color={theme.palette.white.main}
             >
               <Grid item lg={5} md={6} xs={8}>
-                <h2>Welcome to College Management Portal</h2>
+                <h2>
+                  Welcome to <i>THRIVE</i>
+                </h2>
                 <Box
                   component="p"
                   color={theme.palette.gray[400]}
