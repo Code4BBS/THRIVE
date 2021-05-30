@@ -62,8 +62,10 @@ const AssignmentView = ({ user }) => {
         setSubmittedAssignments(data);
 
         let assignment = res.data.data;
-        console.log(assignment);
-        let index = assignment.students.findIndex((el) => el.user == user._id);
+
+        let index = assignment.students.findIndex(
+          (el) => el.user.id == user._id
+        );
         if (index != -1) {
           setSubmittedFile(assignment.students[index]["fileName"]);
           setSubmitted(true);
