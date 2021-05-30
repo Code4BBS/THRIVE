@@ -1,6 +1,6 @@
 import React from "react";
 import CustomChip from "./CustomChip";
-import { TableCell, TableRow } from "@material-ui/core";
+import { TableCell, TableRow, Grid } from "@material-ui/core";
 
 const TagGroup = (props) => {
   return (
@@ -16,11 +16,7 @@ const TagGroup = (props) => {
         </TableCell>
       </TableRow>
       <TableRow>
-        <TableCell
-          align="left"
-          className={props.classes.cell}
-          style={{ border: 0 }}
-        >
+        <Grid container style={{ marginLeft: "1rem" }}>
           {props.tags
             .sort((a, b) => {
               if (a.name < b.name) return -1;
@@ -28,17 +24,28 @@ const TagGroup = (props) => {
             })
             .map((tag, index) => {
               return (
-                <li key={index} style={{ display: "inline" }}>
+                <Grid
+                  item
+                  xs="auto"
+                  align="left"
+                  style={{
+                    paddingLeft: "0.2rem",
+                    paddingRight: "0.2rem",
+                  }}
+                  className={props.classes.cell}
+                >
                   <CustomChip
                     tag={tag}
                     classes={props.classes}
                     addToSelected={props.addToSelected}
                     removeFromSelected={props.removeFromSelected}
+                    tagsSelected={props.tagsSelected}
                   />
-                </li>
+                </Grid>
+                // </li>
               );
             })}
-        </TableCell>
+        </Grid>
       </TableRow>
     </>
   );

@@ -292,6 +292,33 @@ function Profile({ user, getUserAgain }) {
         >
           {user.rollNumber}
         </Box>
+        {updatedData.bio ? (
+          [
+            <Box
+              component={Divider}
+              marginTop="1.5rem!important"
+              marginBottom="1.5rem!important"
+            ></Box>,
+            <Box
+              component="p"
+              fontWeight="300"
+              lineHeight="1.7"
+              marginBottom="1rem"
+              fontSize="1rem"
+            >
+              {user.bio}
+            </Box>,
+          ]
+        ) : (
+          <Chip
+            size="small"
+            style={{
+              width: "250px",
+              margin: "auto",
+            }}
+            label="No bio added yet"
+          />
+        )}
       </React.Fragment>
     );
   }
@@ -444,11 +471,12 @@ function Profile({ user, getUserAgain }) {
                   About you
                 </Box>
                 <div className={classes.plLg4}>
-                  <Grid container>
-                    <Grid item xs={12}>
-                      <FormGroup>
-                        <FormLabel>Bio</FormLabel>
-                        {updatedData.bio || editMode ? (
+                  {editMode ? (
+                    <Grid container>
+                      <Grid item xs={12}>
+                        <FormGroup>
+                          <FormLabel>Bio</FormLabel>
+
                           <FormControl
                             disabled={!editMode}
                             variant="filled"
@@ -477,19 +505,10 @@ function Profile({ user, getUserAgain }) {
                               }}
                             />
                           </FormControl>
-                        ) : (
-                          <Chip
-                            size="small"
-                            style={{
-                              width: "250px",
-                              margin: "auto",
-                            }}
-                            label="You haven't added any bio yet"
-                          />
-                        )}
-                      </FormGroup>
+                        </FormGroup>
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  ) : null}
                   <Grid container>
                     <Grid item xs={12}>
                       <FormGroup>

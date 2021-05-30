@@ -10,7 +10,7 @@ const componentStyles = (theme) => ({
     margin: 0,
   },
   chip: {
-    margin: theme.spacing(0.5),
+    margin: theme.spacing(0.1),
   },
   avatar: {
     marginRight: theme.spacing(2),
@@ -35,6 +35,10 @@ const componentStyles = (theme) => ({
     fontSize: 17,
     paddingTop: 8,
     paddingBottom: 8,
+  },
+  chipCell: {
+    border: 0,
+    // fontSize: 17,
   },
   cardRoot: {
     boxShadow: boxShadows.boxShadow + "!important",

@@ -204,7 +204,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
       ) : null}
       {filterVisibility ? (
         <Box mt={3}>
-          <Card classes={{ root: classes.cardRoot }}>
+          <Card>
             <CardContent style={{ padding: 20 }}>
               <Grid container spacing={3}>
                 <TableContainer>
