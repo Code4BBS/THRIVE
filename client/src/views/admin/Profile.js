@@ -15,6 +15,8 @@ import {
   FormGroup,
   FormLabel,
   Grid,
+  MenuItem,
+  Select,
   Typography,
   TableContainer,
   Table,
@@ -37,6 +39,75 @@ import { clone } from "ramda";
 const useStyles = makeStyles(componentStyles);
 
 const singleTags = ["Program", "Admission Year", "Branch"];
+
+const branches = [
+  {
+    value: "Not Specified",
+    label: "Not Specified",
+  },
+  {
+    value: "CSE",
+    label: "CSE",
+  },
+  {
+    value: "ECE",
+    label: "ECE",
+  },
+  {
+    value: "EE",
+    label: "EE",
+  },
+  {
+    value: "ME",
+    label: "ME",
+  },
+  {
+    value: "CE",
+    label: "CE",
+  },
+  {
+    value: "MM",
+    label: "MM",
+  },
+  {
+    value: "SBS",
+    label: "SBS",
+  },
+  {
+    value: "SEOCS",
+    label: "SEOCS",
+  },
+  {
+    value: "SHSS&M",
+    label: "SHSS&M",
+  },
+];
+const programs = [
+  {
+    value: "Not Specified",
+    label: "Not Specified",
+  },
+  {
+    value: "B.Tech",
+    label: "B.Tech",
+  },
+  {
+    value: "Dual Degree",
+    label: "Dual Degree",
+  },
+  {
+    value: "M.Tech",
+    label: "M.Tech",
+  },
+  {
+    value: "MSc",
+    label: "MSc",
+  },
+  {
+    value: "Ph.D",
+    label: "Ph.D",
+  },
+];
 
 function Profile({ user, getUserAgain }) {
   const classes = useStyles();
@@ -170,6 +241,8 @@ function Profile({ user, getUserAgain }) {
         rollNumber: updatedData.rollNumber,
         bio: updatedData.bio,
         tags: updatedData.tags,
+        branch: updatedData.branch,
+        program: updatedData.program,
       })
       .then((res) => {
         getUserAgain();
@@ -228,20 +301,30 @@ function Profile({ user, getUserAgain }) {
             <FormGroup>
               <FormLabel>Branch</FormLabel>
               <FormControl
-                disabled
+                disabled={!editMode}
                 variant="filled"
                 component={Box}
                 width="100%"
                 marginBottom="1rem!important"
               >
-                <Box
-                  paddingLeft="0.75rem"
-                  paddingRight="0.75rem"
-                  component={FilledInput}
-                  autoComplete="off"
-                  type="text"
-                  defaultValue={user.branch}
-                />
+                <Select
+                  value={
+                    updatedData.branch ? updatedData.branch : "Not Specified"
+                  }
+                  onChange={(event) => {
+                    let curr = { ...updatedData };
+                    curr.branch = event.target.value;
+                    setUpdatedData(curr);
+                  }}
+                >
+                  {branches.map((branch, id) => {
+                    return (
+                      <MenuItem key={id} value={branch.value}>
+                        {branch.label}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
               </FormControl>
             </FormGroup>
           </Grid>
@@ -249,20 +332,30 @@ function Profile({ user, getUserAgain }) {
             <FormGroup>
               <FormLabel>Program</FormLabel>
               <FormControl
-                disabled
+                disabled={!editMode}
                 variant="filled"
                 component={Box}
                 width="100%"
                 marginBottom="1rem!important"
               >
-                <Box
-                  paddingLeft="0.75rem"
-                  paddingRight="0.75rem"
-                  component={FilledInput}
-                  autoComplete="off"
-                  type="text"
-                  defaultValue={user.program}
-                />
+                <Select
+                  value={
+                    updatedData.program ? updatedData.program : "Not Specified"
+                  }
+                  onChange={(event) => {
+                    let curr = { ...updatedData };
+                    curr.program = event.target.value;
+                    setUpdatedData(curr);
+                  }}
+                >
+                  {programs.map((program, id) => {
+                    return (
+                      <MenuItem key={id} value={program.value}>
+                        {program.label}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
               </FormControl>
             </FormGroup>
           </Grid>
