@@ -118,17 +118,33 @@ Enroll Students
 
 <br/>
 Post Assignments
+
 ![image](https://user-images.githubusercontent.com/64681029/120109149-dac3ac80-c185-11eb-91f4-c3751aa9aa54.png)
 
 <br/>
 View Submissions
+
 ![image](https://user-images.githubusercontent.com/64681029/120109165-eadb8c00-c185-11eb-9816-00f874931985.png)
 
 <br/><br/>
 **Admin Actions**
 
 **College Admin**
+<br/>
 Add New Courses with a teacher
+![image](https://user-images.githubusercontent.com/64681029/120109276-502f7d00-c186-11eb-8b14-966425189655.png)
+
+<br/>
+
+**Student Admin**
+
+Blacklist Projects and Questions
+
+![image](https://user-images.githubusercontent.com/64681029/120109321-8ec53780-c186-11eb-8ab4-f868013f8571.png)
+
+<br/>
+
+![image](https://user-images.githubusercontent.com/64681029/120109345-a7355200-c186-11eb-93f9-b794a28c1908.png)
 
 
 
