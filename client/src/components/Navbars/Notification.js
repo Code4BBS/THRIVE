@@ -14,8 +14,7 @@ import axios from "axios";
 import SvgIcon from "@material-ui/core/SvgIcon";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import SupervisorAccountIcon from "@material-ui/icons/SupervisorAccount";
-import SchoolIcon from "@material-ui/icons/School";
-import AssignmentIcon from "@material-ui/icons/Assignment";
+
 import {
   UserX,
   Users,
@@ -74,7 +73,6 @@ const useStyles = makeStyles({
 });
 
 const Notification = ({ user, history, color }) => {
-  // const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [notifications, setNotifications] = useState([

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Box, Container, withStyles, Card } from "@material-ui/core";
-import Page from "./Page";
 import Results from "./Results";
 import axios from "axios";
 import Header from "components/Headers/Header.js";

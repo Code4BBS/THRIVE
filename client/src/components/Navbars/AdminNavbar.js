@@ -7,14 +7,9 @@ import Container from "@material-ui/core/Container";
 // import InputBase from "@material-ui/core/InputBase";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-// @material-ui/icons components
-import SearchIcon from "@material-ui/icons/Search";
-import { InputBase } from "@material-ui/core";
-import SvgIcon from "@material-ui/core/SvgIcon";
+
 // core components
 import NavbarDropdown from "components/Dropdowns/NavbarDropdown.js";
-import NotificationsIcon from "@material-ui/icons/Notifications";
-
 import componentStyles from "assets/theme/components/admin-navbar.js";
 import Notification from "./Notification";
 

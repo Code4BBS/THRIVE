@@ -6,7 +6,6 @@ import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import ProfilePage from "views/admin/ProfilePage.js";
 import Tables from "views/admin/Tables.js";
-// import CollegeAdmin from "views/admin/CollegeAdmin/collegeAdmin";
 import CalendarView from "views/admin/Classroom/Calendar";
 import CollegeMain from "views/admin/CollegeAdmin/collegeMain";
 import NewCourse from "views/admin/CollegeAdmin/NewCourse.js";

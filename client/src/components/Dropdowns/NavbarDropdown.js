@@ -1,4 +1,11 @@
+//React
 import React from "react";
+import axios from "axios";
+import { useHistory } from "react-router-dom";
+
+//O Auth
+import { GoogleLogout } from "react-google-login";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Avatar from "@material-ui/core/Avatar";
@@ -9,16 +16,10 @@ import Hidden from "@material-ui/core/Hidden";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Typography from "@material-ui/core/Typography";
+
 // @material-ui/icons components
 import DirectionsRun from "@material-ui/icons/DirectionsRun";
-import EventNote from "@material-ui/icons/EventNote";
-import LiveHelp from "@material-ui/icons/LiveHelp";
 import Person from "@material-ui/icons/Person";
-import Settings from "@material-ui/icons/Settings";
-import { GoogleLogout } from "react-google-login";
-import axios from "axios";
-
-import { useHistory } from "react-router-dom";
 
 // core components
 import componentStyles from "../../assets/theme/components/navbar-dropdown.js";
@@ -95,17 +96,6 @@ export default function NavbarDropdown({ user, cookies, logOut }) {
       </Box>
 
       <Divider component="div" classes={{ root: classes.dividerRoot }} />
-      {/* <Box
-        display="flex!important"
-        alignItems="center!important"
-        component={MenuItem}
-      >
-        <Box
-          component={DirectionsRun}
-          width="1.25rem!important"
-          height="1.25rem!important"
-          marginRight="1rem"
-        /> */}
       <GoogleLogout
         clientId="814516511786-nucvcmf3osa464saoshkeg2ma2slfuqa.apps.googleusercontent.com"
         buttonText="LOG OUT"
@@ -142,7 +132,6 @@ export default function NavbarDropdown({ user, cookies, logOut }) {
           boxSizing: "inherit",
         }}
       ></GoogleLogout>
-      {/* </Box> */}
     </Menu>
   );
 

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import clsx from "clsx";
 import PropTypes from "prop-types";
 import axios from "axios";
 import { clone } from "ramda";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import TagGroup from "./TagGroup";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
-// import { useNavigate } from 'react-router-dom';
+
 import {
   Avatar,
   Box,
@@ -49,7 +47,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
   const [filterVisibility, setFilterVisibility] = useState(false);
   const [sortedTags, setSortedTags] = useState([]);
   const [processedTags, setProcessTags] = useState(false);
-  // let navigate = useNavigate();
+
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
   };
@@ -170,8 +168,6 @@ const Results = ({ className, customers, tags, ...rest }) => {
                         style={{ verticalAlign: "middle" }}
                       >
                         Filter students by skills, activities and participation
-                        {/* <FilterListIcon color='primary' size='large' cursor='pointer' variant='filled' onClick={displayFilterPane} />
-                          <AutorenewIcon cursor='pointer' size='large' variant='filled' onClick={resetSearch} /> */}
                       </TableCell>
 
                       <TableCell align="right" className={classes.cell}>
@@ -267,21 +263,6 @@ const Results = ({ className, customers, tags, ...rest }) => {
                       <TableRow>
                         <TableCell>
                           <Grid item md={7} xs={12}>
-                            {/* <Input
-                              fullWidth
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <SvgIcon fontSize="small" color="action">
-                                      <SearchIcon />
-                                    </SvgIcon>
-                                  </InputAdornment>
-                                ),
-                              }}
-                              onChange={searchUser}
-                              placeholder="Search student by name or email"
-                              variant="outlined"
-                            /> */}
                             <Box
                               display="flex"
                               alignItems="center"
@@ -371,18 +352,10 @@ const Results = ({ className, customers, tags, ...rest }) => {
                                 </Typography>
                               </Box>
                             </TableCell>
-
-                            {/* <TableCell style={{ verticalAlign: 'middle' }}>
-                            {customer.verifyStatus ? (
-                              <CheckCircleIcon color="primary" />
-                            ) : null}
-                          </TableCell> */}
-
                             <TableCell>{customer.email}</TableCell>
                             <TableCell>
                               {customer.rollNumber || "19CSX002"}
                             </TableCell>
-                            {/* <TableCell>{customer.room || "A-12X"}</TableCell> */}
                           </TableRow>
                         ))}
                     </TableBody>

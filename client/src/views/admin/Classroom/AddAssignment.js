@@ -21,15 +21,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Header from "../../../components/Headers/Header.js";
 import componentStyles from "assets/theme/views/admin/profile.js";
 import Chip from "@material-ui/core/Chip";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
-// import TextField from "@material-ui/core/TextField";
-// import AdapterDateFns from "@material-ui/lab/AdapterDateFns";
-// import LocalizationProvider from "@material-ui/lab/LocalizationProvider";
-// import DatePicker from "@material-ui/lab/DatePicker";
-// import MobileDatePicker from "@material-ui/lab/MobileDatePicker";
-// import DesktopDatePicker from "@material-ui/lab/DesktopDatePicker";
-// var DatePicker = require("react-bootstrap-date-picker");
 import axios from "axios";
 
 const useStyles = makeStyles(componentStyles);
@@ -249,33 +240,6 @@ function CreateAssignment({ user, history }) {
                     </FormGroup>
                   </Grid>
                 </Grid>
-                {/* <Grid container>
-                  <Grid item xs={12} lg={6}>
-                    <FormGroup>
-                      <FormLabel>Duration</FormLabel>
-                      <FormControl
-                        variant="filled"
-                        width="100%"
-                        styles={{ marginBottom: "1rem!important" }}
-                      >
-                        <FilledInput
-                          style={{
-                            paddingLeft: "0.75rem",
-                            paddingRight: "0.75rem",
-                          }}
-                          classes={{ input: classes.searchInput }}
-                          type="text"
-                          value={values.duration}
-                          label="Duration"
-                          name="duration"
-                          onChange={handleChange}
-                          placeholder="E.g. 1 month from June 2021"
-                        />
-                      </FormControl>
-                    </FormGroup>
-                  </Grid>
-                </Grid> */}
-
                 <FormControl variant="filled" width="100%">
                   <FilledInput
                     type="file"
@@ -310,19 +274,6 @@ function CreateAssignment({ user, history }) {
                 marginBottom="0.8rem!important"
                 marginTop="0.8rem!important"
               />
-              {/* <Box
-                component={Typography}
-                variant="h6"
-                color={theme.palette.gray[600] + "!important"}
-                paddingTop=".25rem"
-                paddingBottom=".25rem"
-                fontSize=".75rem!important"
-                letterSpacing=".04em"
-                marginBottom="1.5rem!important"
-                classes={{ root: classes.typographyRootH6 }}
-              >
-                Submit Assignment
-              </Box> */}
               <Box
                 sx={{
                   display: "center",

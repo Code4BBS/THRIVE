@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
+
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -7,10 +8,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
-// import CardActions from "@material-ui/core/CardActions";
 import CardHeader from "@material-ui/core/CardHeader";
 import Container from "@material-ui/core/Container";
-// import LinearProgress from "@material-ui/core/LinearProgress";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import Table from "@material-ui/core/Table";
@@ -22,13 +21,12 @@ import TableRow from "@material-ui/core/TableRow";
 import TablePagination from "@material-ui/core/TablePagination";
 import Tooltip from "@material-ui/core/Tooltip";
 import { Grid, Typography } from "@material-ui/core";
+
 // @material-ui/lab components
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
-// import Pagination from "@material-ui/lab/Pagination";
+
 // @material-ui/icons components
 import MoreVert from "@material-ui/icons/MoreVert";
-
-import Modal from "components/Custom/Modals/Modal.js";
 
 // core components
 import Header from "../../../components/Headers/Header.js";
@@ -45,14 +43,10 @@ const CourseTable = ({ user, history }) => {
   const [courses, setCourses] = useState([]);
   const [isLoading, setLoading] = React.useState(true);
   const [cardTitle, setCardTitle] = React.useState("Courses in college");
-  const [addButton, showAddButton] = React.useState(false);
   const [anchorId, setAnchorId] = React.useState(null);
   const [currentAnchor, setCurrentAnchor] = React.useState(null);
   const [limit, setLimit] = React.useState(10);
   const [page, setPage] = React.useState(0);
-  const [tagsPane, setShowTagsPane] = React.useState(false);
-  const [tagsList, setTagsList] = React.useState([]);
-  const [selectedTags, setSelectedTags] = React.useState([]);
 
   const handleMenuClick = (event, index) => {
     setCurrentAnchor(event.currentTarget);
@@ -70,23 +64,6 @@ const CourseTable = ({ user, history }) => {
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
   };
-
-  //   const getAllProjectsByTags = () => {
-  //     const data = {
-  //       tagsSelected: selectedTags,
-  //     };
-
-  //     axios
-  //       .post("/api/v1/search/project/tags", data, { withCredentials: true })
-  //       .then((response) => {
-  //         let data = response.data.data.projects;
-  //         console.log(data);
-  //         console.log("response");
-  //         if (data) setProjects(data);
-  //         setPage(0);
-  //       })
-  //       .catch((err) => console.log(err));
-  //   };
 
   const headers = ["Course", "ID", "Branch", "Teacher", "Students"];
 
@@ -162,50 +139,6 @@ const CourseTable = ({ user, history }) => {
                       Create new Course
                     </Button>
                   </Grid>
-                  {/* <Grid item xs="auto">
-                      <Box
-                        justifyContent="flex-end"
-                        display="flex"
-                        flexWrap="wrap"
-                      >
-                        {selectedTags.length === 0 ? (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            onClick={() => getAllTags()}
-                            style={{ marginTop: "0.25rem" }}
-                          >
-                            Search by Tags
-                          </Button>
-                        ) : (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            onClick={() => reset()}
-                          >
-                            Reset
-                          </Button>
-                        )}
-                        {addButton ? (
-                          <Button
-                            variant="outlined"
-                            color="primary"
-                            size="small"
-                            onClick={() =>
-                              (window.location.href = "/projects/add")
-                            }
-                            style={{
-                              marginLeft: "0.25rem",
-                              marginTop: "0.25rem",
-                            }}
-                          >
-                            Add New Project
-                          </Button>
-                        ) : null}
-                      </Box>
-                    </Grid> */}
                 </Grid>
               }
             >
@@ -351,22 +284,6 @@ const CourseTable = ({ user, history }) => {
                                   </Box>
                                 </Box>
                               </TableCell>
-
-                              {/* <TableCell
-                                classes={{ root: classes.tableCellRoot }}
-                              >
-                                <Button
-                                  variant="contained"
-                                  size="small"
-                                  style={{ marginRight: "0.5rem" }}
-                                  onClick={() =>
-                                    (window.location.href = `/projects/${project._id}`)
-                                  }
-                                >
-                                  Click Here
-                                </Button>
-                              </TableCell> */}
-
                               {user && user.role === "admin" ? (
                                 <TableCell
                                   classes={{ root: classes.tableCellRoot }}

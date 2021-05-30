@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import TagList from "./../Project/TagsList";
-import Results from "./../Project/ProjectCollaborators";
 // @material-ui/core components
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { useTheme } from "@material-ui/core/styles";
@@ -14,26 +12,17 @@ import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
 import FilledInput from "@material-ui/core/FilledInput";
 import FormControl from "@material-ui/core/FormControl";
-import FormHelperText from "@material-ui/core/FormHelperText";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormLabel from "@material-ui/core/FormLabel";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
-import TextField from "@material-ui/core/TextField";
-// @material-ui/icons components
-import LocationOn from "@material-ui/icons/LocationOn";
-import School from "@material-ui/icons/School";
-import InputLabel from "@material-ui/core/InputLabel";
 import NativeSelect from "@material-ui/core/NativeSelect";
 
 // core components
 import Header from "../../../components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/profile.js";
-import boxShadows from "assets/theme/box-shadow.js";
 import Chip from "@material-ui/core/Chip";
 import axios from "axios";
 
@@ -100,7 +89,6 @@ function NewCourse({ user, history }) {
     axios
       .post("/api/v1/course", { ...values })
       .then((response) => {
-        // console.log(response);
         alert("Successfully created course");
         history.push("/courses/all");
       })
@@ -154,21 +142,6 @@ function NewCourse({ user, history }) {
                       styles={{ color: "black!important" }}
                     />
                   </Grid>
-                  {/* <Grid item xs="auto">
-              <Box
-                justifyContent="flex-end"
-                display="flex"
-                flexWrap="wrap"
-              >
-                <Button
-                  variant="contained"
-                  color="primary"
-                  size="small"
-                >
-                  Settings
-                </Button>
-              </Box>
-            </Grid> */}
                 </Grid>
               }
               classes={{ root: classes.cardHeaderRoot }}
@@ -292,10 +265,6 @@ function NewCourse({ user, history }) {
                       </FormControl>
                     </FormGroup>
                   </Grid>
-                  {/* <Grid item xs={12} lg={6} style={{ marginBottom: "10px" }}>
-                   
-                    
-                  </Grid> */}
                 </Grid>
               </div>
               <Box
@@ -374,8 +343,7 @@ function NewCourse({ user, history }) {
                   )
                 }
                 onClick={(e) => {
-                  postCourse(e);
-                  // window.alert("clicked");
+                  postCourse(e); // window.alert("clicked");
                 }}
               >
                 Submit
