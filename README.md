@@ -81,10 +81,9 @@ College admins can create courses with teachers in it. Teachers thus can enroll 
 Students can have realtime chats in the classroom with peers and teacher. Teachers can post assignments with deadlines and review the submission. Students are provided with a calender where they can view all assignments having deadlines on a particular date.
 
 
-
 <hr/>
 
-### [Working Demo](https://drive.google.com/file/d/1X5iXCO4KyhlDXo5eMGVyDoh_QW5Rz_L-/view)
+### [Working Demo Video](https://www.youtube.com/watch?v=Z6nRdnxHUu8)
 
 ## Pages
 
@@ -122,16 +121,19 @@ Students can have realtime chats in the classroom with peers and teacher. Teache
 **All Projects**
 ![image](https://user-images.githubusercontent.com/64681029/120107755-d5636380-c17f-11eb-9bf3-b0b3fdeca121.png)
 <br/>
+
 **Post Project**
 ![image](https://user-images.githubusercontent.com/64681029/120107818-19566880-c180-11eb-9cd3-2eadda7e8978.png)
 <br/>
+
 **View Project**
 ![image](https://user-images.githubusercontent.com/64681029/120107835-3428dd00-c180-11eb-845c-b35754bb97dc.png)
 <br/>
+
 **Request to Join**
 ![image](https://user-images.githubusercontent.com/64681029/120107985-caf59980-c180-11eb-9869-e5e2afa822bb.png)
 <br/>
-**Project Owner Options**:&nbsp; &nbsp;
+**Project Owner Options**: &nbsp; &nbsp;
 ![image](https://user-images.githubusercontent.com/64681029/120108018-f24c6680-c180-11eb-9fed-a8b76450d56f.png)
 <br/><br/>
 
@@ -143,8 +145,10 @@ Students can have realtime chats in the classroom with peers and teacher. Teache
 <br/>
 
 **Post Question**
+
 ![image](https://user-images.githubusercontent.com/64681029/120108273-1197c380-c182-11eb-9f16-63e0d538b010.png)
 <br/>
+
 **View A Question and Answer it**
 ![image](https://user-images.githubusercontent.com/64681029/120108298-31c78280-c182-11eb-958a-6ecfe4102582.png)
 <br/><br/>
@@ -166,15 +170,18 @@ Students can have realtime chats in the classroom with peers and teacher. Teache
 <br/><br/>
 **Faculty Options**
 <br/>
-Enroll Students
+
+**Enroll Students**
 ![image](https://user-images.githubusercontent.com/64681029/120109116-b1a31c00-c185-11eb-9461-d47c4c83b8dc.png)
 
 <br/>
+
 **Post Assignments**
 
 ![image](https://user-images.githubusercontent.com/64681029/120109149-dac3ac80-c185-11eb-91f4-c3751aa9aa54.png)
 
 <br/>
+
 **View Submissions**
 
 ![image](https://user-images.githubusercontent.com/64681029/120109165-eadb8c00-c185-11eb-9816-00f874931985.png)
@@ -182,7 +189,8 @@ Enroll Students
 <br/><br/>
 
 **Admin Actions**
-<br/>
+<br/><br/>
+
 **College Admin**
 <br/>
 **Add New Courses with a teacher**
@@ -200,6 +208,13 @@ Enroll Students
 
 ![image](https://user-images.githubusercontent.com/64681029/120109345-a7355200-c186-11eb-93f9-b794a28c1908.png)
 
+
+<br/><br/>
+
+**Notifications**
+Users are informed about various events like Collab Request, Assignments etc via notifications.
+
+![image](https://user-images.githubusercontent.com/64681029/120113870-1bc5bc00-c19a-11eb-961a-5f17ea3f65aa.png)
 
 <br/><br/>
 
