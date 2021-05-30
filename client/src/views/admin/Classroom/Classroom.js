@@ -45,95 +45,111 @@ function Classroom({ user, history }) {
   return (
     <div>
       <Header />
-      <Grid
-        container
-        spacing={3}
-        style={{
-          margin: "-6rem auto 0px auto",
-          justifyContent: "space-evenly",
-          width: "100%",
-        }}
-      >
-        {courses.map((course, index) => (
-          <Grid
-            item
-            style={{
-              width: "340px",
-              marginBottom: "20px",
-              cursor: "pointer",
-            }}
-            component={Box}
-            marginBottom="3rem!important"
-            key={course.courseCode}
-            onClick={() => {
-              console.log("clicked");
-              history.push(`/courses/${course.courseCode}/${course.id}`);
-            }}
-          >
-            <Card
-              classes={
-                {
-                  // root: classes.cardRoot,
-                }
-              }
+      {courses.length > 0 ? (
+        <Grid
+          container
+          spacing={3}
+          style={{
+            margin: "-6rem auto 0px auto",
+            justifyContent: "space-evenly",
+            width: "100%",
+          }}
+        >
+          {courses.map((course, index) => (
+            <Grid
+              item
               style={{
-                height: "100%",
-                boxShadow: "0px 0px 1rem rgba(136,152,170,0.35)",
-                border: "0!important",
+                width: "340px",
+                marginBottom: "20px",
+                cursor: "pointer",
+              }}
+              component={Box}
+              marginBottom="3rem!important"
+              key={course.courseCode}
+              onClick={() => {
+                console.log("clicked");
+                history.push(`/courses/${course.courseCode}/${course.id}`);
               }}
             >
-              <CardHeader
-                style={{ minHeight: "140px" }}
-                subheader={
-                  <Box>
-                    <Box
-                      component={Typography}
-                      variant="h2"
-                      className={classes.textUppercase}
-                      marginBottom="1rem!important"
-                    >
-                      <Box
-                        component="span"
-                        //   color={theme.palette.white.main}
-                        style={{
-                          textAlign: "center",
-                        }}
-                      >
-                        {course.name}
-                      </Box>
-                    </Box>
-
-                    <Box
-                      component={Typography}
-                      variant="h5"
-                      letterSpacing=".0625rem"
-                      marginBottom=".25rem!important"
-                    >
-                      <Box component="span" color={theme.palette.gray[600]}>
-                        {course.courseCode}
-                      </Box>
-                    </Box>
-                  </Box>
+              <Card
+                classes={
+                  {
+                    // root: classes.cardRoot,
+                  }
                 }
-                classes={{ root: classes.cardHeaderRoot }}
-              ></CardHeader>
-              <CardContent classes={{ root: classes.cardHeaderRoot }}>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <Avatar
-                    style={{
-                      width: "40px",
-                      height: "40px",
-                      marginRight: "10px",
-                    }}
-                    src={course.teacher.image}
-                  />
-                  <Typography>{course.teacher.name}</Typography>
-                </div>
-              </CardContent>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                style={{
+                  height: "100%",
+                  boxShadow: "0px 0px 1rem rgba(136,152,170,0.35)",
+                  border: "0!important",
+                }}
+              >
+                <CardHeader
+                  style={{ minHeight: "140px" }}
+                  subheader={
+                    <Box>
+                      <Box
+                        component={Typography}
+                        variant="h2"
+                        className={classes.textUppercase}
+                        marginBottom="1rem!important"
+                      >
+                        <Box
+                          component="span"
+                          //   color={theme.palette.white.main}
+                          style={{
+                            textAlign: "center",
+                          }}
+                        >
+                          {course.name}
+                        </Box>
+                      </Box>
+
+                      <Box
+                        component={Typography}
+                        variant="h5"
+                        letterSpacing=".0625rem"
+                        marginBottom=".25rem!important"
+                      >
+                        <Box component="span" color={theme.palette.gray[600]}>
+                          {course.courseCode}
+                        </Box>
+                      </Box>
+                    </Box>
+                  }
+                  classes={{ root: classes.cardHeaderRoot }}
+                ></CardHeader>
+                <CardContent classes={{ root: classes.cardHeaderRoot }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      style={{
+                        width: "40px",
+                        height: "40px",
+                        marginRight: "10px",
+                      }}
+                      src={course.teacher.image}
+                    />
+                    <Typography>{course.teacher.name}</Typography>
+                  </div>
+                </CardContent>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <Grid item>
+          <Card
+            style={{
+              display: "flex",
+              fontSize: "20px",
+              padding: "20px",
+              justifyContent: "center",
+              textAlign: "center",
+            }}
+          >
+            You are not enrolled in any courses
+          </Card>
+        </Grid>
+      )}
     </div>
   );
 }
