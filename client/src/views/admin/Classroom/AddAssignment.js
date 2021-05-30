@@ -46,7 +46,7 @@ function CreateAssignment({ user, history }) {
   };
 
   useEffect(() => {
-    console.log(selectedFile);
+    //console.log(selectedFile);
   }, [selectedFile]);
 
   const selectFile = (event) => {
@@ -64,11 +64,11 @@ function CreateAssignment({ user, history }) {
     const formData = new FormData();
     formData.append("file", selectedFile);
     const query = `/api/v1/course/assignment?courseId=${course._id}&name=${values.name}&description=${values.description}&deadline=${values.deadline}`;
-    console.log(query);
+    //console.log(query);
     axios
       .post(query, formData, { withCredentials: true })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         alert("New assignment created");
         history.push("/classroom");
       })
@@ -81,7 +81,7 @@ function CreateAssignment({ user, history }) {
       .get(`/api/v1/course/${id}`)
       .then((res) => {
         setCourse(res.data);
-        console.log(res.data);
+        //console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

@@ -66,7 +66,7 @@ function NewCourse({ user, history }) {
   const classes = useStyles();
   const theme = useTheme();
 
-  // console.log(user);
+  // //console.log(user);
 
   const [values, setValues] = useState({
     name: "",

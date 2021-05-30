@@ -60,7 +60,7 @@ const Login = ({ sucessLogin, load }) => {
           }
         )
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           sucessLogin(response);
           load(false);
         })
@@ -68,11 +68,11 @@ const Login = ({ sucessLogin, load }) => {
           console.log(err);
           load(false);
         });
-      console.log("success");
+      //console.log("success");
     }
   };
   const failureResponseGoogle = (response) => {
-    console.log("he2");
+    //console.log("he2");
     alert("Use your IIT BBS email for login");
   };
 
@@ -82,7 +82,7 @@ const Login = ({ sucessLogin, load }) => {
     axios
       .post("/api/v1/auth/testLogin", data, { withCredentials: true })
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         sucessLogin(response);
       })
       .catch((err) => console.log(err));

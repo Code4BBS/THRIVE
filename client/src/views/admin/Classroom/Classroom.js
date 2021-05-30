@@ -67,7 +67,7 @@ function Classroom({ user, history }) {
               marginBottom="3rem!important"
               key={course.courseCode}
               onClick={() => {
-                console.log("clicked");
+                //console.log("clicked");
                 history.push(`/courses/${course.courseCode}/${course.id}`);
               }}
             >

@@ -17,12 +17,12 @@ let gfs;
 mongoose.connection
   .once("open", () => {
     // Init stream
-    console.log("connected");
+    //console.log("connected");
     gfs = Grid(mongoose.connection.db, mongoose.mongo);
     gfs.collection("uploads");
   })
   .on("error", function (error) {
-    console.log("Error is: ", error);
+    //console.log("Error is: ", error);
   });
 
 // Create storage engine
@@ -108,21 +108,21 @@ exports.getFile = (req, res) => {
     }
     // if (file.contentType !== "image/jpeg" || file.contentType !== "image/png") {
     // Read output to browser
-    // console.log(file);
+    // //console.log(file);
     res.setHeader("Content-Type", file.contentType);
     const readstream = gfs.createReadStream(file.filename);
 
     readstream.pipe(res);
 
     // res.json(file);
-    console.log("here");
+    //console.log("here");
     // } else {
     //   res.status(404).json({
     //     err: "Not an image",
     //   });
     // }
     // File exists
-    // console.log(file);
+    // //console.log(file);
     // return res.json(file);
   });
 };

@@ -70,7 +70,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response.data.data.users);
+        //console.log(response.data.data.users);
         if (response.data.data.users.length) setUsers(response.data.data.users);
         else setUsers([]);
         setFilterVisibility(false);

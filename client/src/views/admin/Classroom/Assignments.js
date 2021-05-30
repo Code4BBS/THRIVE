@@ -31,10 +31,10 @@ import componentStyles from "assets/theme/views/admin/dashboard.js";
 const useStyles = makeStyles(componentStyles);
 
 const Assignments = ({ course, history, user }) => {
-  console.log(course);
+  //console.log(course);
   const classes = useStyles();
   let id = window.location.pathname.split("/")[3];
-  console.log(id);
+  //console.log(id);
 
   const [assignments, setAssignments] = useState([]);
   const [isLoading, setLoading] = useState(true);
@@ -44,7 +44,7 @@ const Assignments = ({ course, history, user }) => {
       .then((res) => {
         setAssignments(res.data.data);
         setLoading(false);
-        // console.log(res.data.data);
+        // //console.log(res.data.data);
       })
       .catch((err) => {
         console.log(err);

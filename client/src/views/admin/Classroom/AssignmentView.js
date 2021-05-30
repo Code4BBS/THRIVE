@@ -109,8 +109,8 @@ const AssignmentView = ({ user }) => {
         responseType: "arraybuffer",
       })
       .then((response) => {
-        console.log(response.data);
-        // console.log(response);
+        //console.log(response.data);
+        // //console.log(response);
         const file = new Blob([response.data], {
           type: response.headers["content-type"],
         });
@@ -129,8 +129,8 @@ const AssignmentView = ({ user }) => {
         responseType: "arraybuffer",
       })
       .then((response) => {
-        console.log(response.data);
-        // console.log(response);
+        //console.log(response.data);
+        // //console.log(response);
         const file = new Blob([response.data], {
           type: response.headers["content-type"],
         });
@@ -152,8 +152,8 @@ const AssignmentView = ({ user }) => {
         }
       )
       .then((response) => {
-        console.log(response.data);
-        // console.log(response);
+        //console.log(response.data);
+        // //console.log(response);
         const file = new Blob([response.data], {
           type: response.headers["content-type"],
         });

@@ -44,10 +44,10 @@ function CalendarView({ user, history }) {
 
   const changeDate = (value, event) => {
     const selectedDate = value.value;
-    // console.log(new Date(value.value).getFullYear());
+    // //console.log(new Date(value.value).getFullYear());
     // let dateArr = selectedDate.split("/");
     // const formattedDate = dateArr[2] + "-" + dateArr[1] + "-" + dateArr[0];
-    // console.log(formattedDate);
+    // //console.log(formattedDate);
     setDate(selectedDate);
   };
 
@@ -61,11 +61,11 @@ function CalendarView({ user, history }) {
     if (month < 10) month = `0${month}`;
     let Year = curr.getFullYear();
     let reqDate = Year + "-" + month + "-" + dt;
-    console.log(reqDate);
+    //console.log(reqDate);
     axios
       .get(`/api/v1/course/deadline?deadline=${reqDate}`)
       .then((res) => {
-        // console.log(res.data.data);
+        // //console.log(res.data.data);
         setAssignments(res.data.data);
       })
       .catch((err) => {

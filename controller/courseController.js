@@ -30,7 +30,7 @@ exports.getAllCourses = catchAsync(async (req, res, next) => {
 });
 
 exports.getMyCourses = catchAsync(async (req, res, next) => {
-  console.log(req.body);
+  //console.log(req.body);
   let courses;
   if (req.user.role !== "Teacher") {
     courses = await Course.find({ _id: { $in: req.body } }).populate({
@@ -63,7 +63,7 @@ exports.getCourse = catchAsync(async (req, res, next) => {
 exports.createCourse = catchAsync(async (req, res, next) => {
   //Required  : name , courseCode, teacher , year , branch
   const { name, courseCode, email, year, branch } = req.body;
-  console.log(typeof email);
+  //console.log(typeof email);
   const Teacher = await User.findOneAndUpdate(
     { email: email },
     { role: "Teacher" }
@@ -178,12 +178,12 @@ exports.createAssignment = catchAsync(async (req, res, next) => {
   // if (!req.params.id) {
   //   return next(new AppError("Course Id is not mentioned", 404));
   // }
-  console.log(req.query);
+  //console.log(req.query);
   const courseId = req.query.courseId;
   const name = req.query.name;
   const description = req.query.description;
   const deadline = req.query.deadline;
-  console.log(courseId);
+  //console.log(courseId);
   // if(req.user.role != "Teacher"){
   //   return next(new AppError('Only teachers are allowed to post assignment',404));
   // }
@@ -331,7 +331,7 @@ exports.getAllChatMessagesByCourse = catchAsync(async (req, res, next) => {
 
 exports.sendMessage = async (chatMessage) => {
   try {
-    // console.log("Send Message Triggered");
+    // //console.log("Send Message Triggered");
     const { userId, courseId, message, createdAt } = chatMessage;
 
     if (!courseId) return new AppError("No Course ID provided!", 404);
@@ -351,9 +351,9 @@ exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
   const deadline = req.query.deadline;
   const coursesEnrolled = req.user.coursesEnrolled;
 
-  console.log(coursesEnrolled);
+  //console.log(coursesEnrolled);
 
-  console.log(deadline);
+  //console.log(deadline);
   const assignments = await Assignment.find({
     courseId: { $in: coursesEnrolled },
     deadline: deadline,
@@ -363,7 +363,7 @@ exports.getAssignmentsByDeadline = catchAsync(async (req, res, next) => {
     select: "name image",
   });
 
-  console.log(assignments);
+  //console.log(assignments);
 
   res.status(200).json({
     status: "success",

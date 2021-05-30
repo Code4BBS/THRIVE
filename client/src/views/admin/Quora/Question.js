@@ -131,7 +131,7 @@ class QuoraCont extends Component {
       this.state.question.isAnonymous === false &&
       this.state.askedById == this.props.user._id
     ) {
-      console.log(this.state.askedById == this.props.user._id);
+      //console.log(this.state.askedById == this.props.user._id);
       deleteButton = (
         <IconButton
           onClick={() => this.setState({ deleteClicked: true })}
@@ -147,7 +147,7 @@ class QuoraCont extends Component {
           />
         </IconButton>
       );
-      console.log(deleteButton);
+      //console.log(deleteButton);
     } else {
       deleteButton = null;
     }

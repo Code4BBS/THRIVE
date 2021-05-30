@@ -26,7 +26,7 @@ function CollegeDashboard({ user }) {
 
   const classes = useStyles();
   const theme = useTheme();
-  // console.log(user);
+  // //console.log(user);
 
   const [isLoading, setLoading] = useState(false);
 

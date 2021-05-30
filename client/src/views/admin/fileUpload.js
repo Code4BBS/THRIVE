@@ -31,7 +31,7 @@ class File extends Component {
     );
 
     // Details of the uploaded file
-    console.log(this.state.selectedFile);
+    //console.log(this.state.selectedFile);
 
     // Request made to the backend api
     // Send formData object
@@ -40,7 +40,7 @@ class File extends Component {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         this.setState({
           fileName: response.data.filename,
           showButton: true,
@@ -93,7 +93,7 @@ class File extends Component {
         responseType: "arraybuffer",
       })
       .then((response) => {
-        console.log(response.data);
+        //console.log(response.data);
         // var arrBuffer = this.base64ToArrayBuffer(response.data);
         const file = new Blob([response.data], {
           type: "application/pdf",

@@ -13,7 +13,7 @@ socketSetup(server);
 dotenv.config();
 
 console.log("Starting app..");
-console.log("Waiting for connection to MongoDB");
+//console.log("Waiting for connection to MongoDB");
 
 mongoose
   .connect(config.MONGODB_URI, {

@@ -90,7 +90,7 @@ const Project = ({ user }) => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
           window.alert("Something went wrong! Try again Later");
         });
     } else {

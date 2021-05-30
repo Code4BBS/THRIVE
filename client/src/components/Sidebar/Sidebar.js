@@ -33,7 +33,7 @@ export default function Sidebar({
   user,
   history,
 }) {
-  console.log(role);
+  //console.log(role);
   const classes = useStyles();
   const location = useLocation();
   const [anchorEl, setAnchorEl] = useState(null);

@@ -65,7 +65,7 @@ const createProject = catchAsync(async (req, res, next) => {
     tags,
     collaborators,
   } = req.body;
-  console.log(tags);
+  //console.log(tags);
   if (!title || !description || !communication)
     return next(new AppError("All Required Fields not there", 400));
   let createdAt = Date.now();
@@ -121,7 +121,7 @@ const createProject = catchAsync(async (req, res, next) => {
     { $push: { notifications: matchNotification }, notificationsSeen: false }
   );
 
-  // console.log(updatedCollaborators);
+  // //console.log(updatedCollaborators);
 
   res.status(201).json({
     status: "success",
@@ -148,7 +148,7 @@ const updateProject = catchAsync(async (req, res, next) => {
     message: "Project updated successfully",
     project: project,
   });
-  console.log("reached");
+  //console.log("reached");
 });
 
 const deleteProject = catchAsync(async (req, res, next) => {
@@ -163,7 +163,7 @@ const deleteProject = catchAsync(async (req, res, next) => {
 });
 
 const blacklistProject = catchAsync(async (req, res, next) => {
-  console.log(req.params.id);
+  //console.log(req.params.id);
 
   const project = await Project.findByIdAndUpdate(req.params.id, {
     blacklisted: true,

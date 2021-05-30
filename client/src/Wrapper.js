@@ -25,7 +25,7 @@ class Wrapper extends Component {
     axios
       .get("/api/v1/user/profile")
       .then((res) => {
-        console.log(res.data.data.user);
+        //console.log(res.data.data.user);
         this.setState({
           user: res.data.data.user,
           isLoggedIn: cookies ? cookies.isLoggedIn : this.state.isLoggedIn,
@@ -53,7 +53,7 @@ class Wrapper extends Component {
 
   getLoggedInUser = (response) => {
     this.setState({ user: response.data.user, isLoggedIn: true });
-    console.log(response.data.user);
+    //console.log(response.data.user);
     const userData = {
       name: response.data.user.name,
       email: response.data.user.email,

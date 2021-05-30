@@ -42,7 +42,7 @@ const ChatRoom = ({ user, cookies }) => {
     });
     socketSetup.emit("join", courseId);
     socketSetup.on("newMessage", (newMessage) => {
-      console.log("Received new message");
+      //console.log("Received new message");
       onMessageRecieved(newMessage);
     });
 
@@ -56,7 +56,7 @@ const ChatRoom = ({ user, cookies }) => {
       .get(`/api/v1/course/chat-room/${courseId}`)
       .then((response) => {
         setLoading(false);
-        console.log(response);
+        //console.log(response);
         if (response.status === 200) {
           setChatMessages(response.data.data.chatMessages);
         }
@@ -87,7 +87,7 @@ const ChatRoom = ({ user, cookies }) => {
         courseId: courseId,
         createdAt: new Date(),
       };
-      console.log(socket);
+      //console.log(socket);
       if (socket) socket.emit("message", data);
       setMessage("");
     }

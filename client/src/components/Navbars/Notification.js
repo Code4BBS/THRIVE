@@ -83,7 +83,7 @@ const Notification = ({ user, history, color }) => {
   ]);
 
   const [status, setNotificationStatus] = useState(user.notificationsSeen);
-  // console.log(status);
+  // //console.log(status);
   const handleClick = (event) => {
     getNotifications();
     setAnchorEl(event.currentTarget);
@@ -99,11 +99,11 @@ const Notification = ({ user, history, color }) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         let userNotifications = response.data.data.notifications;
         let notificationsInorder = userNotifications.reverse();
         let notificationStatus = response.data.data.status;
-        console.log(notificationsInorder);
+        //console.log(notificationsInorder);
         if (notificationsInorder.length > 0)
           setNotifications(notificationsInorder);
         setNotificationStatus(true);
@@ -298,7 +298,7 @@ const Notification = ({ user, history, color }) => {
             <div
               className={classes.tile}
               onClick={() => {
-                console.log(notification);
+                //console.log(notification);
                 if (notification.type == "assignment") {
                   redirectToAssignment(notification.project._id);
                 } else if (notification.project)

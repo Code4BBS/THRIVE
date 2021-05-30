@@ -73,7 +73,7 @@ const CourseTable = ({ user, history }) => {
 
   const getCourses = () => {
     axios.get("/api/v1/course").then((response) => {
-      console.log(response.data);
+      //console.log(response.data);
       const courses = response.data.data;
       setCourses(courses);
       setLoading(false);

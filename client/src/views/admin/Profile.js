@@ -172,7 +172,7 @@ function Profile({ user, getUserAgain }) {
       })
       .then((response) => {
         let rest = response.data.data.docs.filter((tag) => {
-          // if (tag.group == "Branch") console.log(tag.name);
+          // if (tag.group == "Branch") //console.log(tag.name);
           return !updatedData.tags.map((el) => el._id).includes(tag._id);
         });
         setRestTags(rest);
@@ -236,8 +236,8 @@ function Profile({ user, getUserAgain }) {
   };
 
   const updateUser = () => {
-    console.log(updatedData);
-    console.log(user);
+    //console.log(updatedData);
+    //console.log(user);
     if (updatedData === user) return;
     axios
       .patch("/api/v1/user/profile", {
