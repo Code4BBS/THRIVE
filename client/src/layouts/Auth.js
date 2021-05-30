@@ -17,7 +17,7 @@ import componentStyles from "assets/theme/layouts/auth.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Auth = ({ sucessLogin }) => {
+const Auth = ({ sucessLogin, load }) => {
   const classes = useStyles();
   const mainContent = React.useRef(null);
   const location = useLocation();
@@ -55,7 +55,6 @@ const Auth = ({ sucessLogin }) => {
       <div className="main-content" ref={mainContent}>
         <AuthNavbar />
         <AuthHeader />
-        {/* Page content */}
         <Container
           component={Box}
           maxWidth="xl"
@@ -65,7 +64,7 @@ const Auth = ({ sucessLogin }) => {
           zIndex="101"
         >
           <Box component={Grid} container justifyContent="center">
-            <Login sucessLogin={sucessLogin} />
+            <Login sucessLogin={sucessLogin} load={load} />
           </Box>
         </Container>
       </div>

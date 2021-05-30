@@ -14,6 +14,7 @@ import {
   Button,
   Card,
   CardHeader,
+  CircularProgress,
   FormGroup,
   FormControl,
   FormLabel,
@@ -143,7 +144,13 @@ const Enrolled = ({ user, history, course }) => {
                     variant="h3"
                     marginBottom="0!important"
                   >
-                    {isLoading ? "Loading Students...." : "Enrolled Students"}
+                    {isLoading ? (
+                      <div>
+                        <CircularProgress />
+                      </div>
+                    ) : (
+                      "Enrolled Students"
+                    )}
                   </Box>
                 </Grid>
                 <Grid item xs="auto">

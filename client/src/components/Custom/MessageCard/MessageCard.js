@@ -27,7 +27,7 @@ const Messages = ({ chatMessages }) => {
     <div
       id="chat-elem"
       style={{
-        height: "700px",
+        maxHeight: "700px",
         overflowY: "scroll",
         overflowX: "hidden",
         paddingRight: "10px",

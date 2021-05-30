@@ -9,6 +9,8 @@ import { CookiesProvider, withCookies } from "react-cookie";
 import AdminLayout from "./layouts/Admin.js";
 import AuthLayout from "layouts/Auth.js";
 
+import { CircularProgress } from "@material-ui/core";
+
 import axios from "axios";
 
 class Wrapper extends Component {
@@ -16,6 +18,7 @@ class Wrapper extends Component {
     isLoggedIn: false,
     user: null,
     isLoading: true,
+    loggingOut: false,
   };
 
   getUser = (cookies) => {
@@ -72,10 +75,18 @@ class Wrapper extends Component {
     });
   };
 
+  load = (val) => {
+    this.setState({ isLoading: val });
+  };
+
+  logOut = (val) => {
+    this.setState({ loggingOut: val });
+  };
+
   render() {
     return (
       <div>
-        {!this.state.isLoading ? (
+        {!this.state.isLoading && !this.state.loggingOut ? (
           <>
             {this.state.isLoggedIn && this.state.user ? (
               <Router>
@@ -87,6 +98,7 @@ class Wrapper extends Component {
                         user={this.state.user}
                         cookies={this.props.cookies}
                         getUserAgain={this.getUser}
+                        logOut={this.logOut}
                         {...props}
                       />
                     )}
@@ -95,11 +107,37 @@ class Wrapper extends Component {
                 </Switch>
               </Router>
             ) : (
-              <AuthLayout sucessLogin={this.getLoggedInUser} />
+              <AuthLayout sucessLogin={this.getLoggedInUser} load={this.load} />
             )}
           </>
+        ) : this.state.loggingOut ? (
+          <div
+            style={{
+              display: "flex",
+              height: "100vh",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <CircularProgress />
+              <h3 style={{ marginLeft: "20px" }}>Logging Out...</h3>
+            </div>
+          </div>
         ) : (
-          <p>Loading</p>
+          <div
+            style={{
+              display: "flex",
+              height: "100vh",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <CircularProgress />
+              <h3 style={{ marginLeft: "20px" }}>Loading...</h3>
+            </div>
+          </div>
         )}
       </div>
     );

@@ -23,7 +23,7 @@ import componentStyles from "assets/theme/layouts/admin.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Admin = ({ user, cookies, getUserAgain }) => {
+const Admin = ({ user, cookies, getUserAgain, logOut }) => {
   const classes = useStyles();
   const location = useLocation();
   const history = useHistory();
@@ -80,7 +80,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
           }}
           user={user}
           history={history}
-          dropdown={<NavbarDropdown user={user} />}
+          dropdown={<NavbarDropdown user={user} logOut={logOut} />}
           input={
             <FormControl variant="outlined" fullWidth>
               <InputLabel htmlFor="outlined-adornment-search-responsive">
@@ -109,6 +109,7 @@ const Admin = ({ user, cookies, getUserAgain }) => {
             cookies={cookies}
             brandText={getBrandText(location.pathname)}
             history={history}
+            logOut={logOut}
           />
           <Switch>
             {getRoutes(routes)}

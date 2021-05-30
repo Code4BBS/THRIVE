@@ -20,7 +20,13 @@ import Notification from "./Notification";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function AdminNavbar({ user, cookies, brandText, history }) {
+export default function AdminNavbar({
+  user,
+  cookies,
+  brandText,
+  history,
+  logOut,
+}) {
   const classes = useStyles();
   return (
     <>
@@ -53,7 +59,7 @@ export default function AdminNavbar({ user, cookies, brandText, history }) {
                 </Typography>
               </div>
               <Box display="flex" alignItems="center" width="auto">
-                <NavbarDropdown user={user} cookies={cookies} />
+                <NavbarDropdown user={user} cookies={cookies} logOut={logOut} />
                 <Notification user={user} history={history} />
               </Box>
             </Box>

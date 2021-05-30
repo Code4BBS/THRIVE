@@ -6,6 +6,7 @@ import { clone } from "ramda";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
+  CircularProgress,
   FormControl,
   FormGroup,
   Grid,
@@ -99,16 +100,15 @@ const ChatRoom = ({ user, cookies }) => {
   let chats = null;
   if (isLoading)
     chats = (
-      <Typography
+      <div
         style={{
-          fontSize: "17px",
-          padding: "10px 0px",
-          height: "10px",
-          margin: "5px",
+          display: "flex",
+          margin: "20px 0px",
+          justifyContent: "center",
         }}
       >
-        Loading Messages....
-      </Typography>
+        <CircularProgress />
+      </div>
     );
   else if (!isLoading && chatMessages.length > 0) {
     chats = <MessageCard chatMessages={chatMessages} />;

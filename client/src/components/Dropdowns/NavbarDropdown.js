@@ -25,7 +25,7 @@ import componentStyles from "../../assets/theme/components/navbar-dropdown.js";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function NavbarDropdown({ user, cookies }) {
+export default function NavbarDropdown({ user, cookies, logOut }) {
   const history = useHistory();
 
   const classes = useStyles();
@@ -42,18 +42,19 @@ export default function NavbarDropdown({ user, cookies }) {
   };
 
   const logout = () => {
-    console.log("hell");
+    logOut(true);
     axios
       .post("/api/v1/auth/logout", {
         withCredentials: true,
       })
-      .then((response) => {
+      .then((res) => {
         cookies.remove("isLoggedIn", { path: "/" });
         cookies.remove("userData", { path: "/" });
         window.location.reload();
       })
       .catch((err) => {
         console.log(err);
+        alert("Failed to log out. Try again later");
       });
   };
 
@@ -94,7 +95,7 @@ export default function NavbarDropdown({ user, cookies }) {
       </Box>
 
       <Divider component="div" classes={{ root: classes.dividerRoot }} />
-      <Box
+      {/* <Box
         display="flex!important"
         alignItems="center!important"
         component={MenuItem}
@@ -104,13 +105,24 @@ export default function NavbarDropdown({ user, cookies }) {
           width="1.25rem!important"
           height="1.25rem!important"
           marginRight="1rem"
-        />
-        <GoogleLogout
-          clientId="814516511786-nucvcmf3osa464saoshkeg2ma2slfuqa.apps.googleusercontent.com"
-          buttonText="LOG OUT"
-          render={(renderProps) => (
+        /> */}
+      <GoogleLogout
+        clientId="814516511786-nucvcmf3osa464saoshkeg2ma2slfuqa.apps.googleusercontent.com"
+        buttonText="LOG OUT"
+        render={(renderProps) => (
+          <Box
+            display="flex!important"
+            alignItems="center!important"
+            component={MenuItem}
+            onClick={renderProps.onClick}
+          >
+            <Box
+              component={DirectionsRun}
+              width="1.25rem!important"
+              height="1.25rem!important"
+              marginRight="1rem"
+            />
             <Button
-              onClick={renderProps.onClick}
               disableElevation
               disableRipple
               disableFocusRipple
@@ -119,15 +131,18 @@ export default function NavbarDropdown({ user, cookies }) {
             >
               Sign Out
             </Button>
-          )}
-          onLogoutSuccess={() => logout()}
-          icon={false}
-          style={{
-            color: "black",
-            boxSizing: "inherit",
-          }}
-        ></GoogleLogout>
-      </Box>
+          </Box>
+        )}
+        onLogoutSuccess={() => {
+          logout();
+        }}
+        icon={false}
+        style={{
+          color: "black",
+          boxSizing: "inherit",
+        }}
+      ></GoogleLogout>
+      {/* </Box> */}
     </Menu>
   );
 

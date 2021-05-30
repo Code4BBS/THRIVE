@@ -11,6 +11,7 @@ import {
   Typography,
   IconButton,
   Avatar,
+  CircularProgress,
 } from "@material-ui/core";
 
 import Timeline from "@material-ui/lab/Timeline";
@@ -105,11 +106,11 @@ const Assignments = ({ course, history, user }) => {
         <Typography
           style={{ fontSize: "20px", padding: "20px 0px", height: "70px" }}
         >
-          {isLoading
-            ? "Loading Assignments...."
-            : !isLoading && assignments.length === 0
-            ? "No Assignments have been posted"
-            : null}
+          {isLoading ? (
+            <CircularProgress />
+          ) : !isLoading && assignments.length === 0 ? (
+            "No Assignments have been posted"
+          ) : null}
         </Typography>
         <Timeline>
           {assignments.length > 0

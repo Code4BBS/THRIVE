@@ -25,7 +25,7 @@ import componentStyles from "assets/theme/views/auth/login.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const Login = ({ sucessLogin }) => {
+const Login = ({ sucessLogin, load }) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -40,6 +40,7 @@ const Login = ({ sucessLogin }) => {
       [event.target.name]: event.target.value,
     });
   };
+
   const successResponseGoogle = (response) => {
     const emailUsed = response.profileObj.email;
     const index = emailUsed.indexOf("@");
@@ -49,6 +50,7 @@ const Login = ({ sucessLogin }) => {
       alert("Use your IIT Bhubaneswar email id.");
       return false;
     } else {
+      load(true);
       axios
         .post(
           "/api/v1/auth/login",
@@ -60,8 +62,12 @@ const Login = ({ sucessLogin }) => {
         .then((response) => {
           console.log(response.data);
           sucessLogin(response);
+          load(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+          load(false);
+        });
       console.log("success");
     }
   };
