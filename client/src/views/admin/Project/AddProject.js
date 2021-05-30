@@ -559,14 +559,21 @@ const AddProject = ({ user }) => {
           />
         </Container>
       ) : !tagsPane && collaboratorsPane ? (
-        <Container>
-          <Collaborators
-            currentUser={user}
-            customers={customers}
-            hide={hideCollaboratorsPane}
-            initialSelectedCollaborators={selectedCollaborators}
-            getCollaboraters={getSelectedCollaborators}
-          />
+        <Container
+          maxWidth={false}
+          component={Box}
+          marginTop="-6rem"
+          classes={{ root: classes.containerRoot }}
+        >
+          <Card classes={{ root: classes.cardRoot }} style={{ padding: "1px" }}>
+            <Collaborators
+              currentUser={user}
+              customers={customers}
+              hide={hideCollaboratorsPane}
+              initialSelectedCollaborators={selectedCollaborators}
+              getCollaboraters={getSelectedCollaborators}
+            />
+          </Card>
         </Container>
       ) : null}
     </>
