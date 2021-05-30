@@ -17,7 +17,7 @@ import componentStyles from "assets/theme/views/admin/dashboard.js";
 
 import { useHistory } from "react-router-dom";
 import axios from "axios";
-import { Avatar } from "@material-ui/core";
+import { Avatar, CircularProgress } from "@material-ui/core";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -26,7 +26,7 @@ function Classroom({ user, history }) {
 
   const classes = useStyles();
   const theme = useTheme();
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   const [courses, setCourses] = useState([]);
 
@@ -35,7 +35,7 @@ function Classroom({ user, history }) {
       .post("/api/v1/course/my-courses", user.coursesEnrolled)
       .then((res) => {
         setCourses(res.data);
-        console.log(res.data);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
@@ -146,7 +146,11 @@ function Classroom({ user, history }) {
               textAlign: "center",
             }}
           >
-            You are not enrolled in any courses
+            {!isLoading ? (
+              "You are not enrolled in any courses"
+            ) : (
+              <CircularProgress style={{ margin: "auto" }} />
+            )}
           </Card>
         </Grid>
       )}

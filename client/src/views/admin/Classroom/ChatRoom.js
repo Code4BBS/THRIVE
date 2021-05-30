@@ -122,7 +122,7 @@ const ChatRoom = ({ user, cookies }) => {
           margin: "5px",
         }}
       >
-        No messages in class yet !!
+        Start Conversation
       </Typography>
     );
 
@@ -172,9 +172,11 @@ const ChatRoom = ({ user, cookies }) => {
                         style={{
                           paddingLeft: "0.75rem",
                           paddingRight: "0.75rem",
+                          width: "100%",
                         }}
                         type="text"
                         required
+                        autoComplete="off"
                         classes={{ input: classes.searchInput }}
                         placeholder="Write Your Message"
                         id="message"
