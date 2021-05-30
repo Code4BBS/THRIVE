@@ -147,7 +147,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
     // navigate(url);
   };
 
-  const headings = ["Name", "Email", "Role", "Room"];
+  const headings = ["Name", "Email", "Role"];
 
   return (
     <div>
@@ -382,7 +382,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
                             <TableCell>
                               {customer.rollNumber || "19CSX002"}
                             </TableCell>
-                            <TableCell>{customer.room || "A-12X"}</TableCell>
+                            {/* <TableCell>{customer.room || "A-12X"}</TableCell> */}
                           </TableRow>
                         ))}
                     </TableBody>
@@ -398,6 +398,12 @@ const Results = ({ className, customers, tags, ...rest }) => {
               page={page}
               rowsPerPage={limit}
               rowsPerPageOptions={[5, 10, 25]}
+              SelectProps={{
+                variant: "outlined",
+                classes: {
+                  select: classes.select,
+                },
+              }}
             />
           </Card>
         </>

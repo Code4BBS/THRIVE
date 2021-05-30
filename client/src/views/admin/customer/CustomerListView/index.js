@@ -6,7 +6,6 @@ import axios from "axios";
 import Header from "components/Headers/Header.js";
 
 import componentStyles from "assets/theme/views/admin/tables.js";
-import Discover from "./../../Students/Discover";
 
 class CustomerListView extends Component {
   state = {
@@ -62,7 +61,6 @@ class CustomerListView extends Component {
               marginTop="-6rem"
               classes={{ root: classes.containerRoot }}
             >
-              {/* <Discover users={this.state.users} tags={this.state.tags} /> */}
               <Card
                 classes={{ root: classes.cardRoot }}
                 style={{ padding: "1px" }}
