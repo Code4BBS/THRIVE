@@ -68,10 +68,10 @@ function Profile({ user, getUserAgain }) {
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
-          // console.log(response.data.data.project);
+          // console.log(response.data.data.user.tags);
           setLoading(false);
           setOtherUser(response.data.data.user);
-          // setProject(response.data.data.project);
+          // setProject(response.data.data.);
         }
       })
       .catch((err) => {
@@ -209,8 +209,8 @@ function Profile({ user, getUserAgain }) {
                                 style={{ margin: "10px 0px 0px 0px" }}
                               >
                                 <TableBody>
-                                  {user.tags !== undefined &&
-                                  user.tags.length !== 0 ? (
+                                  {otherUser.tags !== undefined &&
+                                  otherUser.tags.length !== 0 ? (
                                     tagMapArray
                                       .sort((a, b) => {
                                         if (a.name < b.name) return -1;
