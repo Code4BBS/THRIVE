@@ -40,7 +40,7 @@ const Messages = ({ chatMessages }) => {
               container
               wrap="nowrap"
               spacing={2}
-              style={{ margin: "20px 0px" }}
+              style={{ margin: "10px 0px" }}
             >
               <Grid item>
                 <Avatar alt="avatar" src={chatMessage.user.image} />
@@ -63,7 +63,7 @@ const Messages = ({ chatMessages }) => {
                 </p>
               </Grid>
             </Grid>
-            <Divider variant="fullWidth" style={{ margin: "10px 0" }} />
+            <Divider variant="fullWidth" style={{ margin: "0" }} />
           </React.Fragment>
         );
       })}

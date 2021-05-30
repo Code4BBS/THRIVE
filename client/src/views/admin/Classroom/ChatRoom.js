@@ -6,12 +6,14 @@ import { clone } from "ramda";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Box,
-  Button,
-  FilledInput,
   FormControl,
   FormGroup,
   Grid,
+  IconButton,
+  Input,
+  InputAdornment,
   Paper,
+  Typography,
 } from "@material-ui/core";
 import SendIcon from "@material-ui/icons/Send";
 
@@ -25,6 +27,7 @@ const ChatRoom = ({ user, cookies }) => {
 
   const [chatMessages, setChatMessages] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [message, setMessage] = useState("");
 
   const courseId = window.location.pathname.split("/")[3];
 
@@ -73,7 +76,7 @@ const ChatRoom = ({ user, cookies }) => {
     setChatMessages(newChatMessages);
   };
 
-  const onPostMessage = (e, message) => {
+  const onPostMessage = (e) => {
     e.preventDefault();
     if (message === "") alert("Empty Message!");
     else {
@@ -85,15 +88,43 @@ const ChatRoom = ({ user, cookies }) => {
       };
       console.log(socket);
       if (socket) socket.emit("message", data);
-      document.getElementById("message").value = "";
+      setMessage("");
     }
   };
 
+  const handleChange = (e) => {
+    setMessage(e.target.value);
+  };
+
   let chats = null;
-  if (isLoading) chats = <h5>Loading....</h5>;
+  if (isLoading)
+    chats = (
+      <Typography
+        style={{
+          fontSize: "17px",
+          padding: "10px 0px",
+          height: "10px",
+          margin: "5px",
+        }}
+      >
+        Loading Messages....
+      </Typography>
+    );
   else if (!isLoading && chatMessages.length > 0) {
     chats = <MessageCard chatMessages={chatMessages} />;
-  } else chats = <h5>No messages in class yet !!</h5>;
+  } else
+    chats = (
+      <Typography
+        style={{
+          fontSize: "17px",
+          padding: "10px 0px",
+          height: "10px",
+          margin: "5px",
+        }}
+      >
+        No messages in class yet !!
+      </Typography>
+    );
 
   return (
     <div
@@ -120,9 +151,14 @@ const ChatRoom = ({ user, cookies }) => {
           >
             {chats}
             {/* <p>{typingName}</p> */}
-            <div className={classes.plLg4}>
+            <div
+              className={classes.plLg4}
+              style={{ marignLeft: "auto", marginRight: "auto" }}
+            >
+              <br />
+
               <Grid container>
-                <Grid item xs={10} lg={10}>
+                <Grid item xs="auto">
                   <FormGroup>
                     <FormControl
                       variant="filled"
@@ -132,7 +168,7 @@ const ChatRoom = ({ user, cookies }) => {
                       }}
                       required
                     >
-                      <FilledInput
+                      <Input
                         style={{
                           paddingLeft: "0.75rem",
                           paddingRight: "0.75rem",
@@ -142,29 +178,33 @@ const ChatRoom = ({ user, cookies }) => {
                         classes={{ input: classes.searchInput }}
                         placeholder="Write Your Message"
                         id="message"
+                        onChange={handleChange}
+                        value={message}
+                        endAdornment={
+                          <InputAdornment position="end">
+                            <IconButton
+                              onClick={(e) => {
+                                onPostMessage(e);
+                              }}
+                              style={{
+                                border: "0",
+                                padding: "7px",
+                              }}
+                              disabled={message === ""}
+                            >
+                              <SendIcon
+                                style={{
+                                  padding: "0",
+                                  width: "23px",
+                                  height: "23px",
+                                }}
+                              />
+                            </IconButton>
+                          </InputAdornment>
+                        }
                       />
                     </FormControl>
                   </FormGroup>
-                </Grid>
-
-                <Grid item xs={2} lg={2}>
-                  <Button
-                    onClick={(e) => {
-                      onPostMessage(
-                        e,
-                        document.getElementById("message").value
-                      );
-                    }}
-                    style={{
-                      border: "0",
-                      marginLeft: "-15px",
-                      padding: "7px",
-                    }}
-                  >
-                    <SendIcon
-                      style={{ padding: "0", width: "23px", height: "23px" }}
-                    />
-                  </Button>
                 </Grid>
               </Grid>
             </div>
