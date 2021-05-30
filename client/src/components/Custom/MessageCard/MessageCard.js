@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Divider, Avatar, Grid } from "@material-ui/core";
+import { Avatar, Grid } from "@material-ui/core";
 import FormatDate from "./../../../views/admin/Quora/formatDate";
 
 const urlify = (text) => {
@@ -55,15 +55,12 @@ const Messages = ({ chatMessages }) => {
                   dangerouslySetInnerHTML={{
                     __html: urlify(chatMessage.message),
                   }}
-                >
-                  {/* {chatMessage.message} */}
-                </p>
+                ></p>
                 <p style={{ textAlign: "right", color: "gray" }}>
                   - {FormatDate(chatMessage.createdAt)}
                 </p>
               </Grid>
             </Grid>
-            <Divider variant="fullWidth" style={{ margin: "0" }} />
           </React.Fragment>
         );
       })}
