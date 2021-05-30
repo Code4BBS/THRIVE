@@ -189,14 +189,14 @@ Students can have realtime chats in the classroom with peers and teacher. Teache
 <br/><br/>
 
 **Admin Actions**
-<br/><br/>
+<br/>
 
 **College Admin**
 <br/>
+
 **Add New Courses with a teacher**
 ![image](https://user-images.githubusercontent.com/64681029/120109276-502f7d00-c186-11eb-8b14-966425189655.png)
-
-<br/><br/>
+<br/>
 
 **Student Admin**
 <br/>
