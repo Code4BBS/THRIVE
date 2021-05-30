@@ -357,7 +357,13 @@ function Profile({ user, getUserAgain }) {
           </Grid>
         </Container>
       ) : (
-        <h3>Loading...</h3>
+        <Container
+          maxWidth={false}
+          component={Box}
+          classes={{ root: classes.containerRoot }}
+        >
+          <h3 style={{ alignItems: "center" }}>Loading User Data...</h3>
+        </Container>
       )}
     </>
   );

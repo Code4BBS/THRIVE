@@ -126,7 +126,6 @@ class Quora extends Component {
               question={el.questionBody}
               answers={el.answers}
               time={el.createdAt}
-              // key={idx}
               id={el._id}
             />
           </Grid>

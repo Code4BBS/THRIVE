@@ -181,7 +181,7 @@ function Profile({ user, getUserAgain }) {
 
   let studentInfo = null;
   let studentInfoCard = null;
-  if (user && (user.role === "user" || user.role === "studentAdmin")) {
+  if (user && (user.role === "user" || user.role === "admin")) {
     studentInfo = (
       <div className={classes.plLg4}>
         <Grid container>
