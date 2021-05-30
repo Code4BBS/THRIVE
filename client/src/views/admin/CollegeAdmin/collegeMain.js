@@ -103,68 +103,6 @@ function CollegeDashboard({ user }) {
           </Card>
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={4}
-          xl={4}
-          component={Box}
-          marginBottom="3rem!important"
-        >
-          <Card
-            classes={{
-              root: classes.cardHeaderRoot + " " + classes.cardRootBgGradient,
-            }}
-          >
-            <CardHeader
-              subheader={
-                <Box>
-                  <Box
-                    component={Typography}
-                    variant="h2"
-                    className={classes.textUppercase}
-                    marginBottom="1.5rem!important"
-                  >
-                    <Box
-                      component="span"
-                      color={theme.palette.white.main}
-                      style={{
-                        textAlign: "center",
-                      }}
-                    >
-                      Users
-                    </Box>
-                  </Box>
-
-                  <Box
-                    component={Typography}
-                    variant="h5"
-                    letterSpacing=".0625rem"
-                    marginBottom=".25rem!important"
-                  >
-                    <Box component="span" color={theme.palette.gray[400]}>
-                      Colleges students, teachers and other members.
-                    </Box>
-                    <br />
-                  </Box>
-                </Box>
-              }
-              classes={{ root: classes.cardHeaderRoot }}
-            ></CardHeader>
-            <CardContent classes={{ root: classes.cardHeaderRoot }}>
-              <Button
-                size="small"
-                color="primary"
-                onClick={() => {
-                  history.push("/projects/myProjects");
-                }}
-              >
-                {!isLoading ? "Explore" : "Loading..."}
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
         <Grid item sm={12} md={2} xs={12} xl={2}></Grid>
       </Grid>
     </Container>
