@@ -9,6 +9,7 @@ import {
   Card,
   CardContent,
   CardHeader,
+  CircularProgress,
   Container,
   Divider,
   FilledInput,
@@ -33,7 +34,7 @@ import boxShadows from "assets/theme/box-shadow.js";
 
 import axios from "axios";
 
-import { clone } from "ramda";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
 
@@ -42,6 +43,7 @@ const singleTags = ["Program", "Admission Year", "Branch"];
 function Profile({ user, getUserAgain }) {
   const classes = useStyles();
   const theme = useTheme();
+  const history = useHistory();
 
   const [otherUser, setOtherUser] = useState(null);
   const [isLoading, setLoading] = useState(true);
@@ -76,6 +78,7 @@ function Profile({ user, getUserAgain }) {
       })
       .catch((err) => {
         console.log(err);
+        history.push("/discover");
       });
   };
 
@@ -362,7 +365,17 @@ function Profile({ user, getUserAgain }) {
           component={Box}
           classes={{ root: classes.containerRoot }}
         >
-          <h3 style={{ alignItems: "center" }}>Loading User Data...</h3>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              margin: "20px 0px",
+            }}
+          >
+            <CircularProgress style={{ marginRight: "20px" }} />
+            <h3 style={{ alignItems: "center" }}>Loading User Data...</h3>
+          </div>
         </Container>
       )}
     </>

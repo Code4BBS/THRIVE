@@ -45,6 +45,7 @@ function Course({ user, cookies, history }) {
       })
       .catch((err) => {
         console.log(err);
+        history.push("/classroom");
       });
   }, []);
 
