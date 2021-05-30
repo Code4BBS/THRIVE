@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
+import Notification from "./../Navbars/Notification";
+
 import { useLocation, Link } from "react-router-dom";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -186,6 +188,7 @@ export default function Sidebar({
               {dropdown}
               <Notification user={user} history={history} />
             </Container>
+            <Notification user={user} history={history} color="black" />
           </Toolbar>
         </AppBar>
         <Menu

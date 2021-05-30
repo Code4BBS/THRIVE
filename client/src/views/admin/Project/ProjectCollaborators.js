@@ -111,7 +111,7 @@ const Results = ({
   const headings = ["Name", "Email", "Selected"];
 
   return (
-    <div>
+    <>
       <Box mt={3}>
         <Card classes={{ root: classes.cardRoot }}>
           <CardContent style={{ padding: 0 }}>
@@ -120,64 +120,81 @@ const Results = ({
               aria-label="simple table"
               style={{ margin: 0 }}
             >
-              <TableBody>
-                <TableRow>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    className={classes.cellB}
-                    style={{ verticalAlign: "middle" }}
-                  >
-                    Add Collaborator for your project
-                  </TableCell>
+              <Table>
+                <TableBody>
+                  <TableRow>
+                    <TableCell
+                      component="th"
+                      scope="row"
+                      className={classes.cellB}
+                      style={{ verticalAlign: "middle" }}
+                    >
+                      Add Collaborator for your project
+                    </TableCell>
 
-                  <TableCell align="right" className={classes.cell}>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      style={{ alignSelf: "right" }}
-                      onClick={sendCollaborators}
-                    >
-                      Save
-                    </Button>
-                    &nbsp;&nbsp;
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={resetSelections}
-                      disabled={selectedCollaborators === []}
-                      style={{ alignSelf: "right" }}
-                    >
-                      Reset
-                    </Button>
-                  </TableCell>
-                </TableRow>
-                <TableRow style={{ marginLeft: "5px", marginTop: "5px" }}>
-                  {selectedCollaborators.length > 0
-                    ? customers.map((collaborator, index) => {
-                        if (selectedCollaborators.includes(collaborator._id)) {
-                          return (
-                            <li
-                              key={index}
-                              style={{ display: "inline", margin: "3px" }}
-                            >
-                              <Chip
-                                variant="outlined"
-                                label={collaborator.name}
-                                avatar={<Avatar src={collaborator.image} />}
-                                style={{ color: "black!important" }}
-                                onDelete={() =>
-                                  changeCollaborators(collaborator)
-                                }
-                              />
-                            </li>
-                          );
-                        }
-                        return null;
-                      })
-                    : null}
-                </TableRow>
-              </TableBody>
+                    <TableCell align="right" className={classes.cell}>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ alignSelf: "right" }}
+                        onClick={sendCollaborators}
+                      >
+                        Save
+                      </Button>
+                      &nbsp;&nbsp;
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={resetSelections}
+                        disabled={selectedCollaborators === []}
+                        style={{ alignSelf: "right" }}
+                      >
+                        Reset
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                  <TableRow
+                    style={{
+                      marginLeft: "5px",
+                      marginTop: "5px",
+                      padding: "5px",
+                    }}
+                  >
+                    {selectedCollaborators.length > 0
+                      ? customers.map((collaborator, index) => {
+                          if (
+                            selectedCollaborators.includes(collaborator._id)
+                          ) {
+                            return (
+                              <TableCell
+                                classes={{
+                                  root: classes.tableCellRoot,
+                                }}
+                                key={index}
+                                style={{
+                                  display: "inline",
+                                  margin: "3px",
+                                  border: "none!important",
+                                }}
+                              >
+                                <Chip
+                                  variant="outlined"
+                                  label={collaborator.name}
+                                  avatar={<Avatar src={collaborator.image} />}
+                                  style={{ color: "black!important" }}
+                                  onDelete={() =>
+                                    changeCollaborators(collaborator)
+                                  }
+                                />
+                              </TableCell>
+                            );
+                          }
+                          return null;
+                        })
+                      : null}
+                  </TableRow>
+                </TableBody>
+              </Table>
             </TableContainer>
           </CardContent>
         </Card>
@@ -332,7 +349,7 @@ const Results = ({
           />
         </Card>
       </>
-    </div>
+    </>
   );
 };
 

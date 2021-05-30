@@ -78,6 +78,8 @@ const Admin = ({ user, cookies, getUserAgain }) => {
             imgSrc: require("../assets/img/brand/thrive-blue.png").default,
             imgAlt: "...",
           }}
+          user={user}
+          history={history}
           dropdown={<NavbarDropdown user={user} />}
           input={
             <FormControl variant="outlined" fullWidth>

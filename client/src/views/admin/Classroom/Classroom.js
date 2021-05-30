@@ -71,10 +71,16 @@ function Classroom({ user, history }) {
             }}
           >
             <Card
-              classes={{
-                root: classes.cardRoot,
+              classes={
+                {
+                  // root: classes.cardRoot,
+                }
+              }
+              style={{
+                height: "100%",
+                boxShadow: "0px 0px 1rem rgba(136,152,170,0.35)",
+                border: "0!important",
               }}
-              style={{ height: "100%" }}
             >
               <CardHeader
                 style={{ minHeight: "140px" }}
@@ -103,7 +109,7 @@ function Classroom({ user, history }) {
                       letterSpacing=".0625rem"
                       marginBottom=".25rem!important"
                     >
-                      <Box component="span" color={theme.palette.gray[400]}>
+                      <Box component="span" color={theme.palette.gray[600]}>
                         {course.courseCode}
                       </Box>
                     </Box>

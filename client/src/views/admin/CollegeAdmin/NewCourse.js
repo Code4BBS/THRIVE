@@ -356,7 +356,12 @@ function NewCourse({ user, history }) {
             >
               <Button
                 color="primary"
-                style={{ marginLeft: "40%", marginRight: "40%" }}
+                style={{
+                  marginLeft: "40%",
+                  marginRight: "40%",
+                  marginTop: "2%",
+                  marginBottom: "2%",
+                }}
                 classes={{ root: classes.buttonRootDark }}
                 variant="contained"
                 disabled={

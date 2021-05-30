@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Divider, Avatar, Grid } from "@material-ui/core";
 import FormatDate from "./../../../views/admin/Quora/formatDate";
 
@@ -11,12 +11,37 @@ const urlify = (text) => {
 };
 
 const Messages = ({ chatMessages }) => {
+  const scrollToBottom = () => {
+    const elem = document.getElementById("chat-elem");
+    if (elem) elem.scrollTop = elem.scrollHeight;
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [chatMessages]);
+
   return (
-    <>
+    <div
+      id="chat-elem"
+      style={{
+        height: "700px",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        paddingRight: "10px",
+      }}
+    >
       {chatMessages.map((chatMessage, index) => {
         return (
           <React.Fragment key={index}>
-            <Grid container wrap="nowrap" spacing={2}>
+            <Grid
+              container
+              wrap="nowrap"
+              spacing={2}
+              style={{ margin: "10px 0px" }}
+            >
               <Grid item>
                 <Avatar alt="avatar" src={chatMessage.user.image} />
               </Grid>
@@ -38,11 +63,11 @@ const Messages = ({ chatMessages }) => {
                 </p>
               </Grid>
             </Grid>
-            <Divider variant="fullWidth" style={{ margin: "30px 0" }} />
+            <Divider variant="fullWidth" style={{ margin: "0" }} />
           </React.Fragment>
         );
       })}
-    </>
+    </div>
   );
 };
 

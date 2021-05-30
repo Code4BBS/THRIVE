@@ -6,6 +6,7 @@ const AppError = require("../utils/appError");
 
 const getAllProjects = catchAsync(async (req, res, next) => {
   const projects = await Project.find({ blacklisted: false })
+    .sort("-createdAt")
     .populate({
       path: "tags",
       model: "Tag",
@@ -131,14 +132,6 @@ const createProject = catchAsync(async (req, res, next) => {
 });
 
 const updateProject = catchAsync(async (req, res, next) => {
-  // const updateBody = {
-  //   title: req.body.title,
-  //   description: req.body.description,
-  //   preRequsite: req.body.preRequsite,
-  //   communication: req.body.communication,
-  //   lastUpdatedAt: new Date(),
-  // };
-
   const project = await Project.findByIdAndUpdate(
     req.params.id,
     { ...req.body, lastUpdatedAt: new Date() },
@@ -217,8 +210,6 @@ const getAllBlacklistedProjects = async (req, res, next) => {
 
 const requestToJoin = catchAsync(async (req, res, next) => {
   const { request } = req.body;
-  // console.log(request);
-  // console.log(req.user);
 
   const updatedProject = await Project.findByIdAndUpdate(
     req.params.id,
@@ -259,7 +250,6 @@ const requestToJoin = catchAsync(async (req, res, next) => {
 
 const acceptRequest = catchAsync(async (req, res, next) => {
   const requesterId = req.query.id;
-  // console.log(requesterId);
 
   const project = await Project.findByIdAndUpdate(
     req.params.id,
@@ -370,6 +360,7 @@ const getAllProjectsOfAUser = catchAsync(async (req, res, next) => {
   const projects = await Project.find({
     $or: [{ owner: userId }, { collaborators: { $in: [userId] } }],
   })
+    .sort("-createdAt")
     .populate({
       path: "tags",
       model: "Tag",
@@ -377,8 +368,6 @@ const getAllProjectsOfAUser = catchAsync(async (req, res, next) => {
     })
     .populate({ path: "owner", model: "User", select: "name image" })
     .populate({ path: "collaborators", model: "User", select: "name image" });
-
-  // console.log(projects);
 
   res.status(200).json({
     status: "success",

@@ -54,7 +54,7 @@ class Quora extends Component {
       questionBody: this.state.newQuestion,
     };
     axios.post(`/api/v1/quora/questions`, question).then((res) => {
-      window.location.href = `/quora/${res.data.data._id}`;
+      window.location.href = `/discussion/${res.data.data._id}`;
     });
   };
   render() {
@@ -111,10 +111,12 @@ class Quora extends Component {
             item
             xs={12}
             sm={6}
-            md={4}
+            md={6}
+            lg={4}
             component={Box}
             paddingLeft="15px"
             paddingRight="15px"
+            key={idx}
           >
             <QuestionCard
               name={user}
@@ -124,7 +126,6 @@ class Quora extends Component {
               question={el.questionBody}
               answers={el.answers}
               time={el.createdAt}
-              key={idx}
               id={el._id}
             />
           </Grid>

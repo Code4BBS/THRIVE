@@ -377,7 +377,12 @@ const Project = ({ user }) => {
               variant="outlined"
               component="span"
               classes={{ root: classes.buttonRootDark }}
-              style={{ marginLeft: "auto", marginRight: "auto" }}
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "2%",
+                marginBottom: "2%",
+              }}
             >
               Your Request is Registered
             </Button>
@@ -397,7 +402,12 @@ const Project = ({ user }) => {
               variant="contained"
               component="span"
               classes={{ root: classes.buttonRootDark }}
-              style={{ marginLeft: "auto", marginRight: "auto" }}
+              style={{
+                marginLeft: "auto",
+                marginRight: "auto",
+                marginTop: "2%",
+                marginBottom: "2%",
+              }}
               onClick={() => {
                 setOpen(true);
               }}
@@ -661,7 +671,7 @@ const Project = ({ user }) => {
               </CardContent>
 
               <Divider />
-              <br />
+
               {joinRequestButton}
             </Card>
           </Grid>

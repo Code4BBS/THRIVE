@@ -73,13 +73,7 @@ const useStyles = makeStyles({
   },
 });
 
-// const useStyles = makeStyles((theme) => ({
-//   typography: {
-//     padding: theme.spacing(2),
-//   },
-// }));
-
-function Notification({ user, history }) {
+const Notification = ({ user, history, color }) => {
   // const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
@@ -353,7 +347,7 @@ function Notification({ user, history }) {
           }}
           onClick={handleClick}
         >
-          <NotificationsIcon />
+          <NotificationsIcon style={{ color: color ? color : "white" }} />
         </SvgIcon>
       </Badge>
       <Popover
@@ -375,6 +369,6 @@ function Notification({ user, history }) {
       </Popover>
     </div>
   );
-}
+};
 
 export default Notification;

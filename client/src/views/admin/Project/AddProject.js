@@ -519,10 +519,14 @@ const AddProject = ({ user }) => {
                 p: 2,
               }}
             >
-              <br />
               <Button
                 color="primary"
-                style={{ marginLeft: "40%", marginRight: "40%" }}
+                style={{
+                  marginLeft: "40%",
+                  marginRight: "40%",
+                  marginTop: "2%",
+                  marginBottom: "2%",
+                }}
                 classes={{ root: classes.buttonRootDark }}
                 variant="contained"
                 disabled={checkRequiredFields()}
@@ -555,14 +559,21 @@ const AddProject = ({ user }) => {
           />
         </Container>
       ) : !tagsPane && collaboratorsPane ? (
-        <Container>
-          <Collaborators
-            currentUser={user}
-            customers={customers}
-            hide={hideCollaboratorsPane}
-            initialSelectedCollaborators={selectedCollaborators}
-            getCollaboraters={getSelectedCollaborators}
-          />
+        <Container
+          maxWidth={false}
+          component={Box}
+          marginTop="-6rem"
+          classes={{ root: classes.containerRoot }}
+        >
+          <Card classes={{ root: classes.cardRoot }} style={{ padding: "1px" }}>
+            <Collaborators
+              currentUser={user}
+              customers={customers}
+              hide={hideCollaboratorsPane}
+              initialSelectedCollaborators={selectedCollaborators}
+              getCollaboraters={getSelectedCollaborators}
+            />
+          </Card>
         </Container>
       ) : null}
     </>

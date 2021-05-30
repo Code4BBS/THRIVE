@@ -32,7 +32,8 @@ const QuestionCard = (props) => {
   return (
     <Card
       className={classes.root}
-      onClick={() => history.push(`/quora/${props.id}`)}
+      onClick={() => history.push(`/discussion/${props.id}`)}
+      style={{ boxShadow: "0 0 1rem 0 rgba(136, 152, 170,.35)" }}
     >
       <CardActionArea>
         <CardContent>
@@ -48,13 +49,40 @@ const QuestionCard = (props) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Typography>{props.upvotes}</Typography>
-        <ThumbUpOutlinedIcon />
-        <Typography>{props.downvotes}</Typography>
-        <ThumbDownOutlinedIcon />
-        <Typography>{props.answers.length}</Typography>
-        <QuestionAnswerOutlinedIcon />
+      <CardActions style={{ display: "flex", justifyContent: "space-evenly" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "30px",
+          }}
+        >
+          <Typography>{props.upvotes}</Typography>
+          <ThumbUpOutlinedIcon />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "30px",
+          }}
+        >
+          <Typography>{props.downvotes}</Typography>
+          <ThumbDownOutlinedIcon />
+        </div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            width: "30px",
+          }}
+        >
+          <Typography>{props.answers.length}</Typography>
+          <QuestionAnswerOutlinedIcon />
+        </div>
       </CardActions>
     </Card>
   );

@@ -2,7 +2,7 @@
   "name": "comp-frontend",
   "version": "1.0.0",
   "author": "Code4BBS",
-  "description": "College Management Portal",
+  "description": "Thrive - A College Management System",
   "proxy": "http://localhost:3000",
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
@@ -40,6 +40,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-router-dom": "5.2.0",
     "react-scripts": "4.0.2",
+    "react-share": "^4.4.0",
     "socket.io-client": "^4.1.2"
   },
   "eslintConfig": {

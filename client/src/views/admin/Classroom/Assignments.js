@@ -36,12 +36,13 @@ const Assignments = ({ course, history, user }) => {
   console.log(id);
 
   const [assignments, setAssignments] = useState([]);
-
+  const [isLoading, setLoading] = useState(true);
   const getAllCourseAssignments = () => {
     axios
       .get(`/api/v1/course/assignments/${id}`)
       .then((res) => {
         setAssignments(res.data.data);
+        setLoading(false);
         // console.log(res.data.data);
       })
       .catch((err) => {
@@ -93,13 +94,22 @@ const Assignments = ({ course, history, user }) => {
               history.push(`/new-assignment/${course._id}`);
             }}
           >
-            <AddRoundedIcon fontSize="large" />
+            <AddRoundedIcon
+              style={{
+                width: "24px",
+                height: "24px",
+              }}
+            />
           </IconButton>
         ) : null}
         <Typography
           style={{ fontSize: "20px", padding: "20px 0px", height: "70px" }}
         >
-          {assignments.length === 0 ? "No Assignments have been posted" : null}
+          {isLoading
+            ? "Loading Assignments...."
+            : !isLoading && assignments.length === 0
+            ? "No Assignments have been posted"
+            : null}
         </Typography>
         <Timeline>
           {assignments.length > 0
