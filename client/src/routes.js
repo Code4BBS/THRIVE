@@ -5,7 +5,6 @@ import Login from "views/auth/Login.js";
 import Maps from "views/admin/Maps.js";
 import Profile from "views/admin/Profile.js";
 import ProfilePage from "views/admin/ProfilePage.js";
-import Register from "views/auth/Register.js";
 import Tables from "views/admin/Tables.js";
 // import CollegeAdmin from "views/admin/CollegeAdmin/collegeAdmin";
 import CalendarView from "views/admin/Classroom/Calendar";
@@ -277,22 +276,6 @@ var routes = [
     divider: true,
     show: false,
   },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   icon: VpnKey,
-  //   iconColor: "Info",
-  //   component: Login,
-  //   layout: "/auth",
-  // },
-  // {
-  //   path: "/register",
-  //   name: "Register",
-  //   icon: AccountCircle,
-  //   iconColor: "ErrorLight",
-  //   component: Register,
-  //   layout: "/auth",
-  // },
   {
     title: "Documentation",
     show: false,
