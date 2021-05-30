@@ -146,7 +146,7 @@ const Results = ({ className, customers, tags, ...rest }) => {
     // navigate(url);
   };
 
-  const headings = ["Name", "Email", "RolL Number"];
+  const headings = ["Name", "Email", "Roll Number"];
 
   return (
     <div>

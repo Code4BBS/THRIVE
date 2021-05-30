@@ -38,7 +38,7 @@ import { clone } from "ramda";
 
 const useStyles = makeStyles(componentStyles);
 
-const singleTags = ["Program", "Admission Year", "Branch"];
+// const singleTags = ["Program", "Admission Year", "Branch"];
 
 const branches = [
   {
@@ -172,6 +172,7 @@ function Profile({ user, getUserAgain }) {
       })
       .then((response) => {
         let rest = response.data.data.docs.filter((tag) => {
+          // if (tag.group == "Branch") console.log(tag.name);
           return !updatedData.tags.map((el) => el._id).includes(tag._id);
         });
         setRestTags(rest);
@@ -733,8 +734,6 @@ function Profile({ user, getUserAgain }) {
                               >
                                 <TableBody>
                                   {sortedTags.map((group, index) => {
-                                    if (singleTags.includes(group.name))
-                                      return null;
                                     return (
                                       <TagGroup
                                         key={index}
