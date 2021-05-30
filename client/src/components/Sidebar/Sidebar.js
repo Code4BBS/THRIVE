@@ -17,13 +17,21 @@ import Typography from "@material-ui/core/Typography";
 // @material-ui/icons components
 import Clear from "@material-ui/icons/Clear";
 import MenuIcon from "@material-ui/icons/Menu";
-
+import Notification from "./../Navbars/Notification";
 // core components
 import componentStyles from "assets/theme/components/sidebar.js";
 
 const useStyles = makeStyles(componentStyles);
 
-export default function Sidebar({ role, routes, logo, dropdown, input }) {
+export default function Sidebar({
+  role,
+  routes,
+  logo,
+  dropdown,
+  input,
+  user,
+  history,
+}) {
   console.log(role);
   const classes = useStyles();
   const location = useLocation();
@@ -176,6 +184,7 @@ export default function Sidebar({ role, routes, logo, dropdown, input }) {
               />
               {logoObject}
               {dropdown}
+              <Notification user={user} history={history} />
             </Container>
           </Toolbar>
         </AppBar>
