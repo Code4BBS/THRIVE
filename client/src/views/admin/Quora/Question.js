@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import {
-  FacebookShareButton,
-  WhatsappShareButton,
-} from "react-share";
+import { FacebookShareButton, WhatsappShareButton } from "react-share";
 
 import {
   Box,
@@ -30,7 +27,7 @@ import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
 import FacebookIcon from "@material-ui/icons/Facebook";
 import WhatsAppIcon from "@material-ui/icons/WhatsApp";
-import BlockIcon from '@material-ui/icons/Block';
+import BlockIcon from "@material-ui/icons/Block";
 
 import Header from "components/Headers/Header.js";
 
@@ -46,8 +43,8 @@ class QuoraCont extends Component {
     isAnonymous: false,
     askedBy: "",
     deleteClicked: false,
-    blacklistClicked : false,
-    askedById : null
+    blacklistClicked: false,
+    askedById: null,
   };
 
   getQuestion = () => {
@@ -62,7 +59,10 @@ class QuoraCont extends Component {
         answers: res.data.question.answers,
       });
       if (!res.data.question.isAnonymous) {
-        this.setState({ askedBy: res.data.question.user.name, askedById: res.data.question.user._id });
+        this.setState({
+          askedBy: res.data.question.user.name,
+          askedById: res.data.question.user._id,
+        });
       }
     });
   };
@@ -113,17 +113,19 @@ class QuoraCont extends Component {
       });
   };
   blacklistQuestion = () => {
-    axios.patch(`/api/v1/quora/questions/blacklist/${this.state.question._id}`).then(res => {
-      window.location.href = `/discussion`;
-    })
-  }
+    axios
+      .patch(`/api/v1/quora/questions/blacklist/${this.state.question._id}`)
+      .then((res) => {
+        window.location.href = `/discussion`;
+      });
+  };
   render() {
     const { classes } = this.props;
     let upvoteColor = "";
     let downvoteColor = "";
     let deleteButton;
     let blacklistButton;
-    
+
     if (
       this.state.question != null &&
       this.state.question.isAnonymous === false &&
@@ -145,17 +147,14 @@ class QuoraCont extends Component {
           />
         </IconButton>
       );
-      console.log(deleteButton)
+      console.log(deleteButton);
     } else {
       deleteButton = null;
     }
-    if (
-      this.state.question != null &&
-      this.props.user.role == "admin"
-    ) {
+    if (this.state.question != null && this.props.user.role == "admin") {
       blacklistButton = (
         <IconButton
-          onClick={() => this.setState({blacklistClicked : true})}
+          onClick={() => this.setState({ blacklistClicked: true })}
           style={{ padding: "0!important" }}
         >
           <BlockIcon
@@ -215,7 +214,9 @@ class QuoraCont extends Component {
           }}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Are you willing to blacklist this question?</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+            Are you willing to blacklist this question?
+          </DialogTitle>
           <DialogContent>
             <Grid container>
               <Grid item>
@@ -262,6 +263,7 @@ class QuoraCont extends Component {
                   classes={{
                     root: classes.gridItemRoot + " " + classes.order2,
                   }}
+                  style={{ marginLeft: "auto", marginRight: "auto" }}
                 >
                   {deleteModal}
                   {blacklistModal}

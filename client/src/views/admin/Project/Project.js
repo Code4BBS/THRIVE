@@ -434,6 +434,7 @@ const Project = ({ user }) => {
             component={Box}
             marginBottom="3rem"
             classes={{ root: classes.gridItemRoot + " " + classes.order2 }}
+            style={{ marginLeft: "auto", marginRight: "auto" }}
           >
             <Card
               classes={{
@@ -509,33 +510,37 @@ const Project = ({ user }) => {
                       <br />
                     </Grid>
 
-                    <Grid item xs={12} lg={12} style={{ marginBottom: "10px" }}>
-                      <Box component={Typography} variant="h5">
-                        Collaborators &nbsp;&nbsp;
-                      </Box>
-
-                      {project.collaborators.length > 0
-                        ? project.collaborators.map((collaborator, index) => {
-                            return (
-                              <li
-                                key={index}
-                                style={{ display: "inline", margin: "3px" }}
-                              >
-                                <Chip
-                                  variant="outlined"
-                                  label={
-                                    collaborator._id === user._id
-                                      ? "You"
-                                      : collaborator.name
-                                  }
-                                  avatar={<Avatar src={collaborator.image} />}
-                                  style={{ color: "black!important" }}
-                                />
-                              </li>
-                            );
-                          })
-                        : null}
-                    </Grid>
+                    {project.collaborators.length > 0 ? (
+                      <Grid
+                        item
+                        xs={12}
+                        lg={12}
+                        style={{ marginBottom: "10px" }}
+                      >
+                        <Box component={Typography} variant="h5">
+                          Collaborators &nbsp;&nbsp;
+                        </Box>
+                        {project.collaborators.map((collaborator, index) => {
+                          return (
+                            <li
+                              key={index}
+                              style={{ display: "inline", margin: "3px" }}
+                            >
+                              <Chip
+                                variant="outlined"
+                                label={
+                                  collaborator._id === user._id
+                                    ? "You"
+                                    : collaborator.name
+                                }
+                                avatar={<Avatar src={collaborator.image} />}
+                                style={{ color: "black!important" }}
+                              />
+                            </li>
+                          );
+                        })}
+                      </Grid>
+                    ) : null}
 
                     <Grid
                       item
@@ -662,12 +667,6 @@ const Project = ({ user }) => {
                     </Grid>
                   </Grid>
                 </div>
-
-                <Box
-                  component={Divider}
-                  marginBottom="0.8rem!important"
-                  marginTop="0.8rem!important"
-                />
               </CardContent>
 
               <Divider />
