@@ -30,7 +30,11 @@ exports.createQuestion = catchAsync(async (req,res,next) => {
 
 exports.getAllQuestions = catchAsync(async (req,res,next) => {
     let questions = {};
-    questions = await Question.find().sort({createdAt : -1}).populate({
+    let query = {};
+    if(req.user.role != "admin") {
+        query = {blacklisted : false};
+    }
+    questions = await Question.find(query).sort({createdAt : -1}).populate({
         path : "user",
         model : "User",
         select : "name"
@@ -163,6 +167,13 @@ exports.deleteQuestion = catchAsync(async(req,res,next) => {
     })
 })
 
+exports.blacklistQuestion = catchAsync(async(req,res,next) => {
+    await Question.findByIdAndUpdate(req.params.qId, {blacklisted : true});
+    res.status(201).json({
+        status : "success",
+        message : "question blacklisted successfully"
+    })
+})
 exports.deleteAllQuestions = catchAsync(async(req,res,next) => {
     await Question.deleteMany({})
     res.status(200).json({

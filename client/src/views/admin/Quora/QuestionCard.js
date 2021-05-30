@@ -8,7 +8,7 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
-
+import Chip from '@material-ui/core/Chip'
 import ThumbDownOutlinedIcon from "@material-ui/icons/ThumbDownOutlined";
 import ThumbUpOutlinedIcon from "@material-ui/icons/ThumbUpOutlined";
 import QuestionAnswerOutlinedIcon from "@material-ui/icons/QuestionAnswerOutlined";
@@ -28,18 +28,22 @@ const QuestionCard = (props) => {
   const history = useHistory();
 
   const classes = useStyles();
-
+  let blacklistLabel = null;
+  if(props.blacklisted) {
+    blacklistLabel = <Chip label = "Blacklisted"/>
+  }
   return (
     <Card
       className={classes.root}
       onClick={() => history.push(`/discussion/${props.id}`)}
-      style={{ boxShadow: "0 0 1rem 0 rgba(136, 152, 170,.35)" }}
+      style={{ boxShadow: "0 0 1rem 0 rgba(136, 152, 170,.35)"}}
     >
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {!props.isAnonymous ? props.name : "An Anonymous user"} Asked
           </Typography>
+          {blacklistLabel}
           <Typography variant="body2" color="textSecondary" component="p">
             {props.question}
           </Typography>
