@@ -1,5 +1,4 @@
 const Question = require("./../model/questionModel");
-const Answer = require("./../model/answerModel");
 const catchAsync = require("./../utils/catchAsync");
 
 exports.createQuestion = catchAsync(async (req,res,next) => {
