@@ -326,7 +326,6 @@ function CreateAssignment({ user, history }) {
               <Box
                 sx={{
                   display: "center",
-
                   p: 2,
                 }}
               >

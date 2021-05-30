@@ -519,10 +519,14 @@ const AddProject = ({ user }) => {
                 p: 2,
               }}
             >
-              <br />
               <Button
                 color="primary"
-                style={{ marginLeft: "40%", marginRight: "40%" }}
+                style={{
+                  marginLeft: "40%",
+                  marginRight: "40%",
+                  marginTop: "2%",
+                  marginBottom: "2%",
+                }}
                 classes={{ root: classes.buttonRootDark }}
                 variant="contained"
                 disabled={checkRequiredFields()}
