@@ -222,7 +222,7 @@ class QuoraCont extends Component {
                           >
                             {this.state.askedBy == ""
                               ? "An Anonymous User"
-                              : this.state.question.user.name}{" "}
+                              : this.state.askedBy}{" "}
                             asked
                           </Box>
                         </Grid>

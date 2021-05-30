@@ -2,7 +2,7 @@
   "name": "comp-frontend",
   "version": "1.0.0",
   "author": "Code4BBS",
-  "description": "College Management Portal",
+  "description": "Thrive - A College Management System",
   "proxy": "http://localhost:3000",
   "scripts": {
     "start": "set PORT=3001 && react-scripts start",
