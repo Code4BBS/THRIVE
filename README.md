@@ -1,6 +1,6 @@
 # THRIVE
 
-<img src="https://user-images.githubusercontent.com/64681029/120106489-b7dfcb00-c17a-11eb-8d87-25a244de72a4.png" width="300px" height="170px"/>
+<img src="https://user-images.githubusercontent.com/64681029/120106489-b7dfcb00-c17a-11eb-8d87-25a244de72a4.png" width="300px" height="170px" align="center"/>
 
 ***One stop solution for students for college activities***
 
@@ -130,9 +130,12 @@ After publishing, StackEdit keeps your file linked to that publication which mak
 Since one file can be published to multiple locations, you can list and manage publish locations by clicking **File publication** in the **Publish** sub-menu. This allows you to list and remove publication locations that are linked to your file.
 
 
-# Markdown extensions
+## Contributors
 
-StackEdit extends the standard Markdown syntax by adding extra **Markdown extensions**, providing you with some nice features.
+- **[Navaneeth Bysani](https://www.linkedin.com/in/navaneeth-bysani-639b4219a/)**
+- **[P Kartikeya](https://www.linkedin.com/in/kartikeya-pochampalli-29a0a319b/)**
+- **[Sai Krishna Jupally](https://www.linkedin.com/in/sai-krishna-jupally-b7050177/)**
+- **[Shrirang Deshmukh](https://www.linkedin.com/in/shrirang-deshmukh/)**
 
 > **ProTip:** You can disable any **Markdown extension** in the **File properties** dialog.
 
