@@ -42,6 +42,9 @@ const assignmentSchema = new mongoose.Schema(
         fileName: {
           type: String,
         },
+        submittedAt: {
+          type: String,
+        },
       },
     ],
   },

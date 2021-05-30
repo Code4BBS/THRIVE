@@ -18,6 +18,13 @@ import {
   FilledInput,
   Chip,
   Avatar,
+  TableContainer,
+  TableRow,
+  TableCell,
+  TableHead,
+  Table,
+  TableBody,
+  Paper,
 } from "@material-ui/core";
 
 import EventIcon from "@material-ui/icons/Event";
@@ -41,13 +48,19 @@ const AssignmentView = ({ user }) => {
   const [selectedFile, setSelectedFile] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [submittedFileUrl, setSubmittedFileUrl] = useState("");
-
+  const [submittedAssignments, setSubmittedAssignments] = useState([]);
   const getAssignment = () => {
     axios
       .get(`/api/v1/course/assignment/${id}`)
       .then((res) => {
         setAssignment(res.data.data);
         setFileName(res.data.data.assignmentFileName);
+        let data = res.data.data.students;
+        for (let i of Object.keys(data)) {
+          data[i].fileUrl = "";
+        }
+        setSubmittedAssignments(data);
+
         let assignment = res.data.data;
         console.log(assignment);
         let index = assignment.students.findIndex((el) => el.user == user._id);
@@ -117,6 +130,30 @@ const AssignmentView = ({ user }) => {
       });
   };
 
+  const openSubmittedAssignmentFile = (index) => {
+    axios
+      .get(
+        `/api/v1/course/assignment/open/${submittedAssignments[index].fileName}`,
+        {
+          withCredentials: true,
+          responseType: "arraybuffer",
+        }
+      )
+      .then((response) => {
+        console.log(response.data);
+        // console.log(response);
+        const file = new Blob([response.data], {
+          type: response.headers["content-type"],
+        });
+        //Build a URL from the file
+        const fileURL = URL.createObjectURL(file);
+        //Open the URL on new Window
+        submittedAssignments[index].fileUrl = fileUrl;
+        setSubmittedAssignments(submittedAssignments);
+        window.open(fileURL);
+      });
+  };
+
   const selectFile = (event) => {
     setSelectedFile(event.target.files[0]);
   };
@@ -125,6 +162,53 @@ const AssignmentView = ({ user }) => {
     getAssignment();
   }, []);
 
+  const teacherView = (
+    <Box component="span" m={1}>
+      <Typography style={{ textAlign: "center", fontWeight: "bold" }}>
+        Submissions
+      </Typography>
+      {submittedAssignments.length > 0 ? (
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Email</TableCell>
+                <TableCell>Submitted at</TableCell>
+                <TableCell>Assignment</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {submittedAssignments.map((assignment, ind) => {
+                return (
+                  <TableRow>
+                    <TableCell>{assignment.user.email}</TableCell>
+                    <TableCell>
+                      {assignment.submittedAt || "29 May,2021"}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        style={{ display: "flex" }}
+                        onClick={() => {
+                          if (assignment.fileUrl == "")
+                            openSubmittedAssignmentFile(ind);
+                          else window.open(assignment.fileUrl);
+                        }}
+                      >
+                        <DescriptionIcon fontSize="large" color="primary" />
+                        <Typography style={{ padding: "0px" }}>
+                          &nbsp;{assignment.user.name}
+                        </Typography>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      ) : null}
+    </Box>
+  );
   return (
     <>
       <Header />
@@ -212,7 +296,7 @@ const AssignmentView = ({ user }) => {
                           | {assignment.due || "May 26 "}&emsp;&emsp;
                           <EventIcon />
                           <Typography>
-                            Due {assignment.due || "May 30"}
+                            Due {assignment.deadline || "May 30"}
                           </Typography>
                         </div>
                       </div>
@@ -234,70 +318,84 @@ const AssignmentView = ({ user }) => {
                   </Button>
                   <Divider style={{ marginTop: "20px" }} />
                   <Box component="span" m={1}>
-                    {submitted ? (
+                    {user.role != "Teacher" ? (
                       <>
-                        <Typography
-                          style={{ marginBottom: "10px", fontSize: "14px" }}
-                        >
-                          YOUR SUBMISSION
-                        </Typography>
-                        <Button
-                          style={{ display: "flex" }}
-                          onClick={() => {
-                            if (submittedFileUrl == "") openSubmittedFile();
-                            else window.open(submittedFileUrl);
-                          }}
-                        >
-                          <DescriptionIcon fontSize="large" color="primary" />
-                          <Typography style={{ padding: "0px" }}>
-                            &nbsp;View Submission
-                          </Typography>
-                        </Button>
+                        {submitted ? (
+                          <>
+                            <Typography
+                              style={{ marginBottom: "10px", fontSize: "14px" }}
+                            >
+                              YOUR SUBMISSION
+                            </Typography>
+                            <Button
+                              style={{ display: "flex" }}
+                              onClick={() => {
+                                if (submittedFileUrl == "") openSubmittedFile();
+                                else window.open(submittedFileUrl);
+                              }}
+                            >
+                              <DescriptionIcon
+                                fontSize="large"
+                                color="primary"
+                              />
+                              <Typography style={{ padding: "0px" }}>
+                                &nbsp;View Submission
+                              </Typography>
+                            </Button>
+                          </>
+                        ) : (
+                          <>
+                            <Typography>Submit Assignment</Typography>
+                            <FormControl variant="filled" width="100%">
+                              <FilledInput
+                                type="file"
+                                name="file"
+                                id="upload-file"
+                                onChange={selectFile}
+                                className="file-upload"
+                                style={{ display: "none" }}
+                              />
+                            </FormControl>
+                            <div
+                              style={{ display: "flex", alignItems: "center" }}
+                            >
+                              <label htmlFor="upload-file">
+                                <Button
+                                  variant="outlined"
+                                  component="span"
+                                  className={classes.button}
+                                  style={{ width: "130px" }}
+                                >
+                                  Upload File
+                                </Button>
+                              </label>
+                              <Typography
+                                style={{
+                                  marginLeft: "10px",
+                                  overflow: "hidden",
+                                }}
+                              >
+                                {selectedFile.name}
+                              </Typography>
+                            </div>
+                            <Button
+                              color="primary"
+                              style={{ marginLeft: "40%", marginRight: "40%" }}
+                              classes={{ root: classes.buttonRootDark }}
+                              variant="contained"
+                              disabled={!selectedFile}
+                              onClick={(e) => {
+                                submitAssignment(e);
+                                // window.alert("clicked");
+                              }}
+                            >
+                              Submit
+                            </Button>
+                          </>
+                        )}
                       </>
                     ) : (
-                      <>
-                        <Typography>Submit Assignment</Typography>
-                        <FormControl variant="filled" width="100%">
-                          <FilledInput
-                            type="file"
-                            name="file"
-                            id="upload-file"
-                            onChange={selectFile}
-                            className="file-upload"
-                            style={{ display: "none" }}
-                          />
-                        </FormControl>
-                        <div style={{ display: "flex", alignItems: "center" }}>
-                          <label htmlFor="upload-file">
-                            <Button
-                              variant="outlined"
-                              component="span"
-                              className={classes.button}
-                              style={{ width: "130px" }}
-                            >
-                              Upload File
-                            </Button>
-                          </label>
-                          <Typography
-                            style={{ marginLeft: "10px", overflow: "hidden" }}
-                          >
-                            {selectedFile.name}
-                          </Typography>
-                        </div>
-                        <Button
-                          color="primary"
-                          style={{ marginLeft: "40%", marginRight: "40%" }}
-                          classes={{ root: classes.buttonRootDark }}
-                          variant="contained"
-                          disabled={!selectedFile}
-                          onClick={(e) => {
-                            submitAssignment(e);
-                            // window.alert("clicked");
-                          }}
-                        >
-                          Submit
-                        </Button>
-                      </>
+                      teacherView
                     )}
                   </Box>
                 </CardContent>

@@ -264,6 +264,11 @@ exports.getAssignment = catchAsync(async (req, res, next) => {
       path: "courseId",
       ref: "Course",
       select: "courseCode name",
+    })
+    .populate({
+      path: "students.user",
+      ref: "User",
+      select: "name email",
     });
 
   res.status(200).json({
@@ -281,6 +286,10 @@ exports.submitAssignment = catchAsync(async (req, res, next) => {
     fileName = req.file.filename;
   }
   studentData[0].fileName = fileName;
+
+  let date = new Date();
+  date = date.toLocaleDateString();
+  studentData[0].submittedAt = date;
 
   const submitAssignment = await Assignment.findByIdAndUpdate(req.params.id, {
     $push: { students: studentData },

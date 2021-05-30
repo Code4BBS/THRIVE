@@ -69,6 +69,8 @@ const Admin = ({ user, cookies, getUserAgain }) => {
     <>
       <>
         <Sidebar
+          user={user}
+          history={history}
           role={user.role}
           routes={routes}
           logo={{
