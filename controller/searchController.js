@@ -31,7 +31,7 @@ exports.searchByTag = catchAsync(async (req, res, next) => {
     const users = await User.find({
       tags: { $all: queryTags },
     })
-      .select("name email image verifyStatus")
+      .select("name email image rollNumber")
       .sort({ verifyStatus: -1, name: 1 })
       .lean();
 
