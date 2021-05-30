@@ -134,7 +134,7 @@ const Assignments = ({ course, history, user }) => {
                       >
                         {months[new Date(assignment.createdAt).getMonth()] +
                           " " +
-                          new Date(assignment.createdAt).getDay()}
+                          new Date(assignment.createdAt).getDate()}
                       </Typography>
                     </TimelineOppositeContent>
                     <TimelineSeparator>
