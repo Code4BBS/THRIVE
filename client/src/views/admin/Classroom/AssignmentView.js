@@ -170,6 +170,20 @@ const AssignmentView = ({ user }) => {
     setSelectedFile(event.target.files[0]);
   };
 
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
   useEffect(() => {
     getAssignment();
   }, []);
@@ -311,13 +325,25 @@ const AssignmentView = ({ user }) => {
                           ) : (
                             ""
                           )}{" "}
-                          &nbsp;| &nbsp;{assignment.due || "May 26 "}
+                          &nbsp;| &nbsp;
+                          {months[new Date(assignment.createdAt).getMonth()] +
+                            " " +
+                            new Date(assignment.createdAt).getDate()}
                           &emsp;&emsp;
                           <EventIcon
                             style={{ height: "20px", width: "20px" }}
                           />
                           <Typography>
-                            &nbsp;&nbsp;Due {assignment.deadline || "May 30"}
+                            &nbsp;&nbsp;Due &nbsp;{" "}
+                            {assignment.deadline.split("-")[1] < 10
+                              ? months[
+                                  (assignment.deadline.split("-")[1] % 10) - 1
+                                ]
+                              : months[
+                                  assignment.deadline.split("-")[1] - 1
+                                ]}{" "}
+                            &nbsp;
+                            {assignment.deadline.split("-")[2]}
                           </Typography>
                         </div>
                       </div>
