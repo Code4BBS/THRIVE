@@ -114,7 +114,7 @@ function Profile({ user, getUserAgain }) {
   const theme = useTheme();
 
   const [editMode, setEditMode] = useState(false);
-  const [updatedData, setUpdatedData] = useState(user);
+  const [updatedData, setUpdatedData] = useState({ ...user });
 
   const [error, setError] = useState({ rollNumber: false });
   const [errorCount, setErrorCount] = useState(0);
@@ -236,6 +236,8 @@ function Profile({ user, getUserAgain }) {
   };
 
   const updateUser = () => {
+    console.log(updatedData);
+    console.log(user);
     if (updatedData === user) return;
     axios
       .patch("/api/v1/user/profile", {
