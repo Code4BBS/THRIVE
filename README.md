@@ -52,6 +52,15 @@ $ npm start
 ```
 The backend server and client server run at ports 3000 and 3001 i.e. http://localhost:3000/ and http://localhost:3001/ respectively.  
 
+**Emails to be used for testing**
+- student@iitbbs.ac.in: User Role
+- student_admin@iitbbs.ac.in :Student User Role
+- teacher@iitbbs.ac.in : Teacher Role
+- college_admin@iitbbs.ac.in :College Admin Role
+  
+  *No passwords are required.*
+
+
 ## Features
 
 The portal majorly consists of two parts:
