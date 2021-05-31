@@ -16,6 +16,7 @@ import FormControl from "@material-ui/core/FormControl";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Grid from "@material-ui/core/Grid";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { Select, MenuItem } from "@material-ui/core";
 // @material-ui/icons components
 import Email from "@material-ui/icons/Email";
 import Lock from "@material-ui/icons/Lock";
@@ -39,6 +40,7 @@ const Login = ({ sucessLogin, load }) => {
       ...values,
       [event.target.name]: event.target.value,
     });
+    if (event.target.name == "email") console.log(event.target.value);
   };
 
   const successResponseGoogle = (response) => {
@@ -87,6 +89,14 @@ const Login = ({ sucessLogin, load }) => {
       })
       .catch((err) => console.log(err));
   };
+
+  const emails = [
+    "student@iitbbs.ac.in",
+    "teacher@iitbbs.ac.in",
+    "student_admin@iitbbs.ac.in",
+    "college_admin@iitbbs.ac.in",
+  ];
+
   return (
     <>
       <Grid item xs={12} lg={5} md={7}>
@@ -100,7 +110,7 @@ const Login = ({ sucessLogin, load }) => {
                 component="small"
                 color={theme.palette.gray[600]}
               >
-                Sign in with your college email
+                Sign in with your college email (for IIT BBS students)
               </Box>
             }
             titleTypographyProps={{
@@ -157,7 +167,7 @@ const Login = ({ sucessLogin, load }) => {
               fontSize="1rem"
             >
               <Box fontSize="80%" fontWeight="400" component="small">
-                Or sign in with credentials
+                Or sign in with credentials (For testing by the evaluators)
               </Box>
             </Box>
             <FormControl
@@ -166,7 +176,7 @@ const Login = ({ sucessLogin, load }) => {
               width="100%"
               marginBottom="1rem!important"
             >
-              <FilledInput
+              {/* <FilledInput
                 autoComplete="off"
                 type="email"
                 placeholder="Email"
@@ -178,9 +188,29 @@ const Login = ({ sucessLogin, load }) => {
                 name="email"
                 value={values.email}
                 onChange={handleChange}
-              />
+              /> */}
+
+              <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={values.email}
+                onChange={handleChange}
+                label="email"
+                name="email"
+                startAdornment={
+                  <InputAdornment position="start">
+                    <Email />
+                  </InputAdornment>
+                }
+              >
+                {emails.map((email, ind) => (
+                  <MenuItem value={email} key={ind}>
+                    {email}
+                  </MenuItem>
+                ))}
+              </Select>
             </FormControl>
-            <FormControl
+            {/* <FormControl
               variant="filled"
               component={Box}
               width="100%"
@@ -199,7 +229,7 @@ const Login = ({ sucessLogin, load }) => {
                 value={values.password}
                 onChange={handleChange}
               />
-            </FormControl>
+            </FormControl> */}
             <FormControlLabel
               value="end"
               control={<Checkbox color="primary" />}
