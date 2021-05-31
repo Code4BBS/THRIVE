@@ -126,25 +126,31 @@ const googleLogin = catchAsync(async (req, res, next) => {
           );
 
         try {
-          User.findOne({ email }).exec(async (err, user) => {
-            if (err) {
-              return res.status(404).json({
-                message: err.message,
-              });
-            } else {
-              if (user) {
-                await User.updateOne({ email }, { image: picture });
-                createSendToken(user, 200, res);
-              } else {
-                const newUser = await User.create({
-                  name: name,
-                  email: email,
-                  image: picture,
+          User.findOne({ email })
+            .populate({
+              path: "tags",
+              ref: "Tag",
+              select: "name",
+            })
+            .exec(async (err, user) => {
+              if (err) {
+                return res.status(404).json({
+                  message: err.message,
                 });
-                createSendToken(newUser, 200, res);
+              } else {
+                if (user) {
+                  await User.updateOne({ email }, { image: picture });
+                  createSendToken(user, 200, res);
+                } else {
+                  const newUser = await User.create({
+                    name: name,
+                    email: email,
+                    image: picture,
+                  });
+                  createSendToken(newUser, 200, res);
+                }
               }
-            }
-          });
+            });
         } catch (err) {
           throw new AppError(err.message, 401);
         }
@@ -227,7 +233,11 @@ const testLogin = catchAsync(async (req, res, next) => {
     return next(new AppError("No email Id is present", 404));
   }
 
-  const user = await User.findOne({ email: email });
+  const user = await User.findOne({ email: email }).populate({
+    path: "tags",
+    ref: "Tag",
+    select: "name",
+  });
 
   if (user == null) {
     return next(new AppError("This email is not present", 404));
