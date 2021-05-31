@@ -23,7 +23,7 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 
 const useStyles = makeStyles(componentStyles);
 
-const ChatRoom = ({ user, cookies }) => {
+const ChatRoom = ({ user, cookies, socket }) => {
   const classes = useStyles();
 
   const [chatMessages, setChatMessages] = useState([]);
@@ -31,25 +31,6 @@ const ChatRoom = ({ user, cookies }) => {
   const [message, setMessage] = useState("");
 
   const courseId = window.location.pathname.split("/")[3];
-
-  //Setting Up Socket
-
-  const setupSocket = () => {
-    const token = cookies.cookies.JWTClient;
-    const socketSetup = io.connect(`http://localhost:3000/`, {
-      withCredentials: true,
-      query: { token },
-    });
-    socketSetup.emit("join", courseId);
-    socketSetup.on("newMessage", (newMessage) => {
-      //console.log("Received new message");
-      onMessageRecieved(newMessage);
-    });
-
-    return socketSetup;
-  };
-
-  const socket = setupSocket();
 
   const getPreviousMessages = () => {
     axios
@@ -69,13 +50,11 @@ const ChatRoom = ({ user, cookies }) => {
 
   useEffect(() => {
     getPreviousMessages();
+    socket.on("newMessage", (newMessage) => {
+      // console.log("Received new message");
+      setChatMessages((messages) => [...messages, newMessage]);
+    });
   }, []);
-
-  const onMessageRecieved = (newMessage) => {
-    const newChatMessages = clone(chatMessages);
-    newChatMessages.push(newMessage);
-    setChatMessages(newChatMessages);
-  };
 
   const onPostMessage = (e) => {
     e.preventDefault();
@@ -88,8 +67,10 @@ const ChatRoom = ({ user, cookies }) => {
         createdAt: new Date(),
       };
       //console.log(socket);
-      if (socket) socket.emit("message", data);
-      setMessage("");
+      if (socket)
+        socket.emit("message", data, () => {
+          setMessage("");
+        });
     }
   };
 
