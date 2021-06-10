@@ -32,7 +32,7 @@ module.exports.socketSetup = (server) => {
       io.emit("roomJoined", room); //optional----can be used if required
     });
 
-    socket.on("message", async (data) => {
+    socket.on("message", async (data, callback) => {
       //console.log("Message!");
       const { user, message, courseId, createdAt } = data;
       //console.log(data);
@@ -44,6 +44,7 @@ module.exports.socketSetup = (server) => {
       };
       await sendMessage(chatMessage);
       io.in(courseId).emit("newMessage", data); //roomName=courseId
+      callback();
     });
 
     socket.on("typing", (data) => {

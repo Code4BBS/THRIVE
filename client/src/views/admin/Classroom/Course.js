@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import io from "socket.io-client";
 
 import "./Course.css";
 
@@ -32,6 +33,7 @@ function Course({ user, cookies, history }) {
 
   const [course, setCourse] = useState({});
   const [tab, setTab] = useState("Classes");
+  const [socket, setSocket] = useState(null);
 
   let id;
   useEffect(() => {
@@ -48,6 +50,17 @@ function Course({ user, cookies, history }) {
         history.push("/classroom");
       });
   }, []);
+
+  const setupSocket = (courseId) => {
+    const token = cookies.cookies.JWTClient;
+    const socketSetup = io.connect(`http://localhost:3000/`, {
+      withCredentials: true,
+      query: { token },
+    });
+    socketSetup.emit("join", courseId);
+
+    return socketSetup;
+  };
 
   return (
     <div>
@@ -145,14 +158,6 @@ function Course({ user, cookies, history }) {
         </Grid>
       ) : null}
       <div style={{ textAlign: "center" }}>
-        {/* <Button
-          className={tab === "Chat" ? "active" : "in-active"}
-          onClick={() => {
-            setTab("Chat");
-          }}
-        >
-          Chat
-        </Button> */}
         <Button
           className={tab === "Classes" ? "active" : "in-active"}
           onClick={() => {
@@ -172,6 +177,10 @@ function Course({ user, cookies, history }) {
         <Button
           className={tab === "chatRoom" ? "active" : "in-active"}
           onClick={() => {
+            if (!socket) {
+              const newSocket = setupSocket(course._id);
+              setSocket(newSocket);
+            }
             setTab("chatRoom");
           }}
         >
@@ -194,7 +203,7 @@ function Course({ user, cookies, history }) {
         ) : tab === "Assignments" ? (
           <Assignments course={course} history={history} user={user} />
         ) : tab == "chatRoom" ? (
-          <ChatRoom user={user} cookies={cookies} />
+          <ChatRoom user={user} cookies={cookies} socket={socket} />
         ) : (
           <Enrolled user={user} cookies={cookies} course={course} />
         )}
