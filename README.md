@@ -17,13 +17,13 @@ The main aim of the portal is to provide an easy-to-use all-in-one solution for 
 
 ## Technologies used
 
-- **NodeJs** - evented I/O for the backend
-- **Express** - fast node.js network app framework
-- **Socket.io** - Package used to create realtime chats.
-- **MongoDB** - NoSQL Database
-- **React.js** - Javascript llibrary to build user frameworks.
+- **NodeJs** -      Evented I/O for the backend
+- **Express** -     Fast node.js network app framework
+- **Socket.io** -   Package used to create real-time chats.
+- **MongoDB** -     NoSQL Database
+- **React.js** -    Javascript llibrary to build user frameworks.
 - **GoogleOAuth** - Open Authorization from Google
-- **MaterialUI** - React components based on Material Design, responsive web application for all screen sizes.
+- **MaterialUI** -  React components based on Material Design, responsive web application for all screen sizes.
 
 ## Running the WebApp locally
 
@@ -63,7 +63,7 @@ The backend server and client server run at ports 3000 and 3001 i.e. http://loca
 The portal uses Google OAuth for authorization and is restrcited to emails with domain of _@iitbbs.ac.in_. For testing puropses the following emails with different user scopes can be used.
 
 - student@iitbbs.ac.in: User Role
-- student_admin@iitbbs.ac.in :Student User Role
+- student_admin@iitbbs.ac.in :Student Admin Role
 - teacher@iitbbs.ac.in : Teacher Role
 - college_admin@iitbbs.ac.in :College Admin Role
 
@@ -87,7 +87,7 @@ A directory of our students which supports search based on skills, positions of 
 
 #### Project Panel
 
-A platform where students can post there projects with relevant details and supporting tags and ask for collaborators by provding. Students are notified when a project's tag matches one in their profile.
+A platform where students can post there projects with relevant details and supporting tags and ask for collaborators by provding necessary communication details. Students are notified when a project's tag matches one in their profile.
 
 #### Discussion Forum
 
@@ -269,6 +269,7 @@ Students can have realtime chats in the classroom with peers and teacher. Teache
 <br/><br/>
 
 **Notifications**
+<br/>
 Users are informed about various events like Collab Request, Assignments etc via notifications.
 
 ![image](https://user-images.githubusercontent.com/64681029/120113870-1bc5bc00-c19a-11eb-961a-5f17ea3f65aa.png)
