@@ -130,7 +130,7 @@ const googleLogin = catchAsync(async (req, res, next) => {
             .populate({
               path: "tags",
               ref: "Tag",
-              select: "name",
+              select: "name group",
             })
             .exec(async (err, user) => {
               if (err) {
@@ -236,7 +236,7 @@ const testLogin = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: email }).populate({
     path: "tags",
     ref: "Tag",
-    select: "name",
+    select: "name group",
   });
 
   if (user == null) {

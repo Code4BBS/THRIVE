@@ -49,4 +49,10 @@ router.get(
   userController.getNotifications
 );
 
+router.patch(
+  "/endorse/:id",
+  authController.restrictTo("user", "admin"),
+  userController.endorseUser
+);
+
 module.exports = router;

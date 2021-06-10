@@ -173,3 +173,31 @@ exports.seenNotifications = catchAsync(async (req, res, next) => {
     notifications: user.notifications,
   });
 });
+
+exports.endorseUser = catchAsync(async (req, res, next) => {
+  const endorsedUser = await User.findById(req.params.id);
+
+  if (!endorsedUser) {
+    return next(new AppError("The user to be endorseed is not present", 400));
+  }
+
+  if (endorsedUser.endorsers && endorsedUser.endorsers.includes(req.user._id)) {
+    res.status(200).json({
+      status: "success",
+      message: "This user is already endorsed by you",
+    });
+  } else {
+    const newendorseCount = endorsedUser.endorse + 1;
+
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, {
+      endorse: newendorseCount,
+      $push: { endorsers: req.user._id },
+    });
+
+    res.status(200).json({
+      status: "Success",
+      message: "The user has been successfully endorseed",
+      data: updatedUser,
+    });
+  }
+});

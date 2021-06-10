@@ -33,7 +33,7 @@ import componentStyles from "assets/theme/views/admin/profile.js";
 import boxShadows from "assets/theme/box-shadow.js";
 
 import axios from "axios";
-
+import CustomizedMenu from "./Menu";
 import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles(componentStyles);
@@ -112,19 +112,28 @@ function Profile({ user, getUserAgain }) {
                 }}
               >
                 <CardContent>
-                  <Box
-                    component={Typography}
-                    variant="h6"
-                    color={theme.palette.gray[600] + "!important"}
-                    paddingTop=".25rem"
-                    paddingBottom=".25rem"
-                    fontSize=".75rem!important"
-                    letterSpacing=".04em"
-                    marginBottom="1.5rem!important"
-                    classes={{ root: classes.typographyRootH6 }}
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    User Information
-                  </Box>
+                    <Box
+                      component={Typography}
+                      variant="h6"
+                      color={theme.palette.gray[600] + "!important"}
+                      paddingTop=".25rem"
+                      paddingBottom=".25rem"
+                      fontSize=".75rem!important"
+                      letterSpacing=".04em"
+                      marginBottom="1.5rem!important"
+                      classes={{ root: classes.typographyRootH6 }}
+                    >
+                      User Information
+                    </Box>
+                    <CustomizedMenu
+                      user={otherUser}
+                      currentUser={user}
+                      updateProfile={getUserAgain}
+                    />
+                  </div>
                   <div className={classes.plLg4}>
                     <Grid container>
                       <Grid item xs={12} lg={6}>

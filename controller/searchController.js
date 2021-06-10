@@ -32,7 +32,7 @@ exports.searchByTag = catchAsync(async (req, res, next) => {
       tags: { $all: queryTags },
     })
       .select("name email image rollNumber")
-      .sort({ verifyStatus: -1, name: 1 })
+      .sort({ endorse: -1, name: 1 })
       .lean();
 
     res.status(200).json({
