@@ -55,4 +55,10 @@ router.patch(
   userController.endorseUser
 );
 
+router.patch(
+  "/clearEndorses",
+  authController.restrictTo("admin"),
+  userController.clearReports
+);
+
 module.exports = router;

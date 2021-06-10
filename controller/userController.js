@@ -201,3 +201,27 @@ exports.endorseUser = catchAsync(async (req, res, next) => {
     });
   }
 });
+
+exports.clearReports = catchAsync(async (req, res, next) => {
+  if (!req.query.id) {
+    return next(new AppError("There is no id in query", 403));
+  }
+
+  let user = await User.findByIdAndUpdate(
+    req.query.id,
+    { endorse: 0, endorsers: [] },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!user) {
+    return next(new AppError("There is no user with this id", 403));
+  }
+
+  res.status(200).json({
+    status: "success",
+    message: "successfully cleared endorsements",
+  });
+});

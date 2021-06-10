@@ -230,7 +230,7 @@ const Login = ({ sucessLogin, load }) => {
                 onChange={handleChange}
               />
             </FormControl> */}
-            <FormControlLabel
+            {/* <FormControlLabel
               value="end"
               control={<Checkbox color="primary" />}
               label="Remeber me"
@@ -239,7 +239,7 @@ const Login = ({ sucessLogin, load }) => {
                 root: classes.formControlLabelRoot,
                 label: classes.formControlLabelLabel,
               }}
-            />
+            /> */}
             <Box textAlign="center" marginTop="1.5rem" marginBottom="1.5rem">
               <Button
                 color="primary"
