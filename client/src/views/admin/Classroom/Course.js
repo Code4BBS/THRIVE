@@ -43,6 +43,20 @@ function Course({ user, cookies, history }) {
       .get(`/api/v1/course/${id}`)
       .then((res) => {
         setCourse(res.data);
+
+        if (
+          !res.data.students.includes(user._id) &&
+          res.data.teacher !== user._id
+        ) {
+          const con = window.confirm(
+            "You are not associated with this course."
+          );
+
+          if (con) {
+            history.push(`/classroom`);
+          }
+        }
+
         console.log(res.data);
       })
       .catch((err) => {
@@ -55,8 +69,9 @@ function Course({ user, cookies, history }) {
     const token = cookies.cookies.JWTClient;
     const socketSetup = io.connect(`http://localhost:3000/`, {
       withCredentials: true,
-      query: { token },
+      query: { token, courseId },
     });
+
     socketSetup.emit("join", courseId);
 
     return socketSetup;

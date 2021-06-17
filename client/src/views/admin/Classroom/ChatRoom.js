@@ -51,7 +51,6 @@ const ChatRoom = ({ user, cookies, socket }) => {
   useEffect(() => {
     getPreviousMessages();
     socket.on("newMessage", (newMessage) => {
-      // console.log("Received new message");
       setChatMessages((messages) => [...messages, newMessage]);
     });
   }, []);

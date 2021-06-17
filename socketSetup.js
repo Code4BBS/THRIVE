@@ -2,6 +2,7 @@ const socketio = require("socket.io");
 const jwt = require("jsonwebtoken");
 
 const { sendMessage } = require("./controller/courseController");
+const Course = require("./model/courseModel");
 const AppError = require("./utils/appError");
 const { JWT_SECRET } = require("./utils/config");
 
@@ -14,12 +15,36 @@ module.exports.socketSetup = (server) => {
   });
 
   io.use((socket, next) => {
-    if (socket.handshake.query && socket.handshake.query.token) {
-      jwt.verify(socket.handshake.query.token, JWT_SECRET, (err, decoded) => {
-        if (err) throw new AppError("Authentication error", 401);
-        socket.decoded = decoded;
-        next();
-      });
+    if (
+      socket.handshake.query &&
+      socket.handshake.query.token &&
+      socket.handshake.query.courseId
+    ) {
+      jwt.verify(
+        socket.handshake.query.token,
+        JWT_SECRET,
+        async (err, decoded) => {
+          try {
+            if (err) throw new AppError("Authentication error", 401);
+            socket.decoded = decoded;
+
+            const course = await Course.findById(
+              socket.handshake.query.courseId
+            );
+
+            if (!course) throw new AppError("No Course found", 400);
+            if (
+              !course.students.includes(decoded.id) &&
+              course.teacher !== decoded.id
+            ) {
+              throw new AppError("User not part of the course", 401);
+            }
+            next();
+          } catch (err) {
+            return err;
+          }
+        }
+      );
     } else {
       next(new AppError("Authentication error", 401));
     }
